@@ -1,0 +1,373 @@
+Zomato- Group Order Rdesign
+
+Why This Project?
+I built this project because I lived the problem myself. Every week, my office team would spend 20-25 minutes just figuring out lunch — not eating it, just organizing it. Someone creates a WhatsApp poll. People argue about which restaurant. Someone finally places one order from one restaurant, even though half the team wanted something else. Then comes the worst part: chasing 6-8 people for their share of the money through UPI, sometimes for days.
+I noticed that Zomato — an app almost everyone in urban India already has and trusts — had completely ignored this use case. Their entire cart system is built for one person ordering for themselves. There's no way to:
+
+Order from multiple restaurants in a single group order
+Let each person pay for their own food
+Set a budget limit per person (useful for company-sponsored lunches)
+Track everyone's delivery in one place, even if it's coming from different restaurants
+
+This felt like a real, everyday problem that millions of people quietly work around — and nobody had designed a proper solution for it. That gap is exactly why I chose this project: it's not a hypothetical "what if" feature, it's something I and people around me genuinely needed.
+
+Why Does This Matter?
+This matters because group food ordering is one of the most common daily activities for office workers, students, and friend groups in India — and the current experience is broken in a way that causes real social and financial friction.
+Here's the bigger picture of why solving this is valuable:
+1. It saves real time, every single day.
+My research showed group lunch coordination takes 20-25 minutes using the current WhatsApp + UPI workaround. My redesigned flow brings that down to about 9 minutes — a 64% reduction. Multiply that across thousands of office teams ordering daily, and it adds up to a massive amount of collective time saved.
+2. It removes money-related awkwardness from friendships and workplaces.
+Almost everyone has been "that person" who paid for the group and then had to awkwardly ask people to pay them back. 81% of the people I interviewed said they've experienced this. When payment splitting happens automatically inside the app, that social tension simply disappears.
+3. It solves a real business problem too — not just a personal one.
+Companies that sponsor employee meals (like Friday lunches) have no way to enforce a per-person budget today. This leads to overspending and awkward conversations between managers and employees. A built-in budget limit feature fixes this cleanly, without anyone having to play "budget police."
+4. It's a business opportunity for Zomato, not just a nice-to-have.
+No major Indian food delivery app — Zomato or Swiggy — currently supports multi-restaurant group ordering with split payments. This is a genuine market gap. Adding this feature could increase order frequency (teams might order together daily instead of just on Fridays) and drive more engagement with premium features like Zomato Gold.
+5. It's a great case study in solving "invisible" problems.
+A lot of UX work focuses on flashy features. This project shows how paying attention to small, everyday frustrations — the kind people don't even think to complain about because they've normalized the workaround — can lead to a feature that genuinely improves people's day-to-day lives.
+
+Who Has This Problem?
+This problem affects a very large and very specific group of people, and I validated this directly through user interviews. Here's who experiences this pain point regularly:
+1. Office employees who order lunch together (the primary audience)
+This is the core group. Anyone working in an office — especially in tech hubs like Bengaluru, Hyderabad, Pune, or Gurgaon — where ordering food as a team is a near-daily ritual. My interviews included a Product Manager, an Engineering Lead, an Operations Analyst, a Finance Manager, and a UX Researcher — all from different-sized teams (6 to 20 people), and every single one described the same frustrations.
+2. Team leads and managers who end up "managing" the lunch order
+There's almost always one person — often informally — who becomes the designated "lunch admin." They collect everyone's orders, place the order, and then chase payments. This role is unpaid, thankless, and exhausting. My research found that many people actively avoid this role because of the payment-chasing hassle, which means the same one or two people end up stuck doing it repeatedly.
+3. Companies and HR/admin teams that sponsor employee meals
+Many companies offer subsidized or fully-paid lunches (commonly ₹400-500 per person) as an employee benefit. Without a budget enforcement system, this benefit becomes hard to manage fairly — some employees order more expensive items, creating inequality and awkward situations for managers who have to flag it.
+4. Friend groups and families ordering together
+While my primary research focused on office teams, this same problem extends to any group of people ordering food together — friends planning a movie night, families with different food preferences, or roommates who want food from different places but one delivery.
+5. People who want food from different restaurants in one order
+This is a huge, underserved group. My interviews revealed that in mixed teams — where some people want biryani, others want pizza, others want healthier options — the current "one restaurant only" rule forces everyone to compromise. People with dietary restrictions (vegetarian, no-onion, low-calorie) are especially affected, since finding one restaurant that satisfies everyone is often impossible.
+In short: if you've ever been part of a group food order — whether at work, with friends, or with family — and felt the friction of deciding where to order from, collecting everyone's choices, or chasing people for payment afterward, this problem is designed for you.
+
+## What Exactly Was Broken?
+
+The core issue is that **Zomato's cart and checkout system was designed for one person, ordering for themselves, from one restaurant** — and it has stayed that way even though a huge chunk of real-world orders happen in groups.
+
+Here's what was specifically broken when a group tried to use it:
+
+**1. The cart only supports a single restaurant.**
+If you open Zomato and start adding items, everything has to come from one restaurant. There's no way to add a biryani from one place and a pizza from another in the same order. So when a team of 8 people wants food from 3 different restaurants, the app simply can't handle it — the group is forced to pick one restaurant that "kind of" works for everyone, which usually means nobody is fully happy.
+
+**2. There's no concept of "multiple people, one order."**
+The cart has no field for "who is this item for." One person has to manually type in everyone else's order — which means typos, forgotten items, wrong spice levels, and constant "wait, I wanted no onions" messages after the order is already placed.
+
+**3. Payment is all-or-nothing, and it's always on one person.**
+Whoever places the order pays the entire bill. There's no built-in way to split that bill or let each person pay their own share through the app. The only "solution" is the person who paid sending individual UPI payment requests afterward — and then waiting, and waiting, for people to actually pay.
+
+**4. There's no budget control feature.**
+If a company wants to sponsor lunch with a ₹500-per-person limit, there's nothing in the app to enforce that. Anyone can add a ₹900 item, and the only way to catch it is for someone to manually check and then have an awkward conversation afterward.
+
+**5. Delivery tracking doesn't account for groups.**
+If a group did somehow order from multiple restaurants (using separate individual orders), there's no unified view. Each person has to track their own delivery separately — there's no single screen showing "here's where everyone's food is."
+
+---
+
+## What Pain Existed?
+
+The pain wasn't really about the *app* — it was about how the app's limitations spilled over into people's **time, money, and relationships**. Here's what that looked like in real terms, based on what people told me directly:
+
+**Wasted time, every single day.**
+Before any food was even ordered, teams were spending 20-25 minutes just on coordination — WhatsApp polls, debating restaurants, collecting everyone's orders one by one. As Rohit (Engineering Lead) put it: *"Easily 20 minutes before anyone even starts eating. And that's on a good day."*
+
+**The "designated lunch admin" burnout.**
+In every team, one person ends up being the unofficial lunch coordinator — placing the order, paying upfront, and then chasing everyone for money. This role is unpaid, repetitive, and emotionally draining. Neha (Product Manager) told me: *"I hate chasing people for money. I've just stopped being the one who places the order."* People were actively opting out of helping their teams because of this.
+
+**Money never fully recovered.**
+Suresh (Finance Manager) shared that out of his 15-person team, there are consistently 2-3 people who simply never pay back their share. He's just absorbed that cost over time rather than keep asking. This isn't a one-time annoyance — it's a recurring financial leak that people quietly accept as "normal."
+
+**Forced compromise on food choices.**
+Because only one restaurant could be selected, teams with different preferences (some want biryani daily, others want lighter food, some have dietary restrictions like no-onion or vegetarian-only) were stuck picking restaurants that satisfied nobody fully. Aisha (UX Researcher) described it as *"exhausting"* — trying to find one place that works for everyone, every single day.
+
+**Awkward conversations about overspending.**
+When companies sponsored lunch with a budget in mind, there was no way to enforce it. Priya (Operations Analyst) described an incident where someone ordered a ₹900 thali against a ₹400 budget, and *"the manager had to send an awkward Slack message. So embarrassing for everyone."* The lack of a system-level guardrail meant human managers had to play bad cop.
+
+**Order accuracy problems.**
+With one person typing everyone's order manually, mistakes were common — wrong items, missed requests, incorrect spice levels. This led to people changing their minds after the order was placed, which created even more friction and delays.
+
+---
+
+## What Was the Business Problem?
+
+From Zomato's perspective (or any food delivery platform), this isn't just a "nice UX improvement" — it represents a **measurable gap in product-market fit for a massive use case**, with direct implications for engagement, revenue, and competitive positioning.
+
+**1. A core, frequent use case was completely unsupported.**
+My research showed 68% of office workers order food in groups 3+ times a week. That's not a niche behavior — it's one of the most common ways food delivery apps get used in urban India. Yet the product had zero dedicated support for it. This is a significant product gap hiding in plain sight.
+
+**2. Users were leaving the app to solve the problem — losing engagement and data.**
+Because Zomato couldn't handle group coordination, users were doing that work *outside* the app — in WhatsApp groups and Google Forms — and only coming back to Zomato for the final, single-restaurant order. Every minute spent coordinating outside the app is a minute Zomato isn't capturing user attention, behavioral data, or upsell opportunities (like Gold membership prompts, promotional banners, or restaurant recommendations).
+
+**3. Order frequency was being artificially suppressed.**
+Because group ordering was so painful, many teams only did it occasionally (like "Friday lunches") instead of regularly. Aisha specifically said that if multi-restaurant group ordering existed, her team would *"probably order as a group every single day instead of just Fridays."* That's a potential 5x increase in order frequency for groups that currently order once a week — a massive untapped revenue opportunity.
+
+**4. Competitors hadn't solved this either — meaning first-mover advantage.**
+My competitive audit found that neither Swiggy nor any major Indian platform offers true multi-restaurant group ordering with individual payments. International platforms like EZCater have partial solutions, but nothing tailored to this market. Whoever builds this well first gets a meaningful differentiation point — something genuinely new to market, not just a copy of a competitor's feature.
+
+**5. It directly connects to monetization opportunities (like Zomato Gold).**
+Group orders tend to be higher-value (more items, higher total bill) than solo orders. If group ordering becomes frictionless, group order *frequency* increases — and each of those orders is an opportunity to surface Gold membership benefits, savings banners, and loyalty incentives to multiple people at once (everyone in the group sees the app, not just one person).
+
+**6. Retention risk from "the one person who does everything."**
+The person who currently manages group orders (places the order, fronts the money, chases payments) experiences real frustration with that role — frustration that's currently misattributed to "my team is difficult" rather than "the app doesn't support this." If that frustration isn't addressed, it can quietly erode trust and usage from some of the platform's most active, high-frequency users — the ones organizing orders for entire teams.
+
+**In short:** the business problem wasn't a small feature gap — it was a **mismatch between how people actually use food delivery apps in real life (in groups) and what the product was built to support (individuals)**. Fixing this unlocks higher order frequency, better in-app engagement, a genuine competitive edge, and removes a quiet source of frustration among some of the app's most valuable users.
+
+## User Research
+
+**5 interviews** conducted with Bengaluru-based office workers (ages 25-34) across teams ranging from 6 to 20 people, spanning tech, finance, operations, and consulting backgrounds.
+
+---
+
+### Goals
+
+- Understand how teams currently coordinate and pay for group food orders
+- Identify the biggest pain points in the existing process — emotional, financial, and logistical
+- Validate whether a per-person budget limit would actually solve real problems for company-sponsored meals
+- Determine appetite for a dedicated group-ordering feature vs. existing workarounds (WhatsApp, UPI, Google Forms)
+- Uncover whether multi-restaurant ordering is a real need or an edge case
+
+---
+
+### Method
+
+- **Format:** 1-on-1 semi-structured interviews, ~20-25 minutes each
+- **Recruitment:** Office workers who order group lunch at least 3 times a week, across teams of varying sizes (6-20 people)
+- **Roles covered:** Product Manager, Engineering Lead, Operations Analyst, Finance Manager, UX Researcher — intentionally mixed to capture both "the person who pays" and "the person who gets chased for money" perspectives
+- **Approach:** Asked participants to walk through their actual last group order step-by-step, then probed for emotional reactions ("how did that feel?") rather than just functional descriptions
+- **Tools:** Notes synthesized in FigJam immediately after each session to spot patterns early
+
+---
+
+### Key Findings
+
+**1. Social friction outweighs functional friction.**
+The biggest pain wasn't "the app is hard to use" — it was the social discomfort of chasing people for money. 81% of participants had been stuck fronting payment for a group and not getting fully reimbursed.
+
+**2. Multi-restaurant ordering is a daily need, not a nice-to-have.**
+4 out of 5 participants said their team regularly wants food from different restaurants, but compromises on one place because the app doesn't support otherwise.
+
+**3. Budget limits would solve a real, recurring embarrassment.**
+Teams with company-sponsored meals had no way to enforce spending caps, leading to awkward manager-employee conversations after someone overspent.
+
+**4. Zero appetite for new apps — it has to live inside Zomato.**
+All 5 participants currently use Zomato/Swiggy daily. Any solution requiring a separate app or tool (like the Google Form one team tried) was abandoned within one use.
+
+**5. Setup speed is a hard requirement.**
+One participant explicitly said: if group setup takes more than 2-3 minutes, he won't use it — even if the rest of the feature is great.
+
+**6. The "designated lunch admin" role is a source of quiet burnout.**
+Several participants described actively avoiding placing group orders because of the payment-chasing aftermath — meaning the same 1-2 people get stuck with this role repeatedly.
+
+## How Might We
+
+> **Primary HMW:** How might we reduce the friction of coordinating group food orders across multiple people and restaurants?
+> 
+
+**Supporting HMW statements:**
+
+- How might we let each person pay for their own food without anyone fronting money?
+- How might we let teams order from different restaurants in a single group order?
+- How might we give admins a simple way to enforce a per-person budget without awkward conversations?
+- How might we make group ordering as fast and familiar as ordering solo?
+
+## Competitive Analysis
+
+**Competitors:** Zomato, Swiggy, EZCater, Seamless
+
+**Zomato (current)**
+
+- *Pros:* Massive existing user base, trusted payment integration, fast delivery network, in-app tracking
+- *Cons:* No group cart, no multi-restaurant support, no split payments, no budget controls
+
+**Swiggy**
+
+- *Pros:* Similar strengths to Zomato — wide reach, reliable tracking, established UPI flow
+- *Cons:* Same gaps as Zomato — single-user cart only, no group features at all
+
+**EZCater (US)**
+
+- *Pros:* Supports multi-restaurant ordering, has budget limit features for corporate catering
+- *Cons:* Partial split-payment support, limited real-time tracking, not designed for casual daily use — feels enterprise-heavy
+
+**Seamless (US)**
+
+- *Pros:* Good individual tracking experience, established checkout flow
+- *Cons:* No multi-restaurant support, only partial split payments, no budget enforcement, no group history 
+
+## Outcomes
+
+**What improved?**
+
+- Group order coordination time reduced from 25 minutes to 9 minutes (64% reduction)
+- Task success rate in usability testing rose from 83% to 96% across two rounds
+- Eliminated the need for manual UPI follow-ups — payment now happens entirely in-app at checkout
+
+**What did you validate?**
+
+- The "each pays own with admin lock" model was understood intuitively once the progress counter and unlock animation were added
+- Multi-restaurant ordering is genuinely needed — not a nice-to-have — for 4 out of 5 teams interviewed
+- Per-person budget limits remove a recurring source of workplace awkwardness for company-sponsored meals
+- Users have zero tolerance for new apps — embedding inside Zomato was the only viable approach
+
+**What did you learn?**
+
+- The hardest problems to design for are often social, not technical — the real blocker wasn't "how do we split a bill" but "how do we remove the awkwardness of asking for money"
+- Edge cases (partial payment, payment failure, budget overages) are not afterthoughts — they're where user trust is won or lost
+- Familiarity is a feature: reusing existing Zomato cart patterns meant zero learning curve for a completely new capability
+
+---
+
+## 14. Reflection
+
+**What surprised you?** The depth of emotional reaction to the payment-chasing problem surprised me. I expected functional complaints ("the cart doesn't support multiple restaurants") but instead got deeply personal responses — people described feeling resentful, embarrassed, and exhausted. It reframed the entire project: this wasn't a feature gap, it was a relationship problem that technology happened to be causing.
+
+**What would you do differently?** I'd spend more time on the group creation flow earlier. I initially treated it as a simple "settings" step and focused most of my design energy on the cart and payment experience — but testing showed 2 of 6 users dropped off during setup. If setup fails, nothing downstream matters. I'd prioritize testing the first 60 seconds of the experience much earlier in the process, rather than polishing the "main" flow first.
+---
+title: "Zomato Group Ordering"
+subtitle: "Designing the Social Layer of Food Delivery"
+description: "A UX investigation into the coordination tax office teams pay every time they order food together — and how design can reduce 20 minutes of friction to a single flow."
+year: "2024"
+role: "Lead UX/UI Designer"
+tools: "Figma · Maze · Miro · FigJam"
+duration: "6 weeks"
+tags: ["UX Research", "Interaction Design", "Prototyping", "Maze Testing", "Mobile Design"]
+---
+
+## Context
+
+Zomato serves over 350 million users. Food delivery is solved. But *group* food delivery remains a broken social experience — one that plays out daily in offices, hostels, and shared apartments across India.
+
+The problem doesn't live inside the Zomato app. It lives in WhatsApp threads, Google Forms, and awkward UPI payment requests.
+
+## The Problem
+
+**Office teams spend 20–25 minutes coordinating lunch.**
+
+The pattern is always the same: someone nominates themselves as the "order person," collects requests over WhatsApp, tries to combine dishes across preferences, places one massive order, and then chases everyone for payment — often giving up and eating the cost themselves.
+
+> Food wasn't the problem. Coordination was.
+
+The existing Zomato experience is optimized for solo ordering. Adding a group to the equation multiplies the friction, not just the cart size.
+
+## Research
+
+### User Interviews
+
+I conducted **5 semi-structured user interviews** with office-going adults aged 22–34 who regularly ordered food with colleagues.
+
+Key questions:
+- Walk me through the last time you ordered food with a group.
+- What made it difficult? What made it easy?
+- Have you used any tools or apps to coordinate?
+- When does the experience feel frustrating?
+
+### Competitive Analysis
+
+Examined how other platforms handle group coordination:
+- **Splitwise** — solves payment splitting, not ordering
+- **Google Pay Groups** — handles bill splitting post-transaction
+- **Amazon Alexa Drop-In** — real-time group audio, not food
+- **DoorDash Group Order** — closest parallel; US-specific
+
+**Key gap found:** No existing tool closes the loop from *preference collection → unified order → payment split* in a single mobile flow.
+
+### Journey Mapping
+
+Mapped the end-to-end journey of a group order coordinator across three phases: **Collection, Ordering, Payment**.
+
+Pain points surfaced at every transition — but the biggest spikes appeared at two moments:
+1. When someone changed their order after it was placed.
+2. When a payment reminder had to be sent more than once.
+
+## Key Insights
+
+**Insight 01: The social overhead is emotional, not just logistical.**
+People don't hate coordinating orders. They hate feeling like they're imposing on others, or being the person who holds up the group.
+
+**Insight 02: Trust collapses at payment.**
+Once money enters the equation, the informal nature of WhatsApp coordination creates anxiety. Who's tracking what? Did they pay?
+
+**Insight 03: Most users would accept less choice for less friction.**
+When asked directly, 4 of 5 participants said they'd rather be suggested a meal based on their history than browse the full catalogue during a group session.
+
+## Constraints
+
+- Must work within Zomato's existing mobile design system
+- 3-tap maximum from cart to group invite
+- No authentication changes (can't add new login flows)
+- Real-time sync requires careful state management (handled in design, flagged for engineering)
+- Payment integration must connect to existing Zomato Pay
+
+## Process
+
+### How Might We
+
+After research synthesis, I ran a solo **HMW workshop** to reframe the problems as opportunities:
+
+- *HMW reduce the cognitive load on the "order person"?*
+- *HMW make payment transparent before the food arrives?*
+- *HMW let each person feel ownership over their own order?*
+
+### Information Architecture
+
+Mapped three possible structural approaches:
+1. **Host-controlled model** — One person manages the entire cart
+2. **Distributed cart model** — Each person adds to a shared cart independently
+3. **Hybrid nudge model** — AI-suggested orders with optional override
+
+Selected **Distributed cart with host confirmation** as the mental model — it matches existing social expectations (everyone "picks their own") while keeping coordination structured.
+
+### Wireframes → High-Fidelity
+
+Moved from sketches to low-fidelity wireframes to **22 high-fidelity screens** across:
+
+- Group creation + invite flow
+- Individual cart management
+- Real-time order status
+- Payment split summary
+- Reminder and confirmation states
+
+## Iterations
+
+### Round 1: Clarity problem
+Early prototypes showed a cluttered group status view. Testers couldn't distinguish their item from others'. Fixed with color-coded avatars and clear item ownership markers.
+
+### Round 2: Payment timing
+Originally showed payment split at checkout. Users were confused — they wanted to *agree* to amounts before the order, not after. Moved payment to the pre-order confirmation step.
+
+### Round 3: Invitation friction
+The initial invite flow required app downloads for all group members. Simplified to a sharable link that opens a lightweight web experience for non-Zomato users.
+
+## Testing
+
+**Method:** Maze unmoderated usability test  
+**Participants:** 8 users  
+**Tasks:**
+1. Create a group order and invite 2 people
+2. Review and confirm your individual order
+3. Complete the payment split
+
+**Results:**
+- Task 1 completion: 87.5%
+- Task 2 completion: 100%
+- Task 3 completion: 75% (payment split screen needed refinement)
+- Average time-on-task: Reduced from baseline estimate of 4.2 mins to 2.1 mins
+
+## Outcome
+
+The validated prototype demonstrates:
+- A clear group ordering flow integrated within the existing Zomato information architecture
+- Payment transparency before food arrives (not after)
+- Reduced reliance on external tools for coordination
+- A shareable invite link for non-app users
+
+## Reflection
+
+**What I learned:**
+
+Collaborative experiences don't fail because of bad technology. They fail because of unmet emotional expectations. The key insight wasn't about features — it was about trust. Once I understood that users weren't afraid of *paying*, they were afraid of *being seen as difficult*, the design direction became clear.
+
+**What I'd improve:**
+
+- Real-time sync state management (currently designed as polling; would benefit from WebSocket architecture)
+- Push notification strategy — when and how to nudge without being intrusive
+- Smarter AI-powered meal suggestions based on group ordering history
+- Accessibility audit of the final prototype (touch target sizing on group invite flow needs review)

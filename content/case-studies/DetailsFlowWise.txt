@@ -1,0 +1,347 @@
+---
+title: "FlowWise"
+subtitle: "A finance app that nudges instead of judges"
+description: "Most finance apps act like historical ledgers — they tell users what went wrong after it happens. FlowWise was designed to help before mistakes occur, through behavioral design, AI nudges, and offline-first privacy."
+year: "2024"
+role: "Product Designer & Design Engineer"
+tools: "Figma · React Native · Expo · SQLite · Gemini API"
+duration: "10 weeks"
+tags: ["Product Design", "Design Systems", "React Native", "Behavioral Design", "AI-assisted UX", "Privacy-first"]
+links:
+  behance: "https://www.behance.net/gallery/247562999/Flow-Wise-Case-Study"
+  github: "https://github.com/Anubhx/flow-wise"
+---
+
+## Context
+
+Personal finance apps are stuck in a loop: they record what you spent, show you a red number, and expect shame to drive behavior change. It doesn't work.
+
+The behavioral science is clear — **retrospective feedback produces guilt, not action**. What changes behavior is timely, contextual, and non-judgmental guidance *before* the decision is made.
+
+FlowWise is my attempt to build that kind of finance companion.
+
+## The Problem
+
+**Finance demands precision. Human behavior is irrational.**
+
+The core tension: the tools we use to manage money are built like spreadsheets, but the humans using them behave more like social animals with habits, moods, and blind spots.
+
+Most existing apps:
+- Show spending history only
+- Categorize expenses poorly
+- Give generic budgeting advice
+- Ignore behavioral patterns
+- Store sensitive data in the cloud without transparency
+
+> Most finance apps judge users after mistakes. FlowWise helps them before they happen.
+
+## Challenge
+
+Three competing forces had to be balanced:
+
+1. **Precision** — Financial data must be accurate, structured, and reliable
+2. **Behavioral psychology** — The interface must work *with* human tendencies, not against them
+3. **Privacy** — Sensitive financial data must not leave the device without explicit consent
+
+Getting any one of these right is hard. Getting all three simultaneously, with delightful interactions, is the actual design problem.
+
+## Approach
+
+### Starting with Figma
+
+The design process began with extensive Figma work:
+
+- **Component inventory** — Mapped every UI state before building
+- **Design system architecture** — 40+ reusable components: cards, inputs, charts, nudge banners, category chips, and modal sheets
+- **Micro-interaction specs** — Documented every animation curve, timing, and trigger condition
+
+The design system became the product's backbone. With 40+ components defined, the build phase was about assembling — not improvising.
+
+### Behavioral Design
+
+Every interaction was designed around a principle: **reinforce good decisions, surface context before bad ones**.
+
+Key behavioral patterns applied:
+
+**1. Contextual nudges, not alerts**
+When a user is on pace to exceed their dining budget 30% faster than usual on a Tuesday, FlowWise surfaces a gentle suggestion before the weekend arrives. Not a warning. A nudge.
+
+**2. Expense categorization glides**
+Instead of forcing users to manually categorize expenses (which leads to abandonment), the app uses Gemini to suggest categories. The UI allows single-swipe confirmation — making the "correct" action the path of least resistance.
+
+**3. Progress anchoring**
+Rather than showing "you've spent ₹8,400 this month," the UI shows "you're at 68% of your food budget with 12 days left." Context changes behavior. Numbers alone don't.
+
+**4. Transitions reinforce confidence**
+Every state transition — from expense entry to confirmation to summary — uses deliberate motion. Fast enough to feel responsive. Slow enough to communicate permanence. The interface feels trustworthy because it behaves consistently under a user's thumb.
+
+### Privacy Architecture
+
+The most significant product decision was **local-first, offline-first**.
+
+All financial data is stored using **SQLite on-device**. The Gemini API is called only for categorization suggestions, and only with anonymized transaction descriptions — never with amounts, account identifiers, or personal information.
+
+This means:
+- No user account required
+- No cloud sync by default
+- AI assistance without data exposure
+- Full functionality without internet connection
+
+The trade-off was deliberate: we sacrificed multi-device sync for privacy and trust. For financial data, that trade is worth making.
+
+## Technology
+
+**Stack:**
+- React Native (Expo managed workflow)
+- SQLite via `expo-sqlite`
+- Gemini API (categorization only)
+- React Navigation for screen routing
+- Reanimated 3 for gesture-driven transitions
+- Victory Native for data visualization
+
+**Architecture decisions:**
+- Offline-first: all CRUD operations work without network
+- Async AI: categorization suggestions are fetched asynchronously; the app never blocks on API response
+- Type-safe: full TypeScript across all layers
+
+## Design System Highlights
+
+**40+ components including:**
+- `TransactionCard` — swipeable, with state variants (pending, confirmed, flagged)
+- `NudgeBanner` — contextual suggestion with dismiss and action states
+- `BudgetRing` — circular progress with animated fill
+- `CategoryChip` — single-tap selection with animated active state
+- `SpendingChart` — 30-day view with bar + trend overlay
+- `BottomSheet` — gesture-driven, with snap points and backdrop
+
+Each component was built mobile-first with haptic feedback hooks and `prefers-reduced-motion` support.
+
+## Example: The Nudge System
+
+Here's how the core nudge mechanic works end-to-end:
+
+1. User spends ₹400 on dinner (Tuesday)
+2. SQLite logs the transaction
+3. Background job runs a weekly pattern analysis
+4. Gemini compares this week's dining pace to 4-week average
+5. If pace is 30%+ above average with 4+ days remaining in week:
+   - `NudgeBanner` surfaces on the home screen Thursday morning
+   - Copy: "Your dining this week is moving faster than usual. You have ₹620 left. The weekend's ahead."
+   - Action: "View budget" or dismiss
+6. No alarm. No red number. Just a trusted companion, checking in.
+
+## Outcome
+
+**Design:** 22 high-fidelity screens, 40+ component library, 3 complete user flows  
+**Engineering:** Working React Native application with local SQLite persistence  
+**AI integration:** Gemini-powered categorization with privacy-preserving API calls  
+**Links:** [Behance Case Study](https://www.behance.net/gallery/247562999/Flow-Wise-Case-Study) · [GitHub Repository](https://github.com/Anubhx/flow-wise)
+
+## Reflection
+
+**What FlowWise taught me:**
+
+Trust is built through predictability. Motion is context. An interface becomes trustworthy not when it looks beautiful, but when it behaves consistently — when the user can predict what will happen before they tap.
+
+The most interesting design challenge wasn't visual. It was deciding *when* to surface information. AI assistance amplifies that question: now that we can surface insights at any moment, the skill becomes knowing which moments to be quiet.
+
+**What I'd improve:**
+
+- Multi-device sync (opt-in, encrypted) for users who want it
+- Spend analysis ML model trained on-device (eliminate even categorization API calls)
+- Collaborative budgeting for couples/flatmates
+- Apple Watch / Wear OS companion for quick expense entry
+- Accessibility audit — the chart components need screen reader improvements
+1. HERO
+Title:
+FlowWise —
+A finance app that nudges instead of judges.
+Role: Product Designer + Frontend Engineer (sole designer and developer)
+Duration: 6 weeks (Design: 2 weeks · Build: 4 weeks)
+Tools: Figma · HTML/CSS · React Native · Expo
+Tech Stack: React Native · Expo Router · SQLite · Zustand · Gemini 2.5 Flash · Clerk Auth · FastAPI · EAS Build
+WHY THIS MATTERED
+
+I've always found personal finance apps frustrating — not because they lack data, but because they make you feel bad about yourself. They either spit out a generic pie chart and call it analysis, or they demand your live bank credentials and make you feel surveilled.
+The real problem isn't a missing feature. It's the emotional relationship young Indian professionals have with their money. People earning their first real salary — moving to Bengaluru, paying rent, sending money home, trying to save — they're not financially illiterate. They're financially unconfident.
+Unconfidence isn't fixed by better charts. It's fixed by a mirror that doesn't judge. That's what FlowWise is. Not a budgeting tool. A weekly financial relationship.
+
+3. CHALLENGES
+Privacy
+
+Every existing "smart" finance solution required either handing over bank login credentials or manually entering every transaction. Both are broken. Credential sharing is a security nightmare. Manual entry is so much work that users abandon it within a week. FlowWise solves this by being fully offline-first — your financial data never leaves your device. No cloud sync. No third-party access. The trade-off is deliberate: privacy over convenience.
+
+Behaviour
+
+The core user research insight: people don't avoid finance apps because they lack discipline. They avoid them because opening the app confirms anxiety. The design challenge was making financial awareness feel like checking something you want to see — not something you dread. Every micro-decision (plain language status labels, the 5-second expense flow, the skip-friendly onboarding) was aimed at reducing the emotional cost of engagement.
+
+AI
+
+Gemini 2.5 Flash is a thinking model. In early builds, the thinking tokens consumed the entire output budget before a single word of actual response was written — the model would return MAX_TOKENS after generating 8 tokens of real content. The fix required disabling thinking mode (thinkingBudget: 0) for simple nudge generation tasks, and setting responseMimeType: application/json to prevent markdown-wrapped responses. AI integration taught me that model behaviour in production differs significantly from API documentation assumptions.
+
+Trust
+
+A finance app that looks generic triggers the "is this safe?" question immediately. The dark OLED-safe theme, the semantic colour system (mint always means positive, coral always means danger), the Clerk-backed authentication, and the plain-language copy were all deliberate trust signals. Users should feel like FlowWise was built by someone who uses it — not by a bank.
+
+
+4. DESIGN PRINCIPLES
+Principle 1: Guidance over guilt
+
+Finance apps that show you red numbers and negative percentages are optimised for accuracy, not behaviour change. FlowWise replaces raw metrics with contextual verdicts. Not "₹14,000 spent." Instead: "On track · ₹6,000 left." The colour does the emotional work before the user reads a word.
+
+Principle 2: Privacy by default
+
+All data lives in SQLite on the device. No cloud sync in v1. Bank linking is optional and skippable. The onboarding never demands more than a name. Privacy is the baseline — not a premium feature users have to opt into.
+
+Principle 3: Motion builds trust
+
+Micro-interactions signal that the interface is alive and responsive. The blinking cursor on the numpad, the progress bar that animates on load, the success screen's scale-in check icon — each one is a small confirmation that the action registered. Haptic feedback on expense success makes the interaction feel physical and real. Motion isn't decoration. It's the handshake between user action and system response.
+
+Principle 4: Ritual over feature
+
+The Money Mood Score is not a data visualisation. It's a Sunday ritual. The check-in takes 30 seconds, appears passively (never as a push notification demand), and respects user autonomy. Behaviour change happens through repeated small reflections, not through better dashboards.
+
+Principle 5: Speed is a retention strategy
+
+The add expense flow takes under 5 seconds. This wasn't a nice-to-have — it was the primary product requirement. A user who logs expenses 10 times a day will interact with this flow more than any other screen combined. Every half-second of friction here multiplies across hundreds of monthly interactions. The custom numpad removes the iOS keyboard layout switch. The optional note field reduces form anxiety. Default date is today (covers 90% of use cases). Speed is care.
+
+5. DESIGN SYSTEM
+Colors — semantic, not decorative:
+TokenHexRoleMint#2AFFD6Primary action · Income · Success · CTAAmber#FFB547Caution · Budget alerts · In-progressCoral#FF6B6BDanger · Expense · Delete · Over budgetBlue#5B9BFFInformation · Goals · InsightsPurple#A78BFFMoney Mood · Premium · Special statesBG-00#0D0F14Base background (OLED safe)BG-01#161920Card surfacesBG-02#1E222CInput backgrounds
+Typography:
+
+Syne Bold/ExtraBold — all headings, numbers, financial figures. Geometric, authoritative, makes ₹70,000 look important.
+DM Sans Regular/Medium — all body text. Optimised for small screen sizes, generous x-height, warm and approachable.
+Scale: 36px display → 28 → 22 → 18 → 15 → 14 → 13 → 11 → 10px label
+
+Spacing — 4pt base grid:
+All spacing values are multiples of 4. Screen horizontal padding: 20px. Card padding: 18px. Section gaps: 24px. Component gaps: 12px. Never a one-off pixel value.
+Border radius:
+Tags: 4px · Inputs: 12px · Chips: 14px · Buttons: 16px · Cards: 20px · Hero cards: 24px
+Components built:
+Custom SVG tab bar · Balance card · Budget indicator · Category chips · Transaction rows · Goal progress cards · Donut chart · Mood score circle · Day strip · Weekly check-in widget · Toast notifications · Empty states · Bottom sheet warning modal 
+
+6. ARCHITECTURE
+Why React Native + Expo:
+Cross-platform from a single codebase. Expo's managed workflow handles camera, notifications, fonts, and SQLite without native configuration. Expo Go enables live testing on real devices without building. The developer experience is fast enough to maintain design-build feedback loops within the same day.
+Why SQLite (expo-sqlite):
+Financial data is deeply personal. Keeping it on-device eliminates the attack surface entirely — there is no server to breach, no database to leak, no third party with access. SQLite also enables full offline functionality, which matters when the user is checking their balance on the metro with no signal. All monetary values are stored in paise (₹1 = 100 paise) to avoid floating-point precision errors in financial calculations.
+Why Gemini 2.5 Flash:
+Free tier with 60 requests/minute. Fast enough for real-time nudge generation. The critical insight from building this: Gemini 2.5 Flash is a thinking model that burns 400–500 "thinking tokens" before generating visible output. Setting thinkingBudget: 0 disables internal chain-of-thought for simple tasks, and responseMimeType: application/json forces clean JSON responses without markdown wrapping. These two flags reduced response errors from frequent to zero.
+Why Zustand over Redux:
+Redux requires 6 files to manage 3 state values. Zustand requires 15 lines. For a solo developer maintaining both design and code, cognitive overhead matters. Zustand with AsyncStorage persistence gives all the functionality of Redux with none of the boilerplate.
+Why Clerk for auth:
+First-class Expo SDK, free tier at 10,000 MAU, handles token refresh and secure storage automatically. The alternative (building custom JWT auth) would have consumed a week that should have been spent on UI quality.
+
+
+7. KEY FLOWS
+Expense Entry — the 5-second core loop:
+
+
+Home screen → tap "Add Expense" chip
+Custom numpad opens immediately (no keyboard switch)
+Enter amount (₹340)
+Tap category chip horizontally (Food selected, mint highlight)
+Optional: add note "CCD"
+Tap "Add Expense" — haptic feedback fires
+Success screen: ✓ animation + "₹340 logged under Food" + budget impact bar + AI insight nudge
+"Back to Home" or "Add Another"
+
+
+AI Nudges — Gemini-powered weekly insights:
+
+
+Insights tab opens
+Money Mood Score card loads (72/100, blue circle)
+7-day emoji strip shows Mon–Sun with colour-coded mood dots
+"Smart Nudges" section below: 3 Gemini-generated cards
+
+Example: "Weekend food spend was ₹2,100 — 3× your daily average. Set a weekend limit?"
+Example: "Your Goa goal is on track to hit 10 days early at this pace."
+
+
+Weekly check-in widget at bottom: 4 emoji options → submit → score updates
+
+
+Budget Health — immediate context at a glance:
+
+
+Home screen balance card: total balance + income + spent + saved in one view
+Budget indicator: progress bar + "On track · ₹9,473 left" in plain English
+Amber colour transition at 75% — pre-cognitive warning before user reads text
+Coral at 100% — danger signal, triggers push notification
+Add expense flow: if expense would push budget to 80%+, bottom sheet warning appears before confirming
+
+8. MOTION
+Category selection:
+
+When a category chip is tapped, it scales to 0.95 → 1.05 → 1.0 over 150ms with a background fill transition from #1E222C to rgba(42,255,214,0.10) and border colour shift to rgba(42,255,214,0.22). The visual state change happens before the finger lifts — immediate confirmation, no latency in perception.
+
+Nudge reveal:
+
+Gemini insight cards enter with a staggered translateY(20px) → 0 animation, each card delayed by 80ms from the previous. This gives the impression of the insights "arriving" one by one rather than snapping into place. Duration: 320ms ease-out per card.
+
+Swipe transitions:
+
+Screen transitions use Expo Router's default slide animation with backgroundColor: '#0D0F14' on the root Stack — this prevents the white flash that occurs between dark screens in React Navigation's default config. The result is a smooth dark-to-dark transition that feels native iOS.
+
+Progress bar fill:
+
+On first load of home screen, the budget progress bar animates from 0 to actual percentage over 600ms ease-in-out. This draws the eye to the budget indicator and gives users time to process the percentage before the bar finishes moving — the animation itself communicates "something is happening here, pay attention."
+
+Success haptic:
+
+On expense confirmation, Haptics.notificationAsync(NotificationFeedbackType.Success) fires before the screen transition. The physical feedback closes the interaction loop in the body, not just the eyes. Users described this in informal testing as making the app feel "real" compared to other finance apps.
+
+9. TRADE-OFFS
+Why offline-first?
+
+The tempting architecture is cloud-first — sync everything to a server, access from any device, share data across sessions. I deliberately rejected it for v1. The reason is trust. A young professional handing their financial data to a new app they've never heard of is a significant ask. Every server introduces a breach surface. Every sync requires explaining where data lives. Offline-first removes the question entirely. "Your data never leaves your phone" is a sentence that builds more user confidence than any security certification badge.
+The technical trade-off: data is lost if the phone is lost, and there's no cross-device access. The product trade-off: zero infrastructure cost, zero data liability, and a trust proposition that differentiates FlowWise from every cloud-connected competitor.
+
+Why no real-time bank sync?
+
+Plaid (the standard for bank API integration) costs $500+/month at scale and requires compliance overhead inappropriate for a v1 product. More importantly, it requires users to hand over bank login credentials to a third party — which is the exact privacy violation FlowWise was designed to avoid. The v1 answer is manual entry, which sounds worse but is actually better in one important way: it creates intentionality. Every transaction that gets logged is a conscious act. Mindfulness through friction.
+V2 roadmap: CSV import from bank statements (no credentials, no third party) and UPI SMS parsing (with explicit user permission). Both preserve the privacy-first position.
+
+Why Gemini over OpenAI?
+
+Cost. OpenAI GPT-4o at production scale is $0.005 per 1K tokens. For a free app with daily AI nudge generation per user, that compounds quickly. Gemini 2.5 Flash free tier is 60 requests/minute with generous limits — sufficient for a portfolio app and early user base. The engineering cost was higher (discovering the thinking token issue, implementing the right generation config) but the operational cost is ₹0.
+
+
+10. OUTCOMES & METRICS
+What was validated:
+
+✓ The emotional thesis — The Money Mood Score resonated immediately. Every person who saw the weekly check-in said "I'd actually do this" — which is a stronger response than any tracker or chart received.
+✓ The 5-second expense flow — Informal user testing confirmed the numpad UX beats keyboard entry for speed. No one asked for more steps. Several people asked for fewer.
+✓ The dark theme — Not a single person asked for light mode during testing. Several specifically said it felt "premium" and "private" — which maps exactly to the design intent.
+✓ Offline-first trust — When told "your data never leaves your phone," every user's response was visibly positive. This is the right bet for this audience.
+
+Metrics (personal project, not production scale):
+
+
+14 screens designed and shipped
+460 LinkedIn impressions within 11 hours of posting
+Senior Developer from Capgemini asked for setup documentation (organic technical interest)
+Gemini error rate: 0 after implementing thinkingBudget:0 and responseMimeType fix
+Home screen load: < 1 second on device
+Monthly infrastructure cost: ₹0
+
+
+What I'd validate next:
+
+
+Whether the weekly check-in frequency is right (daily micro check-in might work better for power users)
+Whether the Money Mood Score calculation weights match how users actually perceive their financial weeks
+Whether 4 tabs is the right split (Goals and Spend might merge for users who only use one)
+Whether empty states are compelling enough to convert new users into active trackers
+
+
+
+11. REFLECTION
+
+FlowWise taught me that the best product decisions aren't technical — they're philosophical. Every meaningful choice (offline-first, no judgemental language, the Money Mood ritual, the 5-second expense flow) came from answering one question first: what does this user feel when they open a finance app? The answer was anxiety. Every design decision was then about reducing that feeling systematically.
+I learned that constraint produces clarity. Building with a ₹0 budget forced creative solutions — Gemini's free tier instead of OpenAI, SQLite instead of a hosted database, EAS Build's free tier instead of expensive CI. Each constraint became a product feature (free to run, offline-first, no data liability).
+I learned that shipping beats perfecting. FlowWise v1 has limitations — no bank sync, no recurring expense detection, no shared budgets. But it exists, it runs on real phones, and real people have used it. That's worth more than a perfect Figma file that never shipped.
+Most importantly: I learned that UI is the product. Not the code behind it. A user doesn't experience your architecture — they experience the 120ms animation on a button press, the plain-language verdict on a budget bar, the emoji on a Monday that tells them they did okay. Those are the moments that determine whether someone comes back tomorrow. Designing them well is the whole job.
+
