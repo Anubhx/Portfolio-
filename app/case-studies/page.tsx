@@ -15,7 +15,7 @@ const caseStudies = [
     description:
       "Redesigning the coordination layer behind shared food experiences. Office teams don't struggle with ordering food. They struggle with organizing people.",
     image: "/Zomato.png",
-    link: "/case-studies/zomato",
+    link: "/case-studies/zomato-group-ordering",
   },
   {
     id: "flowwise",
