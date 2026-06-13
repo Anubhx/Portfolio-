@@ -5,13 +5,11 @@ import Link from "next/link";
 
 const EASE_EXPO = [0.16, 1, 0.3, 1];
 
-const heroWords = ["I turn messy", "problems into products", "people actually use."];
-
 const proofPoints = [
-  "1+ Years Industry Experience",
-  "22+ Screens Designed",
-  "Research → Production",
-  "WCAG 2.1 AA Mindset",
+  { value: "1+", label: "Years Industry" },
+  { value: "22+", label: "Screens Designed" },
+  { value: "Research", label: "→ Production" },
+  { value: "WCAG", label: "2.1 AA Mindset" },
 ];
 
 export default function Hero() {
@@ -19,35 +17,35 @@ export default function Hero() {
     <section
       aria-label="Introduction"
       style={{
-        paddingTop: "160px",
-        paddingBottom: "120px",
+        paddingTop: "128px",
+        paddingBottom: "80px",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Subtle grid overlay */}
+      {/* Engineering grid — discovered, not noticed */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           backgroundImage: `
-            linear-gradient(var(--border) 1px, transparent 1px),
-            linear-gradient(90deg, var(--border) 1px, transparent 1px)
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
           `,
-          backgroundSize: "80px 80px",
-          opacity: 0.18,
+          backgroundSize: "72px 72px",
+          opacity: 1,
           pointerEvents: "none",
         }}
       />
-      {/* Gradient mask over grid */}
+      {/* Radial vignette over grid */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(ellipse 70% 60% at 50% 40%, transparent 40%, var(--bg) 100%)",
+            "radial-gradient(ellipse 80% 65% at 40% 50%, transparent 30%, var(--bg) 100%)",
           pointerEvents: "none",
         }}
       />
@@ -55,94 +53,98 @@ export default function Hero() {
       <div className="container" style={{ position: "relative" }}>
         {/* Role label */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE_EXPO }}
-          style={{ marginBottom: "32px" }}
+          transition={{ duration: 0.5, ease: EASE_EXPO }}
+          style={{ marginBottom: "24px" }}
         >
           <span className="text-label">
             UX Designer · Design Engineer · Agentic Builder
           </span>
         </motion.div>
 
-        {/* Headline */}
+        {/* Headline — 57% width, tighter scale */}
         <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(48px, 7.5vw, 120px)",
+            fontSize: "clamp(48px, 8vw, 130px)",
             fontWeight: 300,
-            lineHeight: 1.0,
-            letterSpacing: "-0.025em",
+            lineHeight: 0.9,
+            letterSpacing: "-0.03em",
             color: "var(--heading)",
-            marginBottom: "40px",
-            maxWidth: "900px",
+            marginBottom: "28px",
+            maxWidth: "1400px",
           }}
+          className="hero-headline"
         >
-          {heroWords.map((line, i) => (
-            <motion.span
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.1 + i * 0.12,
-                ease: EASE_EXPO,
-              }}
-              style={{ display: "block" }}
-            >
-              {i === 1 ? (
-                <>
-                  <span style={{ color: "var(--heading)" }}>problems into </span>
-                  <em
-                    style={{
-                      fontStyle: "italic",
-                      color: "var(--accent)",
-                    }}
-                  >
-                    products
-                  </em>
-                </>
-              ) : (
-                line
-              )}
-            </motion.span>
-          ))}
+          {["I turn messy", "problems into products", "people actually use."].map(
+            (line, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.7,
+                  delay: 0.08 + i * 0.1,
+                  ease: EASE_EXPO,
+                }}
+                style={{ display: "block" }}
+              >
+                {i === 1 ? (
+                  <>
+                    <span style={{ color: "var(--heading)" }}>problems into </span>
+                    <em
+                      style={{
+                        fontStyle: "italic",
+                        color: "var(--accent)",
+                      }}
+                    >
+                      products
+                    </em>
+                  </>
+                ) : (
+                  line
+                )}
+              </motion.span>
+            )
+          )}
         </h1>
 
         {/* Supporting copy */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5, ease: EASE_EXPO }}
-          style={{ marginBottom: "48px", maxWidth: "520px" }}
+          transition={{ duration: 0.6, delay: 0.42, ease: EASE_EXPO }}
+          style={{ marginBottom: "36px", maxWidth: "420px" }}
         >
           <p className="text-body-lg">
             Designing with evidence. Shipping with code.
             <br />
-            <span style={{ color: "var(--muted)" }}>
+            <span style={{ color: "var(--muted)", fontSize: "14px" }}>
               Currently at{" "}
               <strong style={{ color: "var(--muted-2)", fontWeight: 500 }}>
                 LTI Mindtree
               </strong>
-              . Accessibility-minded. Systems thinker. AI-enabled.
+              . Accessibility-minded. AI-enabled.
             </span>
           </p>
         </motion.div>
 
         {/* CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.65, ease: EASE_EXPO }}
+          transition={{ duration: 0.6, delay: 0.54, ease: EASE_EXPO }}
           style={{
             display: "flex",
-            gap: "16px",
+            gap: "12px",
             flexWrap: "wrap",
-            marginBottom: "80px",
+            marginBottom: "56px",
+            alignItems: "center",
           }}
         >
           <Link href="/case-studies" className="btn btn-primary">
-            Explore Case Studies →
+            Explore Work →
           </Link>
           <a
             href="/resume.pdf"
@@ -154,43 +156,68 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* Proof points */}
+        {/* Proof points — micro metrics */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8, ease: EASE_EXPO }}
+          transition={{ duration: 0.7, delay: 0.72, ease: EASE_EXPO }}
           style={{
             display: "flex",
-            gap: "0",
             flexWrap: "wrap",
             borderTop: "1px solid var(--border)",
-            paddingTop: "32px",
+            paddingTop: "24px",
           }}
         >
           {proofPoints.map((point, i) => (
             <div
-              key={point}
+              key={point.value}
               style={{
-                padding: "0 32px 0 0",
-                marginRight: "32px",
-                borderRight: i < proofPoints.length - 1 ? "1px solid var(--border)" : "none",
+                paddingRight: "28px",
+                marginRight: "28px",
+                borderRight:
+                  i < proofPoints.length - 1
+                    ? "1px solid var(--border)"
+                    : "none",
                 marginBottom: "8px",
               }}
             >
               <span
                 style={{
-                  fontSize: "12px",
-                  fontWeight: 500,
-                  letterSpacing: "0.04em",
-                  color: "var(--muted)",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  letterSpacing: "0.01em",
+                  color: "var(--heading)",
+                  display: "block",
+                  lineHeight: 1.2,
                 }}
               >
-                {point}
+                {point.value}
+              </span>
+              <span
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 400,
+                  letterSpacing: "0.04em",
+                  color: "var(--muted)",
+                  display: "block",
+                  marginTop: "2px",
+                }}
+              >
+                {point.label}
               </span>
             </div>
           ))}
         </motion.div>
       </div>
+
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .hero-headline {
+            max-width: 100% !important;
+            font-size: clamp(36px, 10vw, 60px) !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

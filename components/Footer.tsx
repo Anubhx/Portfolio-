@@ -15,29 +15,29 @@ export default function Footer() {
       role="contentinfo"
       style={{
         borderTop: "1px solid var(--border)",
-        padding: "80px 0 48px",
+        padding: "64px 0 40px",
       }}
     >
       <div className="container">
         {/* CTA */}
         <div
           style={{
-            marginBottom: "64px",
+            marginBottom: "56px",
             maxWidth: "600px",
           }}
         >
-          <p className="text-label" style={{ marginBottom: "20px" }}>
+          <p className="section-number" style={{ marginBottom: "16px" }}>
             Let&apos;s talk
           </p>
           <h2
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(36px, 5vw, 64px)",
+              fontSize: "clamp(32px, 4.5vw, 56px)",
               fontWeight: 300,
               color: "var(--heading)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
-              marginBottom: "24px",
+              marginBottom: "20px",
             }}
           >
             Let&apos;s build something{" "}
@@ -45,15 +45,25 @@ export default function Footer() {
               meaningful.
             </em>
           </h2>
-          <p className="text-body-lg" style={{ marginBottom: "32px" }}>
+          <p className="text-body-lg" style={{ marginBottom: "32px", fontSize: "15px" }}>
             Open to product design and design engineering opportunities.
           </p>
-          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <a
               href="mailto:anubhav0427@gmail.com"
               className="btn btn-primary"
               aria-label="Send Anubhav an email"
             >
+              <span
+                aria-hidden="true"
+                style={{
+                  width: "5px",
+                  height: "5px",
+                  borderRadius: "50%",
+                  background: "white",
+                  flexShrink: 0,
+                }}
+              />
               anubhav0427@gmail.com →
             </a>
             <a
@@ -68,7 +78,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="divider" style={{ marginBottom: "32px" }} />
+        <div className="divider" style={{ marginBottom: "24px" }} />
         <div
           style={{
             display: "flex",
@@ -78,13 +88,13 @@ export default function Footer() {
             gap: "16px",
           }}
         >
-          <p className="text-sm" style={{ color: "var(--muted)" }}>
+          <p className="text-sm" style={{ color: "var(--muted)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
             © {new Date().getFullYear()} Anubhav Raj. Designed & built with
             precision.
           </p>
           <nav
             aria-label="Social links"
-            style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}
+            style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}
           >
             {socialLinks.map((link) => (
               <a
@@ -93,7 +103,10 @@ export default function Footer() {
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
                 style={{
-                  fontSize: "13px",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
                   color: "var(--muted)",
                   textDecoration: "none",
                   transition: "color 0.2s",

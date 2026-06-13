@@ -83,7 +83,7 @@ export default function SelectedWork() {
         style={{ borderTop: "1px solid var(--border)" }}
       >
         <div className="container">
-          <FadeUp style={{ marginBottom: "64px" }}>
+          <FadeUp style={{ marginBottom: "48px" }}>
             <div
               style={{
                 display: "flex",
@@ -94,7 +94,7 @@ export default function SelectedWork() {
               }}
             >
               <div>
-                <p className="section-number" style={{ marginBottom: "20px" }}>
+                <p className="section-number" style={{ marginBottom: "16px" }}>
                   Featured Work
                 </p>
                 <h2 id="featured-work-heading" className="text-h2">
@@ -104,7 +104,7 @@ export default function SelectedWork() {
               <Link
                 href="/case-studies"
                 style={{
-                  fontSize: "14px",
+                  fontSize: "13px",
                   fontWeight: 500,
                   color: "var(--muted-2)",
                   textDecoration: "none",
@@ -117,8 +117,8 @@ export default function SelectedWork() {
             </div>
           </FadeUp>
 
-          <StaggerChildren staggerDelay={0.12}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          <StaggerChildren staggerDelay={0.1}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
               {featuredWork.map((work, i) => (
                 <motion.div key={work.slug} variants={staggerItem}>
                   <Link
@@ -129,26 +129,28 @@ export default function SelectedWork() {
                     <article
                       className="card"
                       style={{
-                        padding: "48px",
+                        padding: "32px",
                         display: "grid",
-                        gridTemplateColumns: i % 2 === 0 ? "1fr 240px" : "240px 1fr",
-                        gap: "48px",
+                        gridTemplateColumns: i % 2 === 0 ? "1fr 220px" : "220px 1fr",
+                        gap: "40px",
                         alignItems: "center",
                         cursor: "pointer",
                         transition:
-                          "transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.3s",
+                          "transform 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.2s, box-shadow 0.2s",
                       }}
                       onMouseEnter={(e) => {
                         (e.currentTarget as HTMLElement).style.transform =
-                          "translateY(-4px)";
+                          "translateY(-2px)";
                         (e.currentTarget as HTMLElement).style.borderColor =
                           "var(--border-2)";
+                        (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 30px rgba(0,0,0,0.4)";
                       }}
                       onMouseLeave={(e) => {
                         (e.currentTarget as HTMLElement).style.transform =
                           "translateY(0)";
                         (e.currentTarget as HTMLElement).style.borderColor =
                           "var(--border)";
+                        (e.currentTarget as HTMLElement).style.boxShadow = "none";
                       }}
                       className="work-card"
                     >
@@ -158,15 +160,15 @@ export default function SelectedWork() {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            gap: "16px",
-                            marginBottom: "20px",
+                            gap: "12px",
+                            marginBottom: "16px",
                           }}
                         >
                           <span
                             style={{
-                              fontSize: "11px",
+                              fontSize: "10px",
                               fontWeight: 600,
-                              letterSpacing: "0.1em",
+                              letterSpacing: "0.12em",
                               textTransform: "uppercase",
                               color: "var(--muted)",
                             }}
@@ -176,13 +178,13 @@ export default function SelectedWork() {
                           <span
                             style={{
                               width: "1px",
-                              height: "12px",
+                              height: "10px",
                               background: "var(--border-2)",
                             }}
                           />
                           <span
                             style={{
-                              fontSize: "12px",
+                              fontSize: "11px",
                               color: "var(--muted)",
                             }}
                           >
@@ -193,23 +195,23 @@ export default function SelectedWork() {
                         <h3
                           style={{
                             fontFamily: "var(--font-display)",
-                            fontSize: "clamp(28px, 3vw, 40px)",
+                            fontSize: "clamp(24px, 2.8vw, 36px)",
                             fontWeight: 300,
                             color: "var(--heading)",
                             letterSpacing: "-0.02em",
                             lineHeight: 1.1,
-                            marginBottom: "8px",
+                            marginBottom: "6px",
                           }}
                         >
                           {work.title}
                         </h3>
                         <p
                           style={{
-                            fontSize: "14px",
+                            fontSize: "13px",
                             color: "var(--accent)",
                             fontStyle: "italic",
                             fontFamily: "var(--font-display)",
-                            marginBottom: "20px",
+                            marginBottom: "16px",
                           }}
                         >
                           {work.subtitle}
@@ -218,8 +220,9 @@ export default function SelectedWork() {
                           className="text-body"
                           style={{
                             color: "var(--muted-2)",
-                            marginBottom: "28px",
+                            marginBottom: "24px",
                             maxWidth: "480px",
+                            fontSize: "14px",
                           }}
                         >
                           {work.description}
@@ -229,8 +232,8 @@ export default function SelectedWork() {
                           style={{
                             display: "flex",
                             flexWrap: "wrap",
-                            gap: "8px",
-                            marginBottom: "28px",
+                            gap: "6px",
+                            marginBottom: "24px",
                           }}
                         >
                           {work.tags.map((tag) => (
@@ -244,17 +247,17 @@ export default function SelectedWork() {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            gap: "20px",
+                            gap: "16px",
                           }}
                         >
                           <span
                             style={{
-                              fontSize: "14px",
+                              fontSize: "13px",
                               fontWeight: 500,
                               color: "var(--heading)",
                               display: "flex",
                               alignItems: "center",
-                              gap: "6px",
+                              gap: "4px",
                             }}
                           >
                             Read Case Study
@@ -276,8 +279,8 @@ export default function SelectedWork() {
                       <div
                         style={{
                           order: i % 2 === 0 ? 2 : 1,
-                          height: "260px",
-                          borderRadius: "var(--radius)",
+                          height: "220px",
+                          borderRadius: "var(--radius-sm)",
                           border: "1px solid var(--border)",
                           position: "relative",
                           overflow: "hidden",
@@ -289,7 +292,7 @@ export default function SelectedWork() {
                           alt={`${work.title} — case study preview`}
                           fill
                           style={{ objectFit: "cover", objectPosition: "top center" }}
-                          sizes="(max-width: 768px) 100vw, 280px"
+                          sizes="(max-width: 768px) 100vw, 240px"
                           priority={i === 0}
                         />
                         {/* Subtle overlay to keep image from overpowering */}
@@ -298,7 +301,7 @@ export default function SelectedWork() {
                           style={{
                             position: "absolute",
                             inset: 0,
-                            background: "rgba(8,8,8,0.15)",
+                            background: "rgba(8,8,8,0.1)",
                           }}
                         />
                       </div>
@@ -317,13 +320,11 @@ export default function SelectedWork() {
         className="section"
         style={{
           borderTop: "1px solid var(--border)",
-          paddingTop: "80px",
-          paddingBottom: "80px",
         }}
       >
         <div className="container">
-          <FadeUp style={{ marginBottom: "48px" }}>
-            <p className="section-number" style={{ marginBottom: "20px" }}>
+          <FadeUp style={{ marginBottom: "40px" }}>
+            <p className="section-number" style={{ marginBottom: "16px" }}>
               Selected Explorations
             </p>
             <h2 id="explorations-heading" className="text-h3" style={{ color: "var(--muted-2)" }}>
@@ -335,7 +336,7 @@ export default function SelectedWork() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
                 gap: "1px",
                 background: "var(--border)",
                 border: "1px solid var(--border)",
@@ -349,7 +350,7 @@ export default function SelectedWork() {
                   variants={staggerItem}
                   style={{
                     background: "var(--surface)",
-                    padding: "32px",
+                    padding: "24px",
                     transition: "background 0.2s",
                   }}
                   onMouseEnter={(e) => {
@@ -366,7 +367,7 @@ export default function SelectedWork() {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "flex-start",
-                      marginBottom: "16px",
+                      marginBottom: "12px",
                     }}
                   >
                     <span className="tag tag-accent" style={{ fontSize: "10px" }}>
@@ -374,7 +375,7 @@ export default function SelectedWork() {
                     </span>
                     <span
                       style={{
-                        fontSize: "12px",
+                        fontSize: "11px",
                         color: "var(--muted)",
                       }}
                     >
@@ -383,18 +384,18 @@ export default function SelectedWork() {
                   </div>
                   <h3
                     style={{
-                      fontSize: "18px",
+                      fontSize: "16px",
                       fontWeight: 600,
                       color: "var(--heading)",
                       letterSpacing: "-0.01em",
-                      marginBottom: "10px",
+                      marginBottom: "8px",
                     }}
                   >
                     {exp.title}
                   </h3>
                   <p
                     style={{
-                      fontSize: "14px",
+                      fontSize: "13px",
                       color: "var(--muted-2)",
                       lineHeight: 1.6,
                     }}

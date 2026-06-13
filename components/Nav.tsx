@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "/about", label: "About" },
-  { href: "/case-studies", label: "Case Studies" },
+  { href: "/case-studies", label: "Work" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -16,15 +16,12 @@ export default function Nav() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    const handleScroll = () => setScrolled(window.scrollY > 32);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -40,13 +37,13 @@ export default function Nav() {
           left: 0,
           right: 0,
           zIndex: 50,
-          height: "64px",
+          height: "80px",
           display: "flex",
           alignItems: "center",
-          transition: "background 0.4s, border-color 0.4s",
-          background: scrolled ? "rgba(8,8,8,0.92)" : "transparent",
-          backdropFilter: scrolled ? "blur(12px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
+          transition: "background 0.35s, border-color 0.35s",
+          background: scrolled ? "rgba(8,8,8,0.88)" : "transparent",
+          backdropFilter: scrolled ? "blur(16px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
           borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
         }}
       >
@@ -59,42 +56,67 @@ export default function Nav() {
             width: "100%",
           }}
         >
-          {/* Wordmark */}
-          <Link
-            href="/"
-            aria-label="Anubhav Raj — Home"
-            style={{
-              textDecoration: "none",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1px",
-            }}
-          >
-            <span
+          {/* Wordmark & Phone Block */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <Link
+              href="/"
+              aria-label="Anubhav Raj — Home"
               style={{
-                fontFamily: "var(--font-sans)",
-                fontWeight: 700,
-                fontSize: "15px",
-                letterSpacing: "-0.03em",
-                color: "var(--heading)",
-                lineHeight: 1,
+                textDecoration: "none",
+                display: "flex",
+                flexDirection: "column",
+                gap: "2px",
               }}
             >
-              Anubhav Raj
-            </span>
-            <span
+              <span
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontWeight: 700,
+                  fontSize: "14px",
+                  letterSpacing: "0.05em",
+                  color: "var(--heading)",
+                  lineHeight: 1,
+                  textTransform: "uppercase"
+                }}
+              >
+                Anubhav RAJ
+              </span>
+            </Link>
+            <div
               style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "10px",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "var(--muted)",
-                lineHeight: 1,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: "6px",
+                padding: "6px 10px",
+                width: "fit-content",
               }}
             >
-              UX Designer · Design Engineer
-            </span>
-          </Link>
+              <span
+                style={{
+                  width: "6px",
+                  height: "6px",
+                  borderRadius: "50%",
+                  background: "#10b981",
+                  boxShadow: "0 0 6px #10b981",
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "monospace",
+                  fontSize: "11px",
+                  fontWeight: 500,
+                  letterSpacing: "0.15em",
+                  color: "var(--muted-2)",
+                  lineHeight: 1,
+                }}
+              >
+                +91 6200107977
+              </span>
+            </div>
+          </div>
 
           {/* Desktop Nav */}
           <nav
@@ -102,28 +124,95 @@ export default function Nav() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "32px",
+              gap: "4px",
             }}
             className="hide-mobile"
           >
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`nav-link${pathname === link.href || pathname.startsWith(link.href + "/") ? " active" : ""}`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: isActive ? "var(--heading)" : "var(--muted)",
+                    textDecoration: "none",
+                    padding: "6px 14px",
+                    borderRadius: "var(--radius-sm)",
+                    transition: "color 0.2s, background 0.2s",
+                    background: isActive ? "rgba(255,255,255,0.04)" : "transparent",
+                    position: "relative",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) (e.currentTarget as HTMLElement).style.color = "var(--heading)";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) (e.currentTarget as HTMLElement).style.color = "var(--muted)";
+                  }}
+                >
+                  {link.label}
+                  {isActive && (
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        position: "absolute",
+                        bottom: "4px",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        width: "3px",
+                        height: "3px",
+                        borderRadius: "50%",
+                        background: "var(--accent)",
+                      }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
+
+            {/* Separator */}
+            <span
+              aria-hidden="true"
+              style={{
+                width: "1px",
+                height: "16px",
+                background: "var(--border-2)",
+                margin: "0 10px",
+              }}
+            />
+
+            {/* Resume download — outlined bracket button */}
             <a
               href="/resume.pdf"
               download
-              className="btn btn-ghost"
-              style={{ padding: "8px 16px", fontSize: "13px" }}
               aria-label="Download Anubhav's resume"
+              className="btn-nav"
             >
               Resume ↓
             </a>
+
+            {/* Contact CTA — accent outlined */}
+            <Link
+              href="/contact"
+              className="btn-nav btn-nav-accent"
+              style={{ marginLeft: "4px" }}
+            >
+              <span
+                aria-hidden="true"
+                style={{
+                  width: "5px",
+                  height: "5px",
+                  borderRadius: "50%",
+                  background: "var(--accent)",
+                  flexShrink: 0,
+                }}
+              />
+              Hire Me
+            </Link>
           </nav>
 
           {/* Mobile Hamburger */}
@@ -146,30 +235,30 @@ export default function Nav() {
             <span
               style={{
                 display: "block",
-                width: "24px",
+                width: "22px",
                 height: "1px",
                 background: "var(--heading)",
-                transition: "transform 0.3s, opacity 0.3s",
+                transition: "transform 0.25s, opacity 0.25s",
                 transform: menuOpen ? "translateY(6px) rotate(45deg)" : "none",
               }}
             />
             <span
               style={{
                 display: "block",
-                width: "24px",
+                width: "22px",
                 height: "1px",
                 background: "var(--heading)",
                 opacity: menuOpen ? 0 : 1,
-                transition: "opacity 0.3s",
+                transition: "opacity 0.25s",
               }}
             />
             <span
               style={{
                 display: "block",
-                width: "24px",
+                width: "22px",
                 height: "1px",
                 background: "var(--heading)",
-                transition: "transform 0.3s",
+                transition: "transform 0.25s",
                 transform: menuOpen ? "translateY(-6px) rotate(-45deg)" : "none",
               }}
             />
@@ -187,13 +276,14 @@ export default function Nav() {
             position: "fixed",
             inset: 0,
             zIndex: 45,
-            background: "var(--bg)",
+            background: "rgba(8,8,8,0.98)",
+            backdropFilter: "blur(20px)",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "flex-start",
             padding: "0 40px",
-            gap: "40px",
+            gap: "32px",
           }}
         >
           {navLinks.map((link, i) => (
@@ -202,15 +292,15 @@ export default function Nav() {
               href={link.href}
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: "clamp(32px, 8vw, 48px)",
+                fontSize: "clamp(28px, 7vw, 44px)",
                 fontWeight: 700,
                 color: pathname === link.href ? "var(--accent)" : "var(--heading)",
                 textDecoration: "none",
                 letterSpacing: "-0.02em",
                 opacity: 0,
-                animationDelay: `${i * 0.08}s`,
-                animationName: "fadeUp",
-                animationDuration: "0.4s",
+                animationDelay: `${i * 0.07}s`,
+                animationName: "mobileNavFadeUp",
+                animationDuration: "0.35s",
                 animationFillMode: "forwards",
                 animationTimingFunction: "var(--ease-expo)",
               }}
@@ -223,7 +313,7 @@ export default function Nav() {
             download
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "16px",
+              fontSize: "14px",
               fontWeight: 500,
               color: "var(--muted-2)",
               textDecoration: "none",
@@ -238,8 +328,8 @@ export default function Nav() {
       )}
 
       <style jsx global>{`
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
+        @keyframes mobileNavFadeUp {
+          from { opacity: 0; transform: translateY(16px); }
           to   { opacity: 1; transform: translateY(0); }
         }
         @media (max-width: 768px) {

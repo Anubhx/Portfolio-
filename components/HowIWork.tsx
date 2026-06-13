@@ -50,25 +50,25 @@ export default function HowIWork() {
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gap: "80px",
+            gap: "64px",
             alignItems: "start",
           }}
           className="how-i-work-grid"
         >
           {/* Left: Label + Headline */}
-          <div style={{ position: "sticky", top: "100px" }}>
+          <div style={{ position: "sticky", top: "112px" }}>
             <FadeUp>
-              <p className="section-number" style={{ marginBottom: "24px" }}>
+              <p className="section-number" style={{ marginBottom: "20px" }}>
                 Process
               </p>
               <h2
                 id="how-i-work-heading"
                 className="text-h2"
-                style={{ marginBottom: "24px" }}
+                style={{ marginBottom: "20px" }}
               >
                 How I work
               </h2>
-              <p className="text-body-lg" style={{ maxWidth: "380px" }}>
+              <p className="text-body-lg" style={{ maxWidth: "340px", color: "var(--muted-2)" }}>
                 From ambiguous brief to shipped product. Four disciplines. One
                 continuous loop.
               </p>
@@ -76,7 +76,7 @@ export default function HowIWork() {
           </div>
 
           {/* Right: Steps */}
-          <StaggerChildren staggerDelay={0.12}>
+          <StaggerChildren staggerDelay={0.08}>
             <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
               {processSteps.map((step, i) => (
                 <motion.div
@@ -85,8 +85,8 @@ export default function HowIWork() {
                   style={{
                     display: "grid",
                     gridTemplateColumns: "auto 1fr",
-                    gap: "24px",
-                    paddingBottom: "48px",
+                    gap: "20px",
+                    paddingBottom: "40px",
                     position: "relative",
                   }}
                 >
@@ -96,8 +96,8 @@ export default function HowIWork() {
                       aria-hidden="true"
                       style={{
                         position: "absolute",
-                        left: "19px",
-                        top: "44px",
+                        left: "15px",
+                        top: "40px",
                         bottom: "0",
                         width: "1px",
                         background:
@@ -109,15 +109,15 @@ export default function HowIWork() {
                   {/* Icon column */}
                   <div
                     style={{
-                      width: "40px",
-                      height: "40px",
+                      width: "32px",
+                      height: "32px",
                       borderRadius: "var(--radius-sm)",
                       border: "1px solid var(--border-2)",
                       background: "var(--surface)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "16px",
+                      fontSize: "14px",
                       color: "var(--accent)",
                       flexShrink: 0,
                     }}
@@ -131,13 +131,13 @@ export default function HowIWork() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "12px",
-                        marginBottom: "8px",
+                        gap: "10px",
+                        marginBottom: "6px",
                       }}
                     >
                       <span
                         style={{
-                          fontSize: "10px",
+                          fontSize: "11px",
                           fontWeight: 600,
                           letterSpacing: "0.14em",
                           textTransform: "uppercase",
@@ -150,7 +150,7 @@ export default function HowIWork() {
                         style={{
                           fontSize: "11px",
                           color: "var(--muted)",
-                          fontWeight: 400,
+                          fontWeight: 500,
                         }}
                       >
                         {step.number}
@@ -158,17 +158,17 @@ export default function HowIWork() {
                     </div>
                     <h3
                       style={{
-                        fontSize: "18px",
+                        fontSize: "16px",
                         fontWeight: 600,
                         color: "var(--heading)",
                         letterSpacing: "-0.01em",
-                        marginBottom: "10px",
+                        marginBottom: "8px",
                         lineHeight: 1.3,
                       }}
                     >
                       {step.title}
                     </h3>
-                    <p className="text-body" style={{ color: "var(--muted-2)" }}>
+                    <p className="text-body" style={{ color: "var(--muted-2)", fontSize: "14px" }}>
                       {step.description}
                     </p>
                   </div>
@@ -183,7 +183,7 @@ export default function HowIWork() {
         @media (max-width: 768px) {
           .how-i-work-grid {
             grid-template-columns: 1fr !important;
-            gap: 48px !important;
+            gap: 40px !important;
           }
         }
       `}</style>

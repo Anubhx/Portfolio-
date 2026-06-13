@@ -35,8 +35,8 @@ export default function DesignPhilosophy() {
       style={{ borderTop: "1px solid var(--border)" }}
     >
       <div className="container">
-        <FadeUp style={{ marginBottom: "64px", maxWidth: "600px" }}>
-          <p className="section-number" style={{ marginBottom: "20px" }}>
+        <FadeUp style={{ marginBottom: "48px", maxWidth: "600px" }}>
+          <p className="section-number" style={{ marginBottom: "16px" }}>
             Philosophy
           </p>
           <h2 id="philosophy-heading" className="text-h2">
@@ -54,7 +54,7 @@ export default function DesignPhilosophy() {
           </h2>
         </FadeUp>
 
-        <StaggerChildren staggerDelay={0.12}>
+        <StaggerChildren staggerDelay={0.1}>
           <div
             style={{
               display: "grid",
@@ -70,30 +70,31 @@ export default function DesignPhilosophy() {
                 style={{
                   background: "var(--surface)",
                   border: "1px solid var(--border)",
-                  borderRadius: "var(--radius)",
+                  borderRadius: "var(--radius-sm)",
                   padding: "32px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "16px",
-                  transition: "border-color 0.3s, transform 0.3s cubic-bezier(0.16,1,0.3,1)",
+                  gap: "12px",
+                  transition: "border-color 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s",
                 }}
                 whileHover={{
-                  y: -4,
+                  y: -2,
                   borderColor: "var(--border-2)" as unknown as number,
+                  boxShadow: "0 8px 30px rgba(0,0,0,0.3)" as unknown as number,
                 }}
               >
                 {/* Icon */}
                 <div
                   style={{
-                    width: "44px",
-                    height: "44px",
+                    width: "36px",
+                    height: "36px",
                     borderRadius: "var(--radius-sm)",
                     background: "var(--accent-subtle)",
                     border: "1px solid var(--accent-border)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "18px",
+                    fontSize: "16px",
                     color: "var(--accent)",
                   }}
                   aria-hidden="true"
@@ -102,12 +103,12 @@ export default function DesignPhilosophy() {
                 </div>
 
                 {/* Label */}
-                <p className="text-label">{pillar.label}</p>
+                <p className="text-label" style={{ marginTop: "4px" }}>{pillar.label}</p>
 
                 {/* Title */}
                 <h3
                   style={{
-                    fontSize: "18px",
+                    fontSize: "16px",
                     fontWeight: 600,
                     color: "var(--heading)",
                     letterSpacing: "-0.01em",
@@ -127,14 +128,14 @@ export default function DesignPhilosophy() {
         </StaggerChildren>
 
         {/* Quote */}
-        <FadeUp delay={0.3}>
+        <FadeUp delay={0.2}>
           <div
             style={{
-              marginTop: "64px",
-              padding: "48px",
+              marginTop: "48px",
+              padding: "40px",
               background: "var(--surface)",
               border: "1px solid var(--border)",
-              borderRadius: "var(--radius-lg)",
+              borderRadius: "var(--radius)",
               position: "relative",
               overflow: "hidden",
             }}
@@ -160,12 +161,12 @@ export default function DesignPhilosophy() {
               <p
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(22px, 2.5vw, 30px)",
+                  fontSize: "clamp(20px, 2.2vw, 28px)",
                   fontWeight: 300,
                   fontStyle: "italic",
                   color: "var(--heading)",
                   lineHeight: 1.45,
-                  marginBottom: "24px",
+                  marginBottom: "20px",
                 }}
               >
                 Great products are researched with empathy, designed with intent,
@@ -174,18 +175,18 @@ export default function DesignPhilosophy() {
               <cite
                 style={{
                   fontStyle: "normal",
-                  fontSize: "13px",
+                  fontSize: "12px",
                   color: "var(--muted)",
                   display: "flex",
                   alignItems: "center",
-                  gap: "12px",
+                  gap: "10px",
                 }}
               >
                 <span
                   aria-hidden="true"
                   style={{
                     display: "inline-block",
-                    width: "24px",
+                    width: "20px",
                     height: "1px",
                     background: "var(--muted)",
                   }}
