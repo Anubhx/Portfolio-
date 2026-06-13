@@ -13,12 +13,12 @@ import {
   MetricGrid,
   LessonsGrid,
   NextProject,
-} from "@/components/case-studies/NaviComponents";
+} from "@/components/case-studies/EditorialComponents";
 
 export default function FlowwiseCaseStudy() {
   return (
-    <article className="navi-case-study">
-      <div className="navi-container">
+    <article className="editorial-case-study">
+      <div className="editorial-container">
 
         {/* HERO */}
         <CaseStudyHero

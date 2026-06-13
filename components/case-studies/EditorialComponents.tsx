@@ -16,10 +16,10 @@ export function CaseStudyHero({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="navi-hero">
-      <h1 className="navi-hero-title">{title}</h1>
-      <p className="navi-hero-subtitle">{subtitle}</p>
-      <div className="navi-hero-divider" />
+    <div className="editorial-hero">
+      <h1 className="editorial-hero-title">{title}</h1>
+      <p className="editorial-hero-subtitle">{subtitle}</p>
+      <div className="editorial-hero-divider" />
       {children}
     </div>
   );
@@ -31,11 +31,11 @@ export function MetricsBar({
   metrics: { label: string; value: string }[];
 }) {
   return (
-    <div className="navi-metadata-row">
+    <div className="editorial-metadata-row">
       {metrics.map((m, i) => (
-        <div key={i} className="navi-meta-col">
-          <span className="navi-meta-label">{m.label}</span>
-          <span className="navi-meta-value">{m.value}</span>
+        <div key={i} className="editorial-meta-col">
+          <span className="editorial-meta-label">{m.label}</span>
+          <span className="editorial-meta-value">{m.value}</span>
         </div>
       ))}
     </div>
@@ -54,12 +54,12 @@ export function EditorialSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="navi-grid">
-      <div className="navi-left-rail">
-        <span className="navi-section-num">{number}</span>
-        <span className="navi-section-title">{title}</span>
+    <section className="editorial-grid">
+      <div className="editorial-left-rail">
+        <span className="editorial-section-num">{number}</span>
+        <span className="editorial-section-title">{title}</span>
       </div>
-      <div className="navi-right-content">{children}</div>
+      <div className="editorial-right-content">{children}</div>
     </section>
   );
 }
@@ -67,18 +67,18 @@ export function EditorialSection({
 // --- CONTENT COMPONENTS ---
 
 export function InsightQuote({ children }: { children: React.ReactNode }) {
-  return <h2 className="navi-statement">{children}</h2>;
+  return <h2 className="editorial-statement">{children}</h2>;
 }
 
 export function Prose({ children }: { children: React.ReactNode }) {
-  return <p className="navi-prose">{children}</p>;
+  return <p className="editorial-prose">{children}</p>;
 }
 
 export function TwoByTwoCards({ cards }: { cards: string[] }) {
   return (
-    <div className="navi-cards-2x2">
+    <div className="editorial-cards-2x2">
       {cards.map((c, i) => (
-        <div key={i} className="navi-card">
+        <div key={i} className="editorial-card">
           <p>{c}</p>
         </div>
       ))}
@@ -94,9 +94,9 @@ export function InsightCallout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="navi-insight-box">
+    <div className="editorial-insight-box">
       <h4>{title}</h4>
-      <ul className="navi-insight-list">
+      <ul className="editorial-insight-list">
         <li>{children}</li>
       </ul>
     </div>
@@ -115,7 +115,7 @@ export function ImageShowcase({
   priority?: boolean;
 }) {
   return (
-    <div className={`navi-image-wrapper ${breakout ? "breakout" : ""}`}>
+    <div className={`editorial-image-wrapper ${breakout ? "breakout" : ""}`}>
       <LightboxImage src={src} alt={alt} priority={priority} />
     </div>
   );
@@ -127,14 +127,14 @@ export function MetricGrid({
   metrics: { value: string; unit?: string; label: string }[];
 }) {
   return (
-    <div className="navi-metrics-row">
+    <div className="editorial-metrics-row">
       {metrics.map((m, i) => (
-        <div key={i} className="navi-metric">
-          <span className="navi-metric-value">
+        <div key={i} className="editorial-metric">
+          <span className="editorial-metric-value">
             {m.value}
             {m.unit && <span>{m.unit}</span>}
           </span>
-          <span className="navi-metric-label">{m.label}</span>
+          <span className="editorial-metric-label">{m.label}</span>
         </div>
       ))}
     </div>
@@ -147,10 +147,10 @@ export function LessonsGrid({
   lessons: { title: string; desc: string }[];
 }) {
   return (
-    <div className="navi-cards-2x2">
+    <div className="editorial-cards-2x2">
       {lessons.map((l, i) => (
-        <div key={i} className="navi-card" style={{ flexDirection: "column", gap: "12px" }}>
-          <span className="navi-meta-label" style={{ color: "var(--accent)" }}>{l.title}</span>
+        <div key={i} className="editorial-card" style={{ flexDirection: "column", gap: "12px" }}>
+          <span className="editorial-meta-label" style={{ color: "var(--accent)" }}>{l.title}</span>
           <p>{l.desc}</p>
         </div>
       ))}
@@ -166,10 +166,10 @@ export function NextProject({
   title: string;
 }) {
   return (
-    <div className="navi-next-project">
-      <Link href={href} className="navi-next-card">
-        <span className="navi-next-label">Next Project</span>
-        <span className="navi-next-title">{title}</span>
+    <div className="editorial-next-project">
+      <Link href={href} className="editorial-next-card">
+        <span className="editorial-next-label">Next Project</span>
+        <span className="editorial-next-title">{title}</span>
       </Link>
     </div>
   );
