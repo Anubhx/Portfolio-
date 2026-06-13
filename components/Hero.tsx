@@ -18,7 +18,7 @@ export default function Hero() {
       aria-label="Introduction"
       style={{
         paddingTop: "128px",
-        paddingBottom: "80px",
+        paddingBottom: "40px",
         position: "relative",
         overflow: "hidden",
       }}

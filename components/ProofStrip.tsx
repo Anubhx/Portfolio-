@@ -23,7 +23,7 @@ export default function ProofStrip() {
     <section
       aria-label="Tool Ecosystem Panel"
       style={{
-        padding: "80px 0",
+        padding: "40px 0",
         position: "relative",
       }}
     >

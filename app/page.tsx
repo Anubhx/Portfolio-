@@ -10,8 +10,9 @@ export default function HomePage() {
     <>
       <Hero />
       <ProofStrip />
+       <ExperienceTimeline />
       <HowIWork />
-      <ExperienceTimeline />
+     
       <SelectedWork />
       <DesignPhilosophy />
     </>
