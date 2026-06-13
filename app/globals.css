@@ -1,0 +1,454 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --bg: #080808;
+  --surface: #111111;
+  --surface-2: #161616;
+  --border: #1f1f1f;
+  --border-2: #2a2a2a;
+  --muted: #6b7280;
+  --muted-2: #9ca3af;
+  --body: #d1d5db;
+  --heading: #f9fafb;
+  --accent: #6366f1;
+  --accent-dim: #4f46e5;
+  --accent-subtle: rgba(99, 102, 241, 0.08);
+  --accent-border: rgba(99, 102, 241, 0.2);
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-expo: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-lg: 20px;
+}
+
+/* ─── Reset & Base ────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--body);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--body);
+  overflow-x: hidden;
+}
+
+/* ─── Skip Link ──────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: var(--accent);
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 9999;
+  border-radius: 0 0 var(--radius-sm) 0;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ─── Typography ─────────────────────────────────────────────── */
+.font-display { font-family: var(--font-display); }
+.font-sans    { font-family: var(--font-sans); }
+
+.text-display {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 7vw, 110px);
+  font-weight: 300;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--heading);
+}
+
+.text-h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--heading);
+}
+
+.text-h2 {
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--heading);
+}
+
+.text-h3 {
+  font-family: var(--font-sans);
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--heading);
+}
+
+.text-body-lg {
+  font-size: clamp(17px, 1.2vw, 20px);
+  line-height: 1.7;
+  color: var(--body);
+}
+
+.text-body {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--body);
+}
+
+.text-sm {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-2);
+}
+
+.text-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.text-accent { color: var(--accent); }
+.text-muted  { color: var(--muted); }
+.text-muted-2 { color: var(--muted-2); }
+.text-heading { color: var(--heading); }
+
+/* ─── Layout ─────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .container { padding: 0 48px; }
+}
+
+@media (min-width: 1200px) {
+  .container { padding: 0 80px; }
+}
+
+.section {
+  padding: 120px 0;
+}
+
+@media (max-width: 768px) {
+  .section { padding: 80px 0; }
+}
+
+/* ─── Divider ────────────────────────────────────────────────── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─── Tags ───────────────────────────────────────────────────── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted-2);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.tag-accent {
+  background: var(--accent-subtle);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s var(--ease-smooth);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+.btn-primary:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent-dim);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--muted-2);
+  border-color: var(--border-2);
+}
+.btn-ghost:hover {
+  color: var(--heading);
+  border-color: var(--muted);
+  transform: translateY(-1px);
+}
+
+/* ─── Cards ──────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.3s var(--ease-smooth), transform 0.3s var(--ease-expo);
+}
+.card:hover {
+  border-color: var(--border-2);
+}
+
+/* ─── Proof Strip Animation ───────────────────────────────────── */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: ticker-scroll 24s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+}
+
+/* ─── Timeline ───────────────────────────────────────────────── */
+.timeline-line {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -4px;
+  top: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+/* ─── Reading Progress ───────────────────────────────────────── */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 100;
+  transition: width 0.1s linear;
+}
+
+/* ─── Case Study Prose ───────────────────────────────────────── */
+.prose-editorial {
+  max-width: 680px;
+}
+
+.prose-editorial h2 {
+  font-size: clamp(24px, 2.5vw, 32px);
+  font-weight: 600;
+  color: var(--heading);
+  letter-spacing: -0.015em;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.prose-editorial h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--heading);
+  letter-spacing: -0.01em;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-editorial p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--body);
+  margin-bottom: 1.25rem;
+}
+
+.prose-editorial ul {
+  margin-bottom: 1.25rem;
+  padding-left: 1.25rem;
+}
+
+.prose-editorial li {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--body);
+  margin-bottom: 0.5rem;
+}
+
+.prose-editorial blockquote {
+  border-left: 2px solid var(--accent);
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  background: var(--accent-subtle);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.prose-editorial blockquote p {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--heading);
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.prose-editorial strong {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+/* ─── Highlight ──────────────────────────────────────────────── */
+.highlight {
+  color: var(--accent);
+  font-style: italic;
+  font-family: var(--font-display);
+}
+
+/* ─── Section Number ─────────────────────────────────────────── */
+.section-number {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-number::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--muted);
+}
+
+/* ─── Metric Card ────────────────────────────────────────────── */
+.metric-number {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-family: var(--font-sans);
+}
+
+/* ─── Focus Styles (a11y) ────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ─── Selection ──────────────────────────────────────────────── */
+::selection {
+  background: var(--accent-subtle);
+  color: var(--heading);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ─── Nav Active Indicator ───────────────────────────────────── */
+.nav-link {
+  position: relative;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted-2);
+  text-decoration: none;
+  transition: color 0.2s;
+  letter-spacing: 0.01em;
+  padding: 4px 0;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s var(--ease-expo);
+}
+.nav-link:hover { color: var(--heading); }
+.nav-link:hover::after,
+.nav-link.active::after { width: 100%; }
+.nav-link.active { color: var(--heading); }
+
+/* ─── Process Step ───────────────────────────────────────────── */
+.process-connector {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--border-2), transparent);
+  margin: 0 auto;
+}

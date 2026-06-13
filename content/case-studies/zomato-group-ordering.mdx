@@ -1,0 +1,151 @@
+---
+title: "Zomato Group Ordering"
+subtitle: "Designing the Social Layer of Food Delivery"
+description: "A UX investigation into the coordination tax office teams pay every time they order food together — and how design can reduce 20 minutes of friction to a single flow."
+year: "2024"
+role: "Lead UX/UI Designer"
+tools: "Figma · Maze · Miro · FigJam"
+duration: "6 weeks"
+tags: ["UX Research", "Interaction Design", "Prototyping", "Maze Testing", "Mobile Design"]
+---
+
+## Context
+
+Zomato serves over 350 million users. Food delivery is solved. But *group* food delivery remains a broken social experience — one that plays out daily in offices, hostels, and shared apartments across India.
+
+The problem doesn't live inside the Zomato app. It lives in WhatsApp threads, Google Forms, and awkward UPI payment requests.
+
+## The Problem
+
+**Office teams spend 20–25 minutes coordinating lunch.**
+
+The pattern is always the same: someone nominates themselves as the "order person," collects requests over WhatsApp, tries to combine dishes across preferences, places one massive order, and then chases everyone for payment — often giving up and eating the cost themselves.
+
+> Food wasn't the problem. Coordination was.
+
+The existing Zomato experience is optimized for solo ordering. Adding a group to the equation multiplies the friction, not just the cart size.
+
+## Research
+
+### User Interviews
+
+I conducted **5 semi-structured user interviews** with office-going adults aged 22–34 who regularly ordered food with colleagues.
+
+Key questions:
+- Walk me through the last time you ordered food with a group.
+- What made it difficult? What made it easy?
+- Have you used any tools or apps to coordinate?
+- When does the experience feel frustrating?
+
+### Competitive Analysis
+
+Examined how other platforms handle group coordination:
+- **Splitwise** — solves payment splitting, not ordering
+- **Google Pay Groups** — handles bill splitting post-transaction
+- **Amazon Alexa Drop-In** — real-time group audio, not food
+- **DoorDash Group Order** — closest parallel; US-specific
+
+**Key gap found:** No existing tool closes the loop from *preference collection → unified order → payment split* in a single mobile flow.
+
+### Journey Mapping
+
+Mapped the end-to-end journey of a group order coordinator across three phases: **Collection, Ordering, Payment**.
+
+Pain points surfaced at every transition — but the biggest spikes appeared at two moments:
+1. When someone changed their order after it was placed.
+2. When a payment reminder had to be sent more than once.
+
+## Key Insights
+
+**Insight 01: The social overhead is emotional, not just logistical.**
+People don't hate coordinating orders. They hate feeling like they're imposing on others, or being the person who holds up the group.
+
+**Insight 02: Trust collapses at payment.**
+Once money enters the equation, the informal nature of WhatsApp coordination creates anxiety. Who's tracking what? Did they pay?
+
+**Insight 03: Most users would accept less choice for less friction.**
+When asked directly, 4 of 5 participants said they'd rather be suggested a meal based on their history than browse the full catalogue during a group session.
+
+## Constraints
+
+- Must work within Zomato's existing mobile design system
+- 3-tap maximum from cart to group invite
+- No authentication changes (can't add new login flows)
+- Real-time sync requires careful state management (handled in design, flagged for engineering)
+- Payment integration must connect to existing Zomato Pay
+
+## Process
+
+### How Might We
+
+After research synthesis, I ran a solo **HMW workshop** to reframe the problems as opportunities:
+
+- *HMW reduce the cognitive load on the "order person"?*
+- *HMW make payment transparent before the food arrives?*
+- *HMW let each person feel ownership over their own order?*
+
+### Information Architecture
+
+Mapped three possible structural approaches:
+1. **Host-controlled model** — One person manages the entire cart
+2. **Distributed cart model** — Each person adds to a shared cart independently
+3. **Hybrid nudge model** — AI-suggested orders with optional override
+
+Selected **Distributed cart with host confirmation** as the mental model — it matches existing social expectations (everyone "picks their own") while keeping coordination structured.
+
+### Wireframes → High-Fidelity
+
+Moved from sketches to low-fidelity wireframes to **22 high-fidelity screens** across:
+
+- Group creation + invite flow
+- Individual cart management
+- Real-time order status
+- Payment split summary
+- Reminder and confirmation states
+
+## Iterations
+
+### Round 1: Clarity problem
+Early prototypes showed a cluttered group status view. Testers couldn't distinguish their item from others'. Fixed with color-coded avatars and clear item ownership markers.
+
+### Round 2: Payment timing
+Originally showed payment split at checkout. Users were confused — they wanted to *agree* to amounts before the order, not after. Moved payment to the pre-order confirmation step.
+
+### Round 3: Invitation friction
+The initial invite flow required app downloads for all group members. Simplified to a sharable link that opens a lightweight web experience for non-Zomato users.
+
+## Testing
+
+**Method:** Maze unmoderated usability test  
+**Participants:** 8 users  
+**Tasks:**
+1. Create a group order and invite 2 people
+2. Review and confirm your individual order
+3. Complete the payment split
+
+**Results:**
+- Task 1 completion: 87.5%
+- Task 2 completion: 100%
+- Task 3 completion: 75% (payment split screen needed refinement)
+- Average time-on-task: Reduced from baseline estimate of 4.2 mins to 2.1 mins
+
+## Outcome
+
+The validated prototype demonstrates:
+- A clear group ordering flow integrated within the existing Zomato information architecture
+- Payment transparency before food arrives (not after)
+- Reduced reliance on external tools for coordination
+- A shareable invite link for non-app users
+
+## Reflection
+
+**What I learned:**
+
+Collaborative experiences don't fail because of bad technology. They fail because of unmet emotional expectations. The key insight wasn't about features — it was about trust. Once I understood that users weren't afraid of *paying*, they were afraid of *being seen as difficult*, the design direction became clear.
+
+**What I'd improve:**
+
+- Real-time sync state management (currently designed as polling; would benefit from WebSocket architecture)
+- Push notification strategy — when and how to nudge without being intrusive
+- Smarter AI-powered meal suggestions based on group ordering history
+- Accessibility audit of the final prototype (touch target sizing on group invite flow needs review)
