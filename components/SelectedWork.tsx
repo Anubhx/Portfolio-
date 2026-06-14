@@ -307,6 +307,7 @@ export default function SelectedWork() {
       </section>
 
       {/* Selected Explorations */}
+      {false && (
       <section
         aria-labelledby="explorations-heading"
         className="section"
@@ -400,6 +401,7 @@ export default function SelectedWork() {
           </StaggerChildren>
         </div>
       </section>
+      )}
     </>
   );
 }
