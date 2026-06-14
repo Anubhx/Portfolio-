@@ -1,30 +1,32 @@
-import { MetadataRoute } from 'next'
- 
+import { MetadataRoute } from "next";
+
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = "https://anubhavportfolio.vercel.app";
+
   return [
     {
-      url: 'https://anubhavportfolio.vercel.app',
+      url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: 'https://anubhavportfolio.vercel.app/about',
+      url: `${baseUrl}/case-studies`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://anubhavportfolio.vercel.app/case-studies',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: 'https://anubhavportfolio.vercel.app/contact',
+      url: `${baseUrl}/case-studies/flowwise`,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.5,
+      changeFrequency: "monthly",
+      priority: 0.9,
     },
-  ]
+    {
+      url: `${baseUrl}/case-studies/zomato-group-ordering`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+  ];
 }
