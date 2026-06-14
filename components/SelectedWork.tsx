@@ -18,7 +18,7 @@ const featuredWork = [
     role: "Lead UX/UI Designer",
     accent: "#ef4444",
     screens: "22 screens",
-    image: "/Zomato.png",
+    image: "/Zomato_Hero2.png",
   },
   {
     slug: "flowwise",
@@ -38,7 +38,7 @@ const featuredWork = [
     role: "Product Designer & Design Engineer",
     accent: "#6366f1",
     screens: "40+ components",
-    image: "/FlowWise.png",
+    image: "/FlowWise_Hero2.png",
     links: {
       behance: "https://www.behance.net/gallery/247562999/Flow-Wise-Case-Study",
       github: "https://github.com/Anubhx/flow-wise",
@@ -127,30 +127,15 @@ export default function SelectedWork() {
                     aria-label={`Read case study: ${work.title}`}
                   >
                     <article
-                      className="card"
                       style={{
-                        padding: "32px",
                         display: "grid",
-                        gridTemplateColumns: i % 2 === 0 ? "1fr 220px" : "220px 1fr",
-                        gap: "40px",
+                        gridTemplateColumns: "1fr 1fr",
+                        columnGap: "80px",
                         alignItems: "center",
-                        cursor: "pointer",
-                        transition:
-                          "transform 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.2s, box-shadow 0.2s",
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.transform =
-                          "translateY(-2px)";
-                        (e.currentTarget as HTMLElement).style.borderColor =
-                          "var(--border-2)";
-                        (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 30px rgba(0,0,0,0.4)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.transform =
-                          "translateY(0)";
-                        (e.currentTarget as HTMLElement).style.borderColor =
-                          "var(--border)";
-                        (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                        maxWidth: "1440px",
+                        margin: "0 auto",
+                        paddingBlock: "80px",
+                        borderBottom: "1px solid rgba(255,255,255,0.06)",
                       }}
                       className="work-card"
                     >
@@ -221,8 +206,9 @@ export default function SelectedWork() {
                           style={{
                             color: "var(--muted-2)",
                             marginBottom: "24px",
-                            maxWidth: "480px",
-                            fontSize: "14px",
+                            maxWidth: "620px",
+                            fontSize: "16px",
+                            lineHeight: 1.75,
                           }}
                         >
                           {work.description}
@@ -279,20 +265,25 @@ export default function SelectedWork() {
                       <div
                         style={{
                           order: i % 2 === 0 ? 2 : 1,
-                          height: "220px",
-                          borderRadius: "var(--radius-sm)",
-                          border: "1px solid var(--border)",
-                          position: "relative",
+                          aspectRatio: "16 / 10",
+                          width: "100%",
+                          height: "auto",
+                          borderRadius: "20px",
                           overflow: "hidden",
-                          flexShrink: 0,
+                          position: "relative",
+                          background: "#090909",
                         }}
                       >
                         <Image
                           src={work.image}
                           alt={`${work.title} — case study preview`}
                           fill
-                          style={{ objectFit: "cover", objectPosition: "top center" }}
-                          sizes="(max-width: 768px) 100vw, 240px"
+                          style={{ 
+                            objectFit: "cover", 
+                            objectPosition: "center",
+                            transition: "opacity 0.25s ease" 
+                          }}
+                          sizes="(max-width: 768px) 100vw, 50vw"
                           priority={i === 0}
                         />
                         {/* Subtle overlay to keep image from overpowering */}
@@ -302,6 +293,7 @@ export default function SelectedWork() {
                             position: "absolute",
                             inset: 0,
                             background: "rgba(8,8,8,0.1)",
+                            pointerEvents: "none",
                           }}
                         />
                       </div>

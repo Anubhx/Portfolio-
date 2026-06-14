@@ -8,15 +8,21 @@ const experiences = [
   {
     company: "LTI Mindtree",
     role: "UX Designer & Design Engineer",
-    period: "2024 — PRESENT",
+    period: "2024 June — PRESENT",
     description:
       "Leading UX design and UI engineering for enterprise and consumer experiences across insurance, e-commerce, HR, and AI products. Bridging the gap between Figma and production React code to deliver accessible, performant, and scalable systems.",
+    currentFocus: [
+      "Designing enterprise and AI experiences",
+      "Translating Figma systems into React production code",
+      "Building accessible interfaces (WCAG 2.1 AA)",
+      "Bridging designers and engineers through systems thinking"
+    ],
     tags: ["UX DESIGN", "REACT", "TYPESCRIPT", "SYSTEMS", "ACCESSIBILITY"],
   },
   {
     company: "Ecstasia",
     role: "Lead UX Designer",
-    period: "2023 — 2024",
+    period: "2024 November — 2025 March",
     description:
       "Owned the end-to-end product experience for an event platform serving 1000+ attendees. Conducted research, designed wireframes and prototypes, and collaborated closely with developers throughout implementation.",
     tags: ["UX RESEARCH", "PROTOTYPING", "PRODUCT DESIGN", "WORKSHOPS", "COLLABORATION"],
@@ -24,7 +30,7 @@ const experiences = [
   {
     company: "Vedantu",
     role: "UX Designer",
-    period: "2022 — 2023",
+    period: "2023 January — 2023 May",
     description:
       "Redesigned learning experiences through iterative testing and accessibility-first thinking. Focused on reducing cognitive load and improving usability across mobile and web touchpoints.",
     tags: ["EDTECH", "ACCESSIBILITY", "MOBILE DESIGN", "USABILITY", "TESTING"],
@@ -115,34 +121,68 @@ export default function ExperienceTimeline() {
           {/* RIGHT COLUMN: Experience Cards */}
           <div className="timeline-column">
             <StaggerChildren staggerDelay={0.1}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "36px" }}>
-                {experiences.map((exp, i) => (
-                  <motion.article
-                    key={exp.company}
-                    variants={staggerItem}
-                    className="exp-card"
-                  >
-                    <div className="exp-card-header">
-                      <div>
-                        <h3 className="exp-role">
-                          {exp.role}
-                        </h3>
-                        <p className="exp-company">{exp.company}</p>
-                      </div>
-                      <div className="exp-date-pill">
-                        {exp.period}
-                      </div>
-                    </div>
-                    
-                    <p className="exp-desc">{exp.description}</p>
-                    
-                    <div className="exp-tags">
-                      {exp.tags.map(tag => (
-                        <span key={tag} className="exp-tag">{tag}</span>
-                      ))}
-                    </div>
-                  </motion.article>
-                ))}
+              <div className="vertical-timeline">
+                <div className="timeline-spine" />
+                {experiences.map((exp, i) => {
+                  const isCurrent = i === 0;
+                  return (
+                    <motion.div
+                      key={exp.company}
+                      variants={staggerItem}
+                      className="timeline-item-wrapper"
+                    >
+                      <div className={`timeline-node ${isCurrent ? "current" : "past"}`} />
+                      
+                      <article
+                        className={`exp-card ${isCurrent ? "current-role-card" : "past-role-card"}`}
+                      >
+                        <div className="exp-card-header">
+                          <div>
+                            <h3 className="exp-role">
+                              {exp.role}
+                            </h3>
+                            <p className="exp-company">{exp.company}</p>
+                          </div>
+                          {isCurrent ? (
+                            <div className="current-status-container">
+                              <div className="current-status-indicator">
+                                <span className="pulse-dot" /> CURRENTLY BUILDING
+                              </div>
+                              <div className="current-status-sub">LTI MINDTREE</div>
+                              <div className="current-since">SINCE JUNE 2024</div>
+                            </div>
+                          ) : (
+                            <div className="exp-date-pill">
+                              {exp.period}
+                            </div>
+                          )}
+                        </div>
+                        
+                        <p className="exp-desc">{exp.description}</p>
+                        
+                        {isCurrent && exp.currentFocus && (
+                          <div className="what-im-doing">
+                            <h4 className="focus-heading">What I'm doing now</h4>
+                            <ul className="focus-list">
+                              {exp.currentFocus.map((focus, idx) => (
+                                <li key={idx}>
+                                  <span className="bullet">•</span>
+                                  {focus}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        
+                        <div className="exp-tags">
+                          {exp.tags.map(tag => (
+                            <span key={tag} className={`exp-tag ${isCurrent ? "current" : "past"}`} tabIndex={0}>{tag}</span>
+                          ))}
+                        </div>
+                      </article>
+                    </motion.div>
+                  );
+                })}
               </div>
             </StaggerChildren>
           </div>
@@ -289,17 +329,73 @@ export default function ExperienceTimeline() {
         }
 
         /* ─── Editorial Experience Cards CSS ────────────────────────────── */
-        .exp-card {
-          background: rgba(255, 255, 255, 0.015);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 30px;
-          padding: 40px;
-          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+        .vertical-timeline {
           position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: 48px;
+          padding-left: 40px; /* Space for the spine */
+        }
+
+        .timeline-spine {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 15px; /* Center of the node */
+          width: 1px;
+          background: rgba(255, 255, 255, 0.1);
+          z-index: 0;
+        }
+
+        .timeline-item-wrapper {
+          position: relative;
+          z-index: 1;
+        }
+
+        .timeline-node {
+          position: absolute;
+          left: -40px; /* Push back to the spine */
+          top: 48px; /* Align with the header */
+          width: 11px;
+          height: 11px;
+          border-radius: 50%;
+          transform: translateX(-50%);
+          z-index: 2;
+        }
+
+        .timeline-node.current {
+          background: #2AFFD6;
+          box-shadow: 0 0 20px rgba(42, 255, 214, 0.3);
+        }
+
+        .timeline-node.past {
+          background: rgba(255, 255, 255, 0.15);
+        }
+
+        .exp-card {
+          position: relative;
+          border-radius: 30px;
+          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
           overflow: hidden;
         }
 
-        .exp-card:hover {
+        .current-role-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(42, 255, 214, 0.10);
+          border-radius: 28px;
+          padding: 36px 40px;
+          box-shadow: 
+            0 0 0 1px rgba(42, 255, 214, 0.04),
+            0 12px 32px rgba(42, 255, 214, 0.03);
+        }
+
+        .past-role-card {
+          background: rgba(255, 255, 255, 0.015);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          padding: 40px;
+        }
+
+        .past-role-card:hover {
           border-color: rgba(255, 255, 255, 0.15);
           transform: translateY(-2px);
         }
@@ -314,29 +410,83 @@ export default function ExperienceTimeline() {
 
         .exp-role {
           font-family: var(--font-sans);
-          font-size: 34px;
-          font-weight: 700;
           color: rgba(255, 255, 255, 0.95);
           letter-spacing: -0.01em;
           margin-bottom: 4px;
         }
 
+        .current-role-card .exp-role {
+          font-size: clamp(42px, 4vw, 48px);
+          font-weight: 600;
+          line-height: 1.08;
+          letter-spacing: -0.03em;
+        }
+
+        .past-role-card .exp-role {
+          font-size: clamp(28px, 3vw, 40px);
+          font-weight: 400;
+        }
+
         .exp-company {
           font-size: 18px;
           color: var(--muted-2);
-          font-weight: 500;
         }
 
-        .exp-date-pill {
-          font-size: 12px;
+        .current-role-card .exp-company {
+          font-size: 16px;
           font-weight: 600;
-          letter-spacing: 0.18em;
+          opacity: 0.85;
+        }
+
+        .past-role-card .exp-company {
+          font-weight: 400;
+          opacity: 0.75;
+        }
+
+        .current-status-container {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 4px;
+        }
+
+        .current-status-indicator {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: #2AFFD6;
+          font-size: 10px;
+          letter-spacing: 0.22em;
+          font-weight: 700;
           text-transform: uppercase;
-          padding: 8px 16px;
-          border-radius: 100px;
-          color: rgba(255, 255, 255, 0.7);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          background: rgba(255, 255, 255, 0.03);
+        }
+
+        .current-status-sub {
+          color: #2AFFD6;
+          font-size: 10px;
+          letter-spacing: 0.22em;
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+
+        .pulse-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #2AFFD6;
+          animation: pulse-dot 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse-dot {
+          0%, 100% { opacity: 0.8; transform: scale(1); }
+          50% { opacity: 0.3; transform: scale(1.2); }
+        }
+
+        .current-since {
+          font-size: 10px;
+          color: var(--muted-2);
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
         }
 
         .exp-desc {
@@ -345,6 +495,48 @@ export default function ExperienceTimeline() {
           color: var(--muted-2);
           margin-bottom: 32px;
           max-width: 75ch; /* 70-75 characters max width */
+        }
+        
+        .current-role-card .exp-desc {
+          font-size: 16px;
+          line-height: 1.65;
+          margin-bottom: 24px;
+          max-width: 70ch;
+        }
+
+        .what-im-doing {
+          margin-bottom: 20px;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          padding-top: 20px;
+        }
+
+        .focus-heading {
+          font-size: 14px;
+          font-weight: 600;
+          color: var(--heading);
+          margin-bottom: 12px;
+        }
+
+        .focus-list {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px 24px;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .focus-list li {
+          font-size: 14px;
+          color: var(--muted-2);
+          display: flex;
+          align-items: flex-start;
+          gap: 8px;
+          line-height: 1.5;
+        }
+
+        .focus-list .bullet {
+          color: #2AFFD6;
         }
 
         .exp-tags {
@@ -363,6 +555,61 @@ export default function ExperienceTimeline() {
           color: rgba(255, 255, 255, 0.8);
           border: 1px solid rgba(255, 255, 255, 0.1);
           background: rgba(255, 255, 255, 0.03);
+          cursor: pointer;
+          transition:
+            background-color 0.3s ease,
+            border-color 0.3s ease,
+            color 0.3s ease,
+            box-shadow 0.3s ease,
+            transform 0.3s ease;
+        }
+
+        .exp-tag.current:hover,
+        .exp-tag.current:focus-visible {
+          background-color: rgba(255, 255, 255, 0.04);
+          border-color: #2AFFD6;
+          color: #F5F7FA;
+          transform: translateY(-2px);
+          box-shadow:
+            0 0 0 1px rgba(42, 255, 214, 0.2),
+            0 0 20px rgba(42, 255, 214, 0.08);
+        }
+
+        .exp-tag.past:hover,
+        .exp-tag.past:focus-visible {
+          background-color: rgba(255, 255, 255, 0.04);
+          border-color: rgba(255, 255, 255, 0.2);
+          color: #F5F7FA;
+        }
+
+        .exp-tag.current:active {
+          transform: translateY(-1px) scale(0.98);
+        }
+
+        .exp-tag.past:active {
+          transform: scale(0.98);
+        }
+
+        .exp-tag.current:focus-visible,
+        .exp-tag.past:focus-visible {
+          outline: 2px solid rgba(42, 255, 214, 0.35);
+          outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .exp-tag {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+          }
+          .exp-tag.current:hover,
+          .exp-tag.current:focus-visible,
+          .exp-tag.past:hover,
+          .exp-tag.past:focus-visible {
+            transform: none;
+          }
+          .exp-tag.current:active,
+          .exp-tag.past:active {
+            transform: none;
+          }
         }
 
         @media (max-width: 1024px) {
@@ -376,15 +623,35 @@ export default function ExperienceTimeline() {
             max-width: 480px;
             margin: 0 auto;
           }
+          .focus-list {
+            grid-template-columns: 1fr;
+          }
         }
 
         @media (max-width: 768px) {
-          .exp-card {
+          .current-role-card {
+            padding: 28px 24px;
+            border-radius: 24px;
+          }
+          .past-role-card {
             padding: 32px;
             border-radius: 24px;
           }
           .exp-card-header {
             flex-direction: column;
+            align-items: flex-start;
+          }
+          .current-status-container {
+            align-items: flex-start;
+          }
+          .vertical-timeline {
+            padding-left: 24px;
+          }
+          .timeline-spine {
+            left: 8px;
+          }
+          .timeline-node {
+            left: -24px;
           }
         }
       `}</style>

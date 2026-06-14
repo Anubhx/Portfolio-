@@ -28,7 +28,7 @@ export function CaseStudyHero({
 export function MetricsBar({
   metrics,
 }: {
-  metrics: { label: string; value: string }[];
+  metrics: { label: string; value: React.ReactNode }[];
 }) {
   return (
     <div className="editorial-metadata-row">

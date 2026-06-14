@@ -1,7 +1,7 @@
 "use client";
 
 import { FadeUp, StaggerChildren, staggerItem } from "./AnimatedElements";
-import { motion } from "framer-motion";
+import { motion, Easing } from "framer-motion";
 
 const processSteps = [
   {

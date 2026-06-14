@@ -11,7 +11,7 @@ export default function HomePage() {
       <Hero />
       <ProofStrip />
        <ExperienceTimeline />
-      <HowIWork />
+      {/* <HowIWork /> */}
      
       <SelectedWork />
       <DesignPhilosophy />

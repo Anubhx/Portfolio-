@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion , Easing} from "framer-motion";
 import Link from "next/link";
 
 const EASE_EXPO = [0.16, 1, 0.3, 1];
@@ -183,7 +183,7 @@ export default function Hero() {
             >
               <span
                 style={{
-                  fontSize: "13px",
+                  fontSize: "22px",
                   fontWeight: 600,
                   letterSpacing: "0.01em",
                   color: "var(--heading)",
@@ -195,7 +195,7 @@ export default function Hero() {
               </span>
               <span
                 style={{
-                  fontSize: "11px",
+                  fontSize: "14px",
                   fontWeight: 400,
                   letterSpacing: "0.04em",
                   color: "var(--muted)",

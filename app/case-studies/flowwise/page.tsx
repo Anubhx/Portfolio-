@@ -30,6 +30,15 @@ export default function FlowwiseCaseStudy() {
               { label: "Role", value: "Product Designer" },
               { label: "Timeline", value: "6 Weeks" },
               { label: "Stack", value: "React Native, SQLite" },
+              { 
+                label: "Links", 
+                value: (
+                  <div style={{ display: "flex", gap: "12px" }}>
+                    <a href="https://www.behance.net/gallery/247562999/Flow-Wise-Case-Study" target="_blank" rel="noreferrer" style={{ color: "var(--heading)", textDecoration: "underline", textUnderlineOffset: "4px" }}>Behance ↗</a>
+                    <a href="https://github.com/Anubhx/flow-wise" target="_blank" rel="noreferrer" style={{ color: "var(--heading)", textDecoration: "underline", textUnderlineOffset: "4px" }}>GitHub ↗</a>
+                  </div>
+                )
+              },
             ]}
           />
         </CaseStudyHero>

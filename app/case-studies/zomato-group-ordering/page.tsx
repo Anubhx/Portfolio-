@@ -30,6 +30,14 @@ export default function ZomatoCaseStudy() {
               { label: "Role", value: "Product Designer" },
               { label: "Timeline", value: "4 Weeks" },
               { label: "Platform", value: "iOS & Android" },
+              { 
+                label: "Links", 
+                value: (
+                  <div style={{ display: "flex", gap: "12px" }}>
+                    <a href="https://www.behance.net/gallery/250727725/Zomato-Group-Order" target="_blank" rel="noreferrer" style={{ color: "var(--heading)", textDecoration: "underline", textUnderlineOffset: "4px" }}>Behance ↗</a>
+                  </div>
+                )
+              },
             ]}
           />
         </CaseStudyHero>

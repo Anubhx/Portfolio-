@@ -70,16 +70,15 @@ export default function Nav() {
             >
               <span
                 style={{
-                  fontFamily: "var(--font-sans)",
-                  fontWeight: 700,
-                  fontSize: "14px",
-                  letterSpacing: "0.05em",
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 600,
+                  fontSize: "20px",
                   color: "var(--heading)",
                   lineHeight: 1,
-                  textTransform: "uppercase"
+                  letterSpacing: "-0.01em",
                 }}
               >
-                Anubhav RAJ
+                Anubhav Raj
               </span>
             </Link>
             <div
@@ -106,7 +105,7 @@ export default function Nav() {
               <span
                 style={{
                   fontFamily: "monospace",
-                  fontSize: "11px",
+                  fontSize: "13px",
                   fontWeight: 500,
                   letterSpacing: "0.15em",
                   color: "var(--muted-2)",
@@ -135,7 +134,7 @@ export default function Nav() {
                   key={link.href}
                   href={link.href}
                   style={{
-                    fontSize: "11px",
+                    fontSize: "13px",
                     fontWeight: 600,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
