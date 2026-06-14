@@ -21,6 +21,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://anubhavportfolio.vercel.app"),
   title: {
     default: "Anubhav Raj UI/UX Designer",
     template: "%s | Anubhav Raj",
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://anubhavraj.design",
+    url: "https://anubhavportfolio.vercel.app",
     title: "Anubhav Raj — UX Designer & Design Engineer",
     description:
       "UX Designer, Design Engineer, and Agentic Builder at LTI Mindtree. I turn messy problems into products people actually use.",
