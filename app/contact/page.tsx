@@ -86,8 +86,9 @@ export default function ContactPage() {
                 anubhav0427@gmail.com →
               </a>
               <a
-                href="/resume.pdf"
-                download
+                href="https://drive.google.com/file/d/1DB9O83t1ClnK0F3wgfJiOF7gr3gDKIXC/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn btn-ghost"
                 style={{ width: "fit-content" }}
                 aria-label="Download Anubhav's resume"

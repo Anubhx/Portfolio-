@@ -67,8 +67,9 @@ export default function Footer() {
               anubhav0427@gmail.com →
             </a>
             <a
-              href="/resume.pdf"
-              download
+              href="https://drive.google.com/file/d/1DB9O83t1ClnK0F3wgfJiOF7gr3gDKIXC/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn-ghost"
               aria-label="Download resume"
             >

@@ -186,8 +186,9 @@ export default function Nav() {
 
             {/* Resume download — outlined bracket button */}
             <a
-              href="/resume.pdf"
-              download
+              href="https://drive.google.com/file/d/1DB9O83t1ClnK0F3wgfJiOF7gr3gDKIXC/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Download Anubhav's resume"
               className="btn-nav"
             >
@@ -308,8 +309,9 @@ export default function Nav() {
             </Link>
           ))}
           <a
-            href="/resume.pdf"
-            download
+            href="https://drive.google.com/file/d/1DB9O83t1ClnK0F3wgfJiOF7gr3gDKIXC/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               fontFamily: "var(--font-sans)",
               fontSize: "14px",
