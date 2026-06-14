@@ -48,14 +48,6 @@ export const metadata: Metadata = {
     description:
       "UX Designer, Design Engineer, and Agentic Builder at LTI Mindtree. I turn messy problems into products people actually use.",
     siteName: "Anubhav Raj",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Anubhav Raj — UX Designer & Design Engineer",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
