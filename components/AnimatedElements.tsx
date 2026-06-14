@@ -1,16 +1,16 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, Variants } from "framer-motion";
 
-const EASE_EXPO = [0.16, 1, 0.3, 1];
+const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 interface FadeUpProps {
   children: React.ReactNode;
   delay?: number;
   className?: string;
   style?: React.CSSProperties;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
 }
 
 export function FadeUp({
@@ -75,7 +75,7 @@ export function StaggerChildren({
   );
 }
 
-export const staggerItem = {
+export const staggerItem: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,

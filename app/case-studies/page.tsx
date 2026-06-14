@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 
-const EASE_EXPO = [0.16, 1, 0.3, 1];
+const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const caseStudies = [
   {
