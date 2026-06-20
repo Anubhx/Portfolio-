@@ -44,6 +44,26 @@ const featuredWork = [
       github: "https://github.com/Anubhx/flow-wise",
     },
   },
+  {
+    slug: "contrast",
+    number: "Project 03",
+    title: "Contrast",
+    subtitle: "Paste a URL. Get a score. Know what to fix.",
+    description:
+      "A free design audit tool that checks any live URL for WCAG compliance, typography consistency, and spacing — returning a scored, shareable report in under 15 seconds. Built with Playwright, axe-core, and Gemini.",
+    tags: [
+      "Engineering",
+      "Accessibility",
+      "Next.js",
+      "Playwright",
+      "Gemini API",
+    ],
+    year: "2025",
+    role: "Designer + Engineer",
+    accent: "#a3e635",
+    screens: "Full-stack tool",
+    image: "/images/contrast/hero.png",
+  },
 ];
 
 const explorations = [

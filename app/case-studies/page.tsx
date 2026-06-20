@@ -26,6 +26,15 @@ const caseStudies = [
     image: "/FlowWise.png",
     link: "/case-studies/flowwise",
   },
+  {
+    id: "contrast",
+    title: "Contrast",
+    metadata: "DESIGNER + ENGINEER / ACCESSIBILITY TOOL",
+    description:
+      "A free design audit tool that checks any live URL for WCAG compliance, typography, and spacing — returning a scored, shareable report in under 15 seconds. Built with Playwright, axe-core, and Gemini.",
+    image: "/images/contrast/hero.png",
+    link: "/case-studies/contrast",
+  },
 ];
 
 export default function CaseStudiesPage() {
@@ -204,7 +213,7 @@ export default function CaseStudiesPage() {
                   textTransform: "uppercase",
                 }}
               >
-                (02 Selected)
+              (03 Selected)
               </span>
             </div>
 
