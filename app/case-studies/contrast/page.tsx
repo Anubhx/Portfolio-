@@ -31,6 +31,15 @@ export default function ContrastCaseStudy() {
               { label: "Type", value: "Engineering Project" },
               { label: "Timeline", value: "2 Weeks (MVP)" },
               { label: "Stack", value: "Next.js · Playwright · axe-core · Gemini API · Vercel KV" },
+              { 
+                label: "Links", 
+                value: (
+                  <div style={{ display: "flex", gap: "12px" }}>
+                    <a href="https://getcontrast.vercel.app" target="_blank" rel="noreferrer" style={{ color: "var(--heading)", textDecoration: "underline", textUnderlineOffset: "4px" }}>Live Site ↗</a>
+                    <a href="https://github.com/Anubhx/Contrast" target="_blank" rel="noreferrer" style={{ color: "var(--heading)", textDecoration: "underline", textUnderlineOffset: "4px" }}>GitHub ↗</a>
+                  </div>
+                )
+              },
             ]}
           />
         </CaseStudyHero>

@@ -63,6 +63,10 @@ const featuredWork = [
     accent: "#a3e635",
     screens: "Full-stack tool",
     image: "/images/contrast/hero.png",
+    links: {
+      website: "https://getcontrast.vercel.app",
+      github: "https://github.com/Anubhx/Contrast",
+    },
   },
 ];
 
