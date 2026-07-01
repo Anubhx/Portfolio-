@@ -151,20 +151,13 @@ export default function SelectedWork() {
                     aria-label={`Read case study: ${work.title}`}
                   >
                     <article
+                      className="work-card grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-[80px] items-center max-w-[1440px] mx-auto py-[40px] md:py-[80px]"
                       style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
-                        columnGap: "80px",
-                        alignItems: "center",
-                        maxWidth: "1440px",
-                        margin: "0 auto",
-                        paddingBlock: "80px",
                         borderBottom: "1px solid rgba(255,255,255,0.06)",
                       }}
-                      className="work-card"
                     >
                       {/* Content */}
-                      <div style={{ order: i % 2 === 0 ? 1 : 2 }}>
+                      <div className={`order-2 ${i % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
                         <div
                           style={{
                             display: "flex",
@@ -287,16 +280,7 @@ export default function SelectedWork() {
 
                       {/* Visual side — real project image */}
                       <div
-                        style={{
-                          order: i % 2 === 0 ? 2 : 1,
-                          aspectRatio: "16 / 10",
-                          width: "100%",
-                          height: "auto",
-                          borderRadius: "20px",
-                          overflow: "hidden",
-                          position: "relative",
-                          background: "#090909",
-                        }}
+                        className={`order-1 w-full h-auto aspect-[16/10] rounded-[20px] overflow-hidden relative bg-[#090909] ${i % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
                       >
                         <Image
                           src={work.image}

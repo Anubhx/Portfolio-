@@ -12,7 +12,6 @@ export default function HomePage() {
       <ProofStrip />
        <ExperienceTimeline />
       {/* <HowIWork /> */}
-     
       <SelectedWork />
       <DesignPhilosophy />
     </>
