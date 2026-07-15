@@ -964,7 +964,7 @@ body {
 @media (max-width: 768px) {
   .hero-headline {
     max-width: 100% !important;
-    font-size: clamp(36px, 10vw, 60px) !important;
+    font-size: clamp(28px, 8vw, 48px) !important;
   }
 
   /* Mobile: pan the image to show the face (right-side of photo) */
