@@ -1,6 +1,7 @@
 "use client";
 
-import { motion , Easing} from "framer-motion";
+import { motion, Easing } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 
 const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -16,6 +17,7 @@ export default function Hero() {
   return (
     <section
       aria-label="Introduction"
+      className="hero-section"
       style={{
         paddingTop: "128px",
         paddingBottom: "40px",
@@ -23,12 +25,51 @@ export default function Hero() {
         overflow: "hidden",
       }}
     >
-      {/* Engineering grid — discovered, not noticed */}
+      {/* ── Optimized background photo ── */}
+      <div
+        aria-hidden="true"
+        className="hero-bg-image-wrap"
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+        }}
+      >
+        <Image
+          src="/images/bg.png"
+          alt=""
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="hero-bg-image"
+          style={{
+            objectFit: "cover",
+            /* Desktop: face is on the right, show full right side */
+            objectPosition: "right center",
+          }}
+        />
+      </div>
+
+      {/* ── Left-to-right gradient — keeps text legible ── */}
+      <div
+        aria-hidden="true"
+        className="hero-text-gradient"
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* ── Engineering grid — discovered, not noticed ── */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
+          zIndex: 2,
           backgroundImage: `
             linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
@@ -38,19 +79,20 @@ export default function Hero() {
           pointerEvents: "none",
         }}
       />
-      {/* Radial vignette over grid */}
+      {/* ── Radial vignette over grid ── */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
+          zIndex: 3,
           background:
             "radial-gradient(ellipse 80% 65% at 40% 50%, transparent 30%, var(--bg) 100%)",
           pointerEvents: "none",
         }}
       />
 
-      <div className="container" style={{ position: "relative" }}>
+      <div className="container" style={{ position: "relative", zIndex: 4 }}>
         {/* Role label */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -210,15 +252,6 @@ export default function Hero() {
           ))}
         </motion.div>
       </div>
-
-      <style jsx>{`
-        @media (max-width: 768px) {
-          .hero-headline {
-            max-width: 100% !important;
-            font-size: clamp(36px, 10vw, 60px) !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

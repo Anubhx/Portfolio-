@@ -939,3 +939,68 @@ body {
   font-size: 32px; cursor: pointer; opacity: 0.7;
 }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ─── Hero Background Image ──────────────────────────────────── */
+
+/* Gradient overlay: strong on the left (text side), fades to transparent on right (face side) */
+.hero-text-gradient {
+  background: linear-gradient(
+    to right,
+    var(--bg) 0%,
+    var(--bg) 30%,
+    rgba(8, 8, 8, 0.88) 48%,
+    rgba(8, 8, 8, 0.45) 65%,
+    rgba(8, 8, 8, 0.10) 85%,
+    transparent 100%
+  );
+}
+
+/* Desktop default: face shows on right */
+.hero-bg-image {
+  object-fit: cover;
+  object-position: right center;
+}
+
+@media (max-width: 768px) {
+  .hero-headline {
+    max-width: 100% !important;
+    font-size: clamp(36px, 10vw, 60px) !important;
+  }
+
+  /* Mobile: pan the image to show the face (right-side of photo) */
+  .hero-bg-image {
+    object-position: 72% top;
+  }
+
+  /* On mobile the text sits on top of the image at the bottom,
+     so we need a strong bottom-to-top overlay as well */
+  .hero-text-gradient {
+    background: linear-gradient(
+      to bottom,
+      rgba(8, 8, 8, 0.20) 0%,
+      rgba(8, 8, 8, 0.50) 40%,
+      rgba(8, 8, 8, 0.92) 70%,
+      var(--bg) 100%
+    );
+  }
+
+  /* Give the hero more height on mobile so the photo has room to breathe */
+  .hero-section {
+    padding-top: 60vw !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Tablet: face still on right but overlay a touch stronger */
+  .hero-text-gradient {
+    background: linear-gradient(
+      to right,
+      var(--bg) 0%,
+      var(--bg) 35%,
+      rgba(8, 8, 8, 0.90) 52%,
+      rgba(8, 8, 8, 0.50) 70%,
+      rgba(8, 8, 8, 0.15) 88%,
+      transparent 100%
+    );
+  }
+}
