@@ -45,8 +45,6 @@ export default function Hero() {
           className="hero-bg-image"
           style={{
             objectFit: "cover",
-            /* Desktop: face is on the right, show full right side */
-            objectPosition: "right center",
           }}
         />
       </div>

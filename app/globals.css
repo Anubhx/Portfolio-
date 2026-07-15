@@ -969,7 +969,7 @@ body {
 
   /* Mobile: pan the image to show the face (right-side of photo) */
   .hero-bg-image {
-    object-position: 72% top;
+    object-position: 55% top;
   }
 
   /* On mobile the text sits on top of the image at the bottom,
