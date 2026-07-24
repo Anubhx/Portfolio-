@@ -5,7 +5,7 @@ const socialLinks = [
   { href: "mailto:anubhav0427@gmail.com", label: "Email" },
   { href: "https://www.linkedin.com/in/anubhax/", label: "LinkedIn", external: true },
   { href: "https://github.com/Anubhx", label: "GitHub", external: true },
-  { href: "https://www.behance.net/anubhavraj", label: "Behance", external: true },
+  { href: "https://www.behance.net/anubhavraj1", label: "Behance", external: true },
   { href: "https://twitter.com/anubhavRaj0", label: "Twitter", external: true },
 ];
 
