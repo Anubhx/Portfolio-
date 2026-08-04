@@ -14,6 +14,7 @@ import {
   LessonsGrid,
   NextProject,
 } from "@/components/case-studies/EditorialComponents";
+import FlowPreview from "@/components/FlowPreview";
 
 export default function ZomatoCaseStudy() {
   return (
@@ -30,8 +31,8 @@ export default function ZomatoCaseStudy() {
               { label: "Role", value: "Product Designer" },
               { label: "Timeline", value: "4 Weeks" },
               { label: "Platform", value: "iOS & Android" },
-              { 
-                label: "Links", 
+              {
+                label: "Links",
                 value: (
                   <div style={{ display: "flex", gap: "12px" }}>
                     <a href="https://www.behance.net/gallery/250727725/Zomato-Group-Order" target="_blank" rel="noreferrer" style={{ color: "var(--heading)", textDecoration: "underline", textUnderlineOffset: "4px" }}>Behance ↗</a>
@@ -120,6 +121,18 @@ export default function ZomatoCaseStudy() {
             alt="Final Solution Mocks"
           />
         </EditorialSection>
+
+      </div>
+
+      {/* FULL-WIDTH CENTERED INTERACTIVE FLOW PREVIEW SECTION */}
+      <section
+        style={{ maxWidth: '1152px', marginLeft: 'auto', marginRight: 'auto', paddingLeft: '16px', paddingRight: '16px' }}
+        className="my-16 w-full"
+      >
+        <FlowPreview className="w-full" />
+      </section>
+
+      <div className="editorial-container">
 
         {/* 04 OUTCOMES */}
         <EditorialSection number="04" title="Outcomes">
