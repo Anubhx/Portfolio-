@@ -176,46 +176,52 @@ function StepRow({
       onFocus={() => onEnter(step)}
       onBlur={onLeave}
       aria-current={isActive ? "step" : undefined}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '32px 1fr',
+        gap: '10px',
+        alignItems: 'baseline',
+        padding: '11px 12px',
+        borderRadius: '6px',
+        fontSize: '13px',
+        lineHeight: '1.55',
+        marginBottom: '0',
+      }}
       className={[
-        "group relative w-full text-left rounded-xl border px-7 py-5 transition-all duration-200 ease-out cursor-pointer min-w-0 min-h-[58px]",
-        "flex items-center justify-between gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ef4444]",
-        isDashed ? "border-dashed" : "border-solid",
+        "group relative w-full text-left border transition-all duration-200 cursor-pointer min-w-0",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ef4444]",
+        isDashed ? "border-dashed border-[#3A3A33]" : "border-solid",
         isActive
-          ? "border-[#ef4444] bg-[#1a0a0a] text-white translate-x-1 shadow-lg shadow-[#ef4444]/10"
-          : "border-white/15 bg-[#111114] text-white/80 hover:border-white/30 hover:bg-[#161619] hover:text-white",
+          ? "border-[#ef4444] bg-[#141413] text-[#F0EDE5] translate-x-1"
+          : "border-[#2E2E29] bg-[#1A1A18] text-[#CFCCC2] hover:border-[#ef4444] hover:bg-[#141413] hover:text-[#F0EDE5]",
       ].join(" ")}
     >
-      {/* Node Dot on Vertical Line (Centered exactly on vertical line at -20px offset) */}
+      {/* Node Dot on timeline */}
       <span
         className={[
-          "absolute -left-[20px] top-1/2 -translate-y-1/2 w-[7px] h-[7px] rounded-full border-2 border-[#0a0a0c] transition-all duration-200 pointer-events-none",
+          "absolute top-1/2 -translate-y-1/2 w-[7px] h-[7px] rounded-full border-2 border-[#0C0C0B] transition-all duration-200 pointer-events-none",
           isActive
-            ? "bg-[#ef4444] shadow-[0_0_8px_#ef4444] scale-125"
-            : "bg-white/30 group-hover:bg-[#ef4444] group-hover:scale-125",
+            ? "bg-[#ef4444]"
+            : "bg-[#56564E] group-hover:bg-[#ef4444]",
         ].join(" ")}
+        style={{ left: '-19.5px' }}
       />
 
-      <div className="flex items-start gap-4 min-w-0 pr-2">
-        {/* Monospace Step ID */}
-        <span
-          className={[
-            "font-mono text-xs tabular-nums shrink-0 mt-0.5 transition-colors font-medium",
-            isActive ? "text-[#ef4444] font-bold" : "text-white/40 group-hover:text-white/70",
-          ].join(" ")}
-        >
-          {step.id}
-        </span>
+      {/* Step Number */}
+      <span
+        className={[
+          "font-mono tabular-nums transition-colors",
+          isActive ? "text-[#ef4444]" : "text-[#8A8A80]",
+        ].join(" ")}
+        style={{ fontSize: '10px', letterSpacing: '0.06em' }}
+      >
+        {step.id}
+      </span>
 
-        {/* Step Label Text */}
-        <span className="text-[14px] leading-snug font-normal text-white/90 group-hover:text-white">
-          {step.label}
-        </span>
-      </div>
-
-      {/* Solid Active Indicator Dot on Far Right Inside Card */}
-      {isActive && (
-        <span className="w-2.5 h-2.5 rounded-full bg-[#ef4444] shrink-0 shadow-[0_0_6px_#ef4444]" />
-      )}
+      {/* Step Label */}
+      <span className="leading-[1.55]">
+        {step.label}
+      </span>
     </button>
   );
 }
@@ -230,11 +236,20 @@ function GroupHeader({
   titleColor?: string;
 }) {
   return (
-    <div className="mb-4 border-b border-white/10 pb-2.5 font-mono text-xs tracking-wider uppercase">
+    <div
+      className="font-mono uppercase"
+      style={{
+        fontSize: '10px',
+        letterSpacing: '0.1em',
+        paddingBottom: '12px',
+        marginBottom: '14px',
+        borderBottom: '1px solid #2E2E29',
+      }}
+    >
       <span className={`font-semibold ${titleColor}`}>{title}</span>
       {subtitle && (
-        <span className="text-white/40 font-normal tracking-normal lowercase italic ml-2">
-          · {subtitle}
+        <span style={{ color: '#8A8A80', textTransform: 'none', letterSpacing: '0.04em', fontWeight: 400 }}>
+          {' '}· {subtitle}
         </span>
       )}
     </div>
@@ -283,33 +298,39 @@ export default function FlowPreview({
 
       {/* FLOW PANEL OUTER CARD WITH GRID OVERLAY */}
       <div
-        className="relative w-full rounded-2xl bg-[#0a0a0c] overflow-hidden shadow-2xl"
+        className="relative w-full overflow-hidden shadow-2xl"
         style={{
-          border: '1px solid rgba(255, 255, 255, 0.12)',
-          padding: 'clamp(24px, 4vw, 48px)',
+          background: '#141413',
+          border: '1px solid #2E2E29',
+          borderRadius: '6px',
+          padding: 'clamp(28px, 3.5vw, 56px)',
         }}
       >
-        {/* Dark Blueprint 32px Grid Overlay */}
+        {/* Blueprint Grid Overlay */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-[0.25]"
+          className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px)
+              linear-gradient(#2E2E29 1px, transparent 1px),
+              linear-gradient(90deg, #2E2E29 1px, transparent 1px)
             `,
-            backgroundSize: "32px 32px",
+            backgroundSize: '48px 48px',
+            opacity: 0.35,
           }}
         />
 
         {/* 3-COLUMN FLOW BOARD GRID (SYMMETRICAL 1FR - 280PX - 1FR) */}
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_280px_1fr] xl:grid-cols-[1fr_300px_1fr] gap-8 lg:gap-12 xl:gap-14 items-center">
+        <div
+          className="relative z-10 grid grid-cols-1 lg:grid-cols-[minmax(0,1.12fr)_auto_minmax(0,1fr)] items-center"
+          style={{ gap: '44px clamp(32px, 4vw, 64px)' }}
+        >
 
           {/* LEFT COLUMN: ORGANISER & CONTRIBUTOR LANES */}
-          <div className="order-2 lg:order-1 flex flex-col gap-8 min-w-0">
+          <div className="order-2 lg:order-1 flex flex-col min-w-0" style={{ gap: '30px' }}>
             {leftGroups.map((group) => (
-              <div key={group.title} className="relative pl-6 pr-1">
-                {/* Vertical Timeline Guide Line (placed at left-[4px]) */}
-                <div className="absolute left-[4px] top-9 bottom-4 w-[1px] bg-white/15 z-0" />
+              <div key={group.title} className="relative" style={{ paddingLeft: '20px' }}>
+                {/* Vertical Timeline Line */}
+                <div className="absolute z-0" style={{ left: '4px', top: '44px', bottom: '22px', width: '1px', background: '#2E2E29' }} />
 
                 <GroupHeader
                   title={group.title}
@@ -318,7 +339,7 @@ export default function FlowPreview({
                 />
 
                 {/* Steps List */}
-                <div className="relative z-10 flex flex-col gap-3.5">
+                <div className="relative z-10 flex flex-col" style={{ gap: '10px' }}>
                   {group.steps.map((step) => {
                     const isActive = activeStep?.step.id === step.id;
                     const isDashed = group.dashedIds?.includes(step.id);
@@ -338,14 +359,14 @@ export default function FlowPreview({
             ))}
 
             {footerNote && (
-              <p className="font-mono text-xs italic text-white/30 pl-6 pt-1">
+              <p className="font-mono italic" style={{ fontSize: '10px', letterSpacing: '0.05em', color: '#56564E', paddingLeft: '12px', marginTop: '2px' }}>
                 {footerNote}
               </p>
             )}
           </div>
 
-          {/* CENTER: STAGE PHONE MOCKUP (MOBILE FIRST) */}
-          <div className="order-1 lg:order-2 flex flex-col items-center justify-center min-w-0 my-2 lg:my-0">
+          {/* CENTER: STAGE PHONE MOCKUP */}
+          <div className="order-1 lg:order-2 flex flex-col items-center min-w-0" style={{ gap: '14px' }}>
             <div
               className={[
                 "relative w-[260px] sm:w-[280px] aspect-[9/19.5] overflow-hidden rounded-[2.3rem] border-[6px] transition-all duration-300 bg-black shadow-2xl ring-1 ring-white/10",
@@ -409,11 +430,11 @@ export default function FlowPreview({
           </div>
 
           {/* RIGHT COLUMN: SYSTEM LANE */}
-          <div className="order-3 lg:order-3 flex flex-col gap-8 min-w-0">
+          <div className="order-3 lg:order-3 flex flex-col min-w-0" style={{ gap: '30px' }}>
             {rightGroups.map((group) => (
-              <div key={group.title} className="relative pl-6 pr-1">
-                {/* Vertical Timeline Guide Line (placed at left-[4px]) */}
-                <div className="absolute left-[4px] top-9 bottom-4 w-[1px] bg-white/15 z-0" />
+              <div key={group.title} className="relative" style={{ paddingLeft: '20px' }}>
+                {/* Vertical Timeline Line */}
+                <div className="absolute z-0" style={{ left: '4px', top: '44px', bottom: '22px', width: '1px', background: '#2E2E29' }} />
 
                 <GroupHeader
                   title={group.title}
@@ -422,7 +443,7 @@ export default function FlowPreview({
                 />
 
                 {/* Steps List */}
-                <div className="relative z-10 flex flex-col gap-3.5">
+                <div className="relative z-10 flex flex-col" style={{ gap: '10px' }}>
                   {group.steps.map((step) => {
                     const isActive = activeStep?.step.id === step.id;
                     const isDashed = group.dashedIds?.includes(step.id);

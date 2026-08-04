@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FadeUp } from "@/components/AnimatedElements";
+import PageHero from "@/components/PageHero";
 
 const links = [
   {
@@ -38,8 +39,9 @@ const links = [
 
 export default function ContactPage() {
   return (
-    <div style={{ paddingTop: "120px" }}>
-      <section className="section" style={{ paddingTop: "40px" }}>
+    <div style={{ paddingTop: "120px", position: "relative" }}>
+      <PageHero height={480} opacity={0.28} />
+      <section className="section" style={{ paddingTop: "40px", position: "relative", zIndex: 1 }}>
         <div className="container">
           <FadeUp style={{ marginBottom: "16px" }}>
             <p className="section-number">Contact</p>

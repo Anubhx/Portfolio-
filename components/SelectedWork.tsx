@@ -5,6 +5,16 @@ import Image from "next/image";
 import { FadeUp, StaggerChildren, staggerItem } from "./AnimatedElements";
 import { motion } from "framer-motion";
 
+// Tiny 10×10 base64 blur placeholders — generated from the real images
+const BLUR = {
+  zomato:
+    "data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAAF/8QAHhAAAQQBBQAAAAAAAAAAAAAAAQACBBEDBRUhUZL/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8ANp0bDJe9rybFEcpu2Ruj6WIpB//Z",
+  flowwise:
+    "data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAKAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIDBf/EABsQAAICAwEAAAAAAAAAAAAAAAABAhESIWGB/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMqKTlpeWNguLlkgA//Z",
+  contrast:
+    "data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAKAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIDBf/EACAQAAEDAgcAAAAAAAAAAAAAAAEAAhEDIgQSFDFBUZH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AbD6E0Wmu4Z+QSVlOdcY2lFz3QLj6pSeyg//Z",
+};
+
 const featuredWork = [
   {
     slug: "zomato-group-ordering",
@@ -19,6 +29,7 @@ const featuredWork = [
     accent: "#ef4444",
     screens: "22 screens",
     image: "/Zomato_Hero2.png",
+    blur: BLUR.zomato,
   },
   {
     slug: "flowwise",
@@ -39,6 +50,7 @@ const featuredWork = [
     accent: "#6366f1",
     screens: "40+ components",
     image: "/FlowWise_Hero2.png",
+    blur: BLUR.flowwise,
     links: {
       behance: "https://www.behance.net/gallery/247562999/Flow-Wise-Case-Study",
       github: "https://github.com/Anubhx/flow-wise",
@@ -63,6 +75,7 @@ const featuredWork = [
     accent: "#a3e635",
     screens: "Full-stack tool",
     image: "/images/contrast/hero.png",
+    blur: BLUR.contrast,
     links: {
       website: "https://getcontrast.vercel.app",
       github: "https://github.com/Anubhx/Contrast",
@@ -286,10 +299,12 @@ export default function SelectedWork() {
                           src={work.image}
                           alt={`${work.title} — case study preview`}
                           fill
+                          placeholder="blur"
+                          blurDataURL={work.blur}
                           style={{ 
                             objectFit: "cover", 
                             objectPosition: "center",
-                            transition: "opacity 0.25s ease" 
+                            transition: "opacity 0.6s ease"
                           }}
                           sizes="(max-width: 768px) 100vw, 50vw"
                           priority={i === 0}

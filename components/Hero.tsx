@@ -1,5 +1,10 @@
 "use client";
 
+// Tiny 10×10 blur placeholder for bg.png
+const BG_BLUR =
+  "data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAMF/8QAHBAAAgICAwAAAAAAAAAAAAAAAAEDEQIEMXKh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AKLgA9rO3WXiETOoJOpmAf/Z";
+
+
 import { motion, Easing } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -43,8 +48,11 @@ export default function Hero() {
           quality={85}
           sizes="100vw"
           className="hero-bg-image"
+          placeholder="blur"
+          blurDataURL={BG_BLUR}
           style={{
             objectFit: "cover",
+            transition: "opacity 0.8s ease",
           }}
         />
       </div>

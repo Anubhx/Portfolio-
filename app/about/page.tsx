@@ -2,6 +2,7 @@
 
 import { FadeUp, StaggerChildren, staggerItem } from "@/components/AnimatedElements";
 import { motion } from "framer-motion";
+import PageHero from "@/components/PageHero";
 
 const skills = [
   {
@@ -79,9 +80,10 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <div style={{ paddingTop: "120px" }}>
+    <div style={{ paddingTop: "120px", position: "relative" }}>
+      <PageHero height={520} opacity={0.3} />
       {/* Hero */}
-      <section className="section" style={{ paddingTop: "40px" }}>
+      <section className="section" style={{ paddingTop: "40px", position: "relative", zIndex: 1 }}>
         <div className="container">
           <FadeUp style={{ marginBottom: "24px" }}>
             <p className="section-number">About</p>

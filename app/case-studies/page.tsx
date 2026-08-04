@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 
 const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -44,9 +45,11 @@ export default function CaseStudiesPage() {
         style={{
           paddingTop: "120px",
           paddingBottom: "80px",
+          position: "relative",
         }}
       >
-        <div className="container">
+        <PageHero height={500} opacity={0.28} />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           {/* Breadcrumb */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
