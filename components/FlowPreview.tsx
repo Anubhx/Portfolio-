@@ -177,7 +177,7 @@ function StepRow({
       onBlur={onLeave}
       aria-current={isActive ? "step" : undefined}
       className={[
-        "group relative w-full text-left rounded-xl border px-5 py-4 transition-all duration-200 ease-out cursor-pointer min-w-0 min-h-[58px]",
+        "group relative w-full text-left rounded-xl border px-7 py-5 transition-all duration-200 ease-out cursor-pointer min-w-0 min-h-[58px]",
         "flex items-center justify-between gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ef4444]",
         isDashed ? "border-dashed" : "border-solid",
         isActive
