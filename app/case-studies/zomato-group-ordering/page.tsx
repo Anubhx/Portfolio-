@@ -51,7 +51,7 @@ export default function ZomatoCaseStudy() {
           <Prose>
             Someone opens their phone. It gets passed around. Everyone forgets their modifications.
             The bill arrives, and someone has to do math while the food gets cold.
-            The existing Zomato flow wasn&apos;t just inefficient — it was killing the joy of a shared meal.
+            The existing Zomato flow wasn&apos;t just inefficient - it was killing the joy of a shared meal.
           </Prose>
 
           <ImageShowcase
@@ -110,7 +110,7 @@ export default function ZomatoCaseStudy() {
           <TwoByTwoCards
             cards={[
               "Hosts control checkout and delivery.",
-              "Guests join via deep link — no install needed.",
+              "Guests join via deep link - no install needed.",
               "Real-time cart sync across all devices.",
               "Automatic proportional bill splitting.",
             ]}
@@ -151,7 +151,7 @@ export default function ZomatoCaseStudy() {
             lessons={[
               {
                 title: "Software is social",
-                desc: "The hardest part wasn't the UI. It was mapping human behavior — trust, awkwardness, generosity — into software states.",
+                desc: "The hardest part wasn't the UI. It was mapping human behavior - trust, awkwardness, generosity - into software states.",
               },
               {
                 title: "Deep links win",
@@ -163,7 +163,7 @@ export default function ZomatoCaseStudy() {
               },
               {
                 title: "Visibility builds trust",
-                desc: "Live cursors and real-time updates in the cart weren't flair — they proved to the group the system was working.",
+                desc: "Live cursors and real-time updates in the cart weren't flair - they proved to the group the system was working.",
               },
             ]}
           />

@@ -8,7 +8,7 @@ const experiences = [
   {
     company: "LTI Mindtree",
     role: "UX Designer & Design Engineer",
-    period: "2024 June — PRESENT",
+    period: "2024 June - PRESENT",
     description:
       "Leading UX design and UI engineering for enterprise and consumer experiences across insurance, e-commerce, HR, and AI products. Bridging the gap between Figma and production React code to deliver accessible, performant, and scalable systems.",
     currentFocus: [
@@ -22,7 +22,7 @@ const experiences = [
   {
     company: "Ecstasia",
     role: "Lead UX Designer",
-    period: "2024 November — 2025 March",
+    period: "2024 November - 2025 March",
     description:
       "Owned the end-to-end product experience for an event platform serving 1000+ attendees. Conducted research, designed wireframes and prototypes, and collaborated closely with developers throughout implementation.",
     tags: ["UX RESEARCH", "PROTOTYPING", "PRODUCT DESIGN", "WORKSHOPS", "COLLABORATION"],
@@ -30,7 +30,7 @@ const experiences = [
   {
     company: "Vedantu",
     role: "UX Designer",
-    period: "2023 January — 2023 May",
+    period: "2023 January - 2023 May",
     description:
       "Redesigned learning experiences through iterative testing and accessibility-first thinking. Focused on reducing cognitive load and improving usability across mobile and web touchpoints.",
     tags: ["EDTECH", "ACCESSIBILITY", "MOBILE DESIGN", "USABILITY", "TESTING"],
@@ -67,7 +67,7 @@ export default function ExperienceTimeline() {
                       priority
                     />
                   </div>
-                  
+
                   {/* Caption below image inside stamp */}
                   <div className="stamp-caption">
                     ANUBHAV RAJ • DESIGN ENGINEER
@@ -104,14 +104,14 @@ export default function ExperienceTimeline() {
                   Product Designer & Engineer with experience building high-scale systems.
                 </p>
                 <p style={{ color: "var(--muted-2)", fontSize: "17px", lineHeight: 1.7, marginBottom: "16px" }}>
-                  Currently shipping products at LTI Mindtree. I translate complex user workflows into 
-                  intuitive interfaces, writing both the Figma files and the production React components. 
+                  Currently shipping products at LTI Mindtree. I translate complex user workflows into
+                  intuitive interfaces, writing both the Figma files and the production React components.
                   <a href="/case-studies" style={{ color: "var(--accent)", textDecoration: "none", marginLeft: "4px" }}>
                     View Case Studies →
                   </a>
                 </p>
                 <p style={{ color: "var(--muted-2)", fontSize: "17px", lineHeight: 1.7 }}>
-                  I believe that a designer who codes and an engineer who understands design is the ultimate multiplier for any product team. 
+                  I believe that a designer who codes and an engineer who understands design is the ultimate multiplier for any product team.
                   My work is rooted in accessibility, behavioral psychology, and systems thinking.
                 </p>
               </div>
@@ -132,7 +132,7 @@ export default function ExperienceTimeline() {
                       className="timeline-item-wrapper"
                     >
                       <div className={`timeline-node ${isCurrent ? "current" : "past"}`} />
-                      
+
                       <article
                         className={`exp-card ${isCurrent ? "current-role-card" : "past-role-card"}`}
                       >
@@ -157,9 +157,9 @@ export default function ExperienceTimeline() {
                             </div>
                           )}
                         </div>
-                        
+
                         <p className="exp-desc">{exp.description}</p>
-                        
+
                         {isCurrent && exp.currentFocus && (
                           <div className="what-im-doing">
                             <h4 className="focus-heading">What I'm doing now</h4>
@@ -173,7 +173,7 @@ export default function ExperienceTimeline() {
                             </ul>
                           </div>
                         )}
-                        
+
                         <div className="exp-tags">
                           {exp.tags.map(tag => (
                             <span key={tag} className={`exp-tag ${isCurrent ? "current" : "past"}`} tabIndex={0}>{tag}</span>

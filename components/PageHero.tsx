@@ -9,7 +9,7 @@ const BG_BLUR =
 interface PageHeroProps {
   /** Height of the background image area. Defaults to 480px */
   height?: number | string;
-  /** How visible the image is — 0 to 1. Defaults to 0.35 (subtle) */
+  /** How visible the image is - 0 to 1. Defaults to 0.35 (subtle) */
   opacity?: number;
   /** Focal point of the image. Defaults to "right center" */
   objectPosition?: string;
@@ -58,7 +58,7 @@ export default function PageHero({
         />
       </div>
 
-      {/* Strong gradient — solid left (text side), image fades in from right */}
+      {/* Strong gradient - solid left (text side), image fades in from right */}
       <div
         style={{
           position: "absolute",

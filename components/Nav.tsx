@@ -60,7 +60,7 @@ export default function Nav() {
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             <Link
               href="/"
-              aria-label="Anubhav Raj — Home"
+              aria-label="Anubhav Raj - Home"
               style={{
                 textDecoration: "none",
                 display: "flex",
@@ -184,7 +184,7 @@ export default function Nav() {
               }}
             />
 
-            {/* Resume download — outlined bracket button */}
+            {/* Resume download - outlined bracket button */}
             <a
               href="https://drive.google.com/file/d/1DB9O83t1ClnK0F3wgfJiOF7gr3gDKIXC/view?usp=sharing"
               target="_blank"
@@ -195,7 +195,7 @@ export default function Nav() {
               Resume ↓
             </a>
 
-            {/* Contact CTA — accent outlined */}
+            {/* Contact CTA - accent outlined */}
             <Link
               href="/contact"
               className="btn-nav btn-nav-accent"

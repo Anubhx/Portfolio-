@@ -5,7 +5,7 @@ import Image from "next/image";
 import { FadeUp, StaggerChildren, staggerItem } from "./AnimatedElements";
 import { motion } from "framer-motion";
 
-// Tiny 10×10 base64 blur placeholders — generated from the real images
+// Tiny 10×10 base64 blur placeholders - generated from the real images
 const BLUR = {
   zomato:
     "data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAAF/8QAHhAAAQQBBQAAAAAAAAAAAAAAAQACBBEDBRUhUZL/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8ANp0bDJe9rybFEcpu2Ruj6WIpB//Z",
@@ -37,7 +37,7 @@ const featuredWork = [
     title: "FlowWise",
     subtitle: "A finance app that nudges instead of judges",
     description:
-      "Most finance apps act like historical ledgers. FlowWise was designed to help users before mistakes happen — through behavioral design, AI nudges, and offline-first privacy.",
+      "Most finance apps act like historical ledgers. FlowWise was designed to help users before mistakes happen - through behavioral design, AI nudges, and offline-first privacy.",
     tags: [
       "Product Design",
       "React Native",
@@ -62,7 +62,7 @@ const featuredWork = [
     title: "Contrast",
     subtitle: "Paste a URL. Get a score. Know what to fix.",
     description:
-      "A free design audit tool that checks any live URL for WCAG compliance, typography consistency, and spacing — returning a scored, shareable report in under 15 seconds. Built with Playwright, axe-core, and Gemini.",
+      "A free design audit tool that checks any live URL for WCAG compliance, typography consistency, and spacing - returning a scored, shareable report in under 15 seconds. Built with Playwright, axe-core, and Gemini.",
     tags: [
       "Engineering",
       "Accessibility",
@@ -291,18 +291,18 @@ export default function SelectedWork() {
                         </div>
                       </div>
 
-                      {/* Visual side — real project image */}
+                      {/* Visual side - real project image */}
                       <div
                         className={`order-1 w-full h-auto aspect-[16/10] rounded-[20px] overflow-hidden relative bg-[#090909] ${i % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
                       >
                         <Image
                           src={work.image}
-                          alt={`${work.title} — case study preview`}
+                          alt={`${work.title} - case study preview`}
                           fill
                           placeholder="blur"
                           blurDataURL={work.blur}
-                          style={{ 
-                            objectFit: "cover", 
+                          style={{
+                            objectFit: "cover",
                             objectPosition: "center",
                             transition: "opacity 0.6s ease"
                           }}
@@ -331,99 +331,99 @@ export default function SelectedWork() {
 
       {/* Selected Explorations */}
       {false && (
-      <section
-        aria-labelledby="explorations-heading"
-        className="section"
-        style={{
-          borderTop: "1px solid var(--border)",
-        }}
-      >
-        <div className="container">
-          <FadeUp style={{ marginBottom: "40px" }}>
-            <p className="section-number" style={{ marginBottom: "16px" }}>
-              Selected Explorations
-            </p>
-            <h2 id="explorations-heading" className="text-h3" style={{ color: "var(--muted-2)" }}>
-              Demonstrating range
-            </h2>
-          </FadeUp>
+        <section
+          aria-labelledby="explorations-heading"
+          className="section"
+          style={{
+            borderTop: "1px solid var(--border)",
+          }}
+        >
+          <div className="container">
+            <FadeUp style={{ marginBottom: "40px" }}>
+              <p className="section-number" style={{ marginBottom: "16px" }}>
+                Selected Explorations
+              </p>
+              <h2 id="explorations-heading" className="text-h3" style={{ color: "var(--muted-2)" }}>
+                Demonstrating range
+              </h2>
+            </FadeUp>
 
-          <StaggerChildren staggerDelay={0.08}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                gap: "1px",
-                background: "var(--border)",
-                border: "1px solid var(--border)",
-                borderRadius: "var(--radius)",
-                overflow: "hidden",
-              }}
-            >
-              {explorations.map((exp) => (
-                <motion.div
-                  key={exp.title}
-                  variants={staggerItem}
-                  style={{
-                    background: "var(--surface)",
-                    padding: "24px",
-                    transition: "background 0.2s",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.background =
-                      "var(--surface-2)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.background =
-                      "var(--surface)";
-                  }}
-                >
-                  <div
+            <StaggerChildren staggerDelay={0.08}>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                  gap: "1px",
+                  background: "var(--border)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "var(--radius)",
+                  overflow: "hidden",
+                }}
+              >
+                {explorations.map((exp) => (
+                  <motion.div
+                    key={exp.title}
+                    variants={staggerItem}
                     style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      marginBottom: "12px",
+                      background: "var(--surface)",
+                      padding: "24px",
+                      transition: "background 0.2s",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.background =
+                        "var(--surface-2)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.background =
+                        "var(--surface)";
                     }}
                   >
-                    <span className="tag tag-accent" style={{ fontSize: "10px" }}>
-                      {exp.category}
-                    </span>
-                    <span
+                    <div
                       style={{
-                        fontSize: "11px",
-                        color: "var(--muted)",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                        marginBottom: "12px",
                       }}
                     >
-                      {exp.year}
-                    </span>
-                  </div>
-                  <h3
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      color: "var(--heading)",
-                      letterSpacing: "-0.01em",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    {exp.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: "13px",
-                      color: "var(--muted-2)",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {exp.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </StaggerChildren>
-        </div>
-      </section>
+                      <span className="tag tag-accent" style={{ fontSize: "10px" }}>
+                        {exp.category}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "11px",
+                          color: "var(--muted)",
+                        }}
+                      >
+                        {exp.year}
+                      </span>
+                    </div>
+                    <h3
+                      style={{
+                        fontSize: "16px",
+                        fontWeight: 600,
+                        color: "var(--heading)",
+                        letterSpacing: "-0.01em",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      {exp.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: "13px",
+                        color: "var(--muted-2)",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {exp.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </StaggerChildren>
+          </div>
+        </section>
       )}
     </>
   );

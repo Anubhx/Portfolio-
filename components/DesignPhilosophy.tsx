@@ -16,14 +16,14 @@ const pillars = [
     label: "Engineered for Humans",
     title: "I close the gap between design and implementation",
     description:
-      "I write the React. I implement the design system. When I hand off to engineering, there's nothing lost in translation — because I am both sides of the conversation.",
+      "I write the React. I implement the design system. When I hand off to engineering, there's nothing lost in translation - because I am both sides of the conversation.",
   },
   {
     icon: "◈",
     label: "AI as Multiplier",
     title: "Move from insight to prototype in hours, not weeks",
     description:
-      "I use Claude, Cursor, Gemini, and n8n to accelerate research synthesis, generate design variants, and automate repetitive work — without compromising the quality of judgment.",
+      "I use Claude, Cursor, Gemini, and n8n to accelerate research synthesis, generate design variants, and automate repetitive work - without compromising the quality of judgment.",
   },
 ];
 

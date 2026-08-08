@@ -134,22 +134,52 @@ export function PhoneMockup({
 }) {
   return (
     <div className="flex flex-col items-center my-10 mx-auto w-full">
-      {/* Outer Device Chassis Border */}
-      <div
-        className="relative p-2.5 sm:p-3 rounded-[3rem] border border-neutral-700/60 bg-[#141416]"
-        style={{
-          boxShadow: "0 25px 60px -15px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(255,255,255,0.12)",
-        }}
-      >
-        {/* Inner 390x844 Phone Frame */}
-        <div className="relative w-[270px] sm:w-[310px] md:w-[340px] max-w-[390px] aspect-[390/844] overflow-hidden rounded-[2.3rem] border-[4px] border-black bg-black ring-1 ring-white/10">
-          {/* Notch */}
-          <div className="absolute left-1/2 top-2.5 z-20 h-4 w-24 -translate-x-1/2 rounded-full bg-black flex items-center justify-center pointer-events-none">
-            <div className="w-2.5 h-2.5 rounded-full bg-[#161616] mr-2" />
-            <div className="w-1.5 h-1.5 rounded-full bg-[#0d0d0d]" />
-          </div>
-          <div className="relative w-full h-full overflow-hidden bg-[#080808]">
-            <LightboxImage src={src} alt={alt} priority={priority} />
+      {/* iPhone 12 Pro Max Realistic Frame Outer Container */}
+      <div className="relative w-full max-w-[340px] sm:max-w-[380px] aspect-[433/888] select-none">
+        
+        {/* Side Antenna Bands */}
+        <div className="absolute inset-x-0 top-[10%] h-[2px] bg-gradient-to-r from-neutral-600 via-transparent to-neutral-600 z-10 pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-[10%] h-[2px] bg-gradient-to-r from-neutral-600 via-transparent to-neutral-600 z-10 pointer-events-none" />
+
+        {/* Side Hardware Buttons */}
+        {/* Mute Switch */}
+        <div className="absolute -left-[3px] top-[14%] w-[3px] h-[34px] rounded-l-sm bg-gradient-to-b from-[#232323] via-[#a4a6a8] to-[#232323] z-0" />
+        {/* Volume Up */}
+        <div className="absolute -left-[3px] top-[23%] w-[3px] h-[68px] rounded-l-sm bg-gradient-to-b from-[#232323] via-[#a4a6a8] to-[#232323] z-0" />
+        {/* Volume Down */}
+        <div className="absolute -left-[3px] top-[34%] w-[3px] h-[68px] rounded-l-sm bg-gradient-to-b from-[#232323] via-[#a4a6a8] to-[#232323] z-0" />
+        {/* Power Button */}
+        <div className="absolute -right-[3px] top-[25%] w-[3px] h-[107px] rounded-r-sm bg-gradient-to-b from-[#232323] via-[#a4a6a8] to-[#232323] z-0" />
+
+        {/* Metallic Edge Outer Chassis */}
+        <div
+          className="relative w-full h-full rounded-[3.8rem] p-[5px] bg-gradient-to-b from-[#626366] via-[#949699] to-[#626366] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.1)] z-10"
+        >
+          {/* Inner Black Bezel Frame */}
+          <div className="relative w-full h-full rounded-[3.5rem] p-[10px] sm:p-[12px] bg-[#1f1f1f] shadow-inner">
+            
+            {/* Screen Viewport Container */}
+            <div className="relative w-full h-full rounded-[2.6rem] overflow-hidden bg-black ring-1 ring-white/10">
+
+              {/* iPhone 12 Notch Assembly */}
+              <div className="absolute left-1/2 top-0 z-30 h-[26px] sm:h-[30px] w-[50%] -translate-x-1/2 rounded-b-[18px] bg-[#1f1f1f] flex items-center justify-center pointer-events-none">
+                {/* Speaker Grill */}
+                <div className="absolute top-[6px] h-[4px] w-[42px] rounded-full bg-[#030303] border border-neutral-800" />
+                {/* Camera Lens */}
+                <div className="absolute top-[14px] right-[24%] h-[8px] w-[8px] rounded-full bg-[#08081a] border border-[#12122b] shadow-inner flex items-center justify-center">
+                  <div className="w-[3px] h-[3px] rounded-full bg-[#1b2b48]" />
+                </div>
+              </div>
+
+              {/* Screen Image Container */}
+              <div className="relative w-full h-full overflow-y-auto overflow-x-hidden no-scrollbar bg-[#080808] scroll-smooth">
+                <LightboxImage src={src} alt={alt} priority={priority} />
+              </div>
+
+              {/* Home Bar Indicator at Bottom */}
+              <div className="absolute bottom-[8px] left-1/2 -translate-x-1/2 z-30 h-[4px] w-[35%] rounded-full bg-white/40 pointer-events-none" />
+
+            </div>
           </div>
         </div>
       </div>

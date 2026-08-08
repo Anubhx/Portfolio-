@@ -151,8 +151,8 @@ export default function FlowwiseCaseStudy() {
               { label: "Role", value: "Product Designer" },
               { label: "Timeline", value: "6 Weeks" },
               { label: "Stack", value: "React Native, SQLite" },
-              { 
-                label: "Links", 
+              {
+                label: "Links",
                 value: (
                   <div style={{ display: "flex", gap: "12px" }}>
                     <a href="https://www.behance.net/gallery/247562999/Flow-Wise-Case-Study" target="_blank" rel="noreferrer" style={{ color: "var(--heading)", textDecoration: "underline", textUnderlineOffset: "4px" }}>Behance ↗</a>
@@ -210,7 +210,7 @@ export default function FlowwiseCaseStudy() {
           />
 
           <InsightCallout>
-            FlowWise positions itself as proactive rather than retrospective — nudging before mistakes happen, not punishing after.
+            FlowWise positions itself as proactive rather than retrospective - nudging before mistakes happen, not punishing after.
           </InsightCallout>
         </EditorialSection>
 

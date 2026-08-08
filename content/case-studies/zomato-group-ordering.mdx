@@ -1,7 +1,7 @@
 ---
 title: "Zomato Group Ordering"
 subtitle: "Designing the Social Layer of Food Delivery"
-description: "A UX investigation into the coordination tax office teams pay every time they order food together — and how design can reduce 20 minutes of friction to a single flow."
+description: "A UX investigation into the coordination tax office teams pay every time they order food together - and how design can reduce 20 minutes of friction to a single flow."
 year: "2024"
 role: "Lead UX/UI Designer"
 tools: "Figma · Maze · Miro · FigJam"
@@ -11,7 +11,7 @@ tags: ["UX Research", "Interaction Design", "Prototyping", "Maze Testing", "Mobi
 
 ## Context
 
-Zomato serves over 350 million users. Food delivery is solved. But *group* food delivery remains a broken social experience — one that plays out daily in offices, hostels, and shared apartments across India.
+Zomato serves over 350 million users. Food delivery is solved. But *group* food delivery remains a broken social experience - one that plays out daily in offices, hostels, and shared apartments across India.
 
 The problem doesn't live inside the Zomato app. It lives in WhatsApp threads, Google Forms, and awkward UPI payment requests.
 
@@ -19,7 +19,7 @@ The problem doesn't live inside the Zomato app. It lives in WhatsApp threads, Go
 
 **Office teams spend 20–25 minutes coordinating lunch.**
 
-The pattern is always the same: someone nominates themselves as the "order person," collects requests over WhatsApp, tries to combine dishes across preferences, places one massive order, and then chases everyone for payment — often giving up and eating the cost themselves.
+The pattern is always the same: someone nominates themselves as the "order person," collects requests over WhatsApp, tries to combine dishes across preferences, places one massive order, and then chases everyone for payment - often giving up and eating the cost themselves.
 
 > Food wasn't the problem. Coordination was.
 
@@ -40,10 +40,10 @@ Key questions:
 ### Competitive Analysis
 
 Examined how other platforms handle group coordination:
-- **Splitwise** — solves payment splitting, not ordering
-- **Google Pay Groups** — handles bill splitting post-transaction
-- **Amazon Alexa Drop-In** — real-time group audio, not food
-- **DoorDash Group Order** — closest parallel; US-specific
+- **Splitwise** - solves payment splitting, not ordering
+- **Google Pay Groups** - handles bill splitting post-transaction
+- **Amazon Alexa Drop-In** - real-time group audio, not food
+- **DoorDash Group Order** - closest parallel; US-specific
 
 **Key gap found:** No existing tool closes the loop from *preference collection → unified order → payment split* in a single mobile flow.
 
@@ -51,7 +51,7 @@ Examined how other platforms handle group coordination:
 
 Mapped the end-to-end journey of a group order coordinator across three phases: **Collection, Ordering, Payment**.
 
-Pain points surfaced at every transition — but the biggest spikes appeared at two moments:
+Pain points surfaced at every transition - but the biggest spikes appeared at two moments:
 1. When someone changed their order after it was placed.
 2. When a payment reminder had to be sent more than once.
 
@@ -87,11 +87,11 @@ After research synthesis, I ran a solo **HMW workshop** to reframe the problems 
 ### Information Architecture
 
 Mapped three possible structural approaches:
-1. **Host-controlled model** — One person manages the entire cart
-2. **Distributed cart model** — Each person adds to a shared cart independently
-3. **Hybrid nudge model** — AI-suggested orders with optional override
+1. **Host-controlled model** - One person manages the entire cart
+2. **Distributed cart model** - Each person adds to a shared cart independently
+3. **Hybrid nudge model** - AI-suggested orders with optional override
 
-Selected **Distributed cart with host confirmation** as the mental model — it matches existing social expectations (everyone "picks their own") while keeping coordination structured.
+Selected **Distributed cart with host confirmation** as the mental model - it matches existing social expectations (everyone "picks their own") while keeping coordination structured.
 
 ### Wireframes → High-Fidelity
 
@@ -109,7 +109,7 @@ Moved from sketches to low-fidelity wireframes to **22 high-fidelity screens** a
 Early prototypes showed a cluttered group status view. Testers couldn't distinguish their item from others'. Fixed with color-coded avatars and clear item ownership markers.
 
 ### Round 2: Payment timing
-Originally showed payment split at checkout. Users were confused — they wanted to *agree* to amounts before the order, not after. Moved payment to the pre-order confirmation step.
+Originally showed payment split at checkout. Users were confused - they wanted to *agree* to amounts before the order, not after. Moved payment to the pre-order confirmation step.
 
 ### Round 3: Invitation friction
 The initial invite flow required app downloads for all group members. Simplified to a sharable link that opens a lightweight web experience for non-Zomato users.
@@ -141,11 +141,11 @@ The validated prototype demonstrates:
 
 **What I learned:**
 
-Collaborative experiences don't fail because of bad technology. They fail because of unmet emotional expectations. The key insight wasn't about features — it was about trust. Once I understood that users weren't afraid of *paying*, they were afraid of *being seen as difficult*, the design direction became clear.
+Collaborative experiences don't fail because of bad technology. They fail because of unmet emotional expectations. The key insight wasn't about features - it was about trust. Once I understood that users weren't afraid of *paying*, they were afraid of *being seen as difficult*, the design direction became clear.
 
 **What I'd improve:**
 
 - Real-time sync state management (currently designed as polling; would benefit from WebSocket architecture)
-- Push notification strategy — when and how to nudge without being intrusive
+- Push notification strategy - when and how to nudge without being intrusive
 - Smarter AI-powered meal suggestions based on group ordering history
 - Accessibility audit of the final prototype (touch target sizing on group invite flow needs review)

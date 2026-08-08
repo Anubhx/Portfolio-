@@ -227,12 +227,12 @@ export default function AboutSnapshot() {
                 Anubhav bridges it.
               </p>
               <p className="text-body" style={{ marginBottom: "16px", color: "var(--muted-2)", fontSize: "14px" }}>
-                He translates research insights into production-ready experiences — writing the
+                He translates research insights into production-ready experiences - writing the
                 Figma files and the React components. He believes accessibility, clarity, and
                 empathy aren&apos;t soft skills. They&apos;re competitive advantages.
               </p>
               <p className="text-body" style={{ marginBottom: "32px", color: "var(--muted-2)", fontSize: "14px" }}>
-                At LTI Mindtree, he works across insurance, e-commerce, HR, and AI products —
+                At LTI Mindtree, he works across insurance, e-commerce, HR, and AI products -
                 always moving from user problem to shipped solution.
               </p>
 

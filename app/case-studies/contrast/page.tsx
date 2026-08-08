@@ -23,7 +23,7 @@ export default function ContrastCaseStudy() {
         {/* HERO */}
         <CaseStudyHero
           title={<><i>Contrast</i>, A design audit tool built for designers, not developers.</>}
-          subtitle="A free, public web tool that audits any live URL for design quality and accessibility compliance — returning a scored, shareable report in under 15 seconds."
+          subtitle="A free, public web tool that audits any live URL for design quality and accessibility compliance - returning a scored, shareable report in under 15 seconds."
         >
           <MetricsBar
             metrics={[
@@ -31,8 +31,8 @@ export default function ContrastCaseStudy() {
               { label: "Type", value: "Engineering Project" },
               { label: "Timeline", value: "2 Weeks (MVP)" },
               { label: "Stack", value: "Next.js · Playwright · axe-core · Gemini API · Vercel KV" },
-              { 
-                label: "Links", 
+              {
+                label: "Links",
                 value: (
                   <div style={{ display: "flex", gap: "12px" }}>
                     <a href="https://getcontrast.vercel.app" target="_blank" rel="noreferrer" style={{ color: "var(--heading)", textDecoration: "underline", textUnderlineOffset: "4px" }}>Live Site ↗</a>
@@ -47,7 +47,7 @@ export default function ContrastCaseStudy() {
         {/* HERO IMAGE */}
         <ImageShowcase
           src="/images/contrast/hero.png"
-          alt="Contrast — Design Audit Tool"
+          alt="Contrast - Design Audit Tool"
           priority
           breakout
         />
@@ -55,13 +55,13 @@ export default function ContrastCaseStudy() {
         {/* 01 THE PROBLEM */}
         <EditorialSection number="01" title="The Problem">
           <InsightQuote>
-            Any designer should be able to paste a URL and know — in 10 seconds — whether their product is accessible.
+            Any designer should be able to paste a URL and know - in 10 seconds - whether their product is accessible.
           </InsightQuote>
           <Prose>
-            Manual WCAG reviews are slow, require expertise, and are rarely done pre-launch. Enterprise tools like Siteimprove and Deque are priced out of reach for most teams. Free tools like axe and Lighthouse output raw JSON or developer dashboards — unusable by most designers.
+            Manual WCAG reviews are slow, require expertise, and are rarely done pre-launch. Enterprise tools like Siteimprove and Deque are priced out of reach for most teams. Free tools like axe and Lighthouse output raw JSON or developer dashboards - unusable by most designers.
           </Prose>
           <Prose>
-            AI-generated UIs are everywhere in 2025. Most of them fail basic accessibility checks. There is a real, growing need for a tool that catches this fast — and presents findings in a way designers can actually act on.
+            AI-generated UIs are everywhere in 2025. Most of them fail basic accessibility checks. There is a real, growing need for a tool that catches this fast - and presents findings in a way designers can actually act on.
           </Prose>
 
           <TwoByTwoCards
@@ -83,18 +83,18 @@ export default function ContrastCaseStudy() {
             Contrast audits any publicly accessible URL across four dimensions: color contrast ratios (WCAG AA), alt text coverage, typography consistency, and spacing grid alignment. The entire audit completes in under 15 seconds, powered by a Playwright headless browser injecting axe-core directly into the page DOM.
           </Prose>
           <Prose>
-            The output is a scored, shareable report — not a wall of error codes. Each result gets a unique URL that can be shared on LinkedIn or downloaded as a PDF. The tool also generates a social card (OG image) so audit scores can be embedded directly in posts.
+            The output is a scored, shareable report - not a wall of error codes. Each result gets a unique URL that can be shared on LinkedIn or downloaded as a PDF. The tool also generates a social card (OG image) so audit scores can be embedded directly in posts.
           </Prose>
 
           <InsightCallout title="Scoring Logic">
-            Overall = (Contrast × 0.4) + (Alt Text × 0.3) + (Typography × 0.15) + (Spacing × 0.15). Contrast is weighted highest — it has the greatest direct impact on users with low vision or color blindness.
+            Overall = (Contrast × 0.4) + (Alt Text × 0.3) + (Typography × 0.15) + (Spacing × 0.15). Contrast is weighted highest - it has the greatest direct impact on users with low vision or color blindness.
           </InsightCallout>
         </EditorialSection>
 
         {/* 03 HOW IT WAS BUILT */}
         <EditorialSection number="03" title="How It Was Built">
           <InsightQuote>
-            A full backend pipeline — from headless browser to scored, stored, shareable result.
+            A full backend pipeline - from headless browser to scored, stored, shareable result.
           </InsightQuote>
           <Prose>
             The audit pipeline runs as a Next.js API route. When a URL is submitted, the backend calls Browserless.io (a hosted Playwright service) which visits the page in a real Chromium instance. A custom DOM evaluation script extracts text color pairs, image alt attributes, font families, and spacing values. axe-core is injected into the page for WCAG violation detection.
@@ -105,7 +105,7 @@ export default function ContrastCaseStudy() {
 
           <TwoByTwoCards
             cards={[
-              "Playwright via Browserless.io — real browser, real DOM",
+              "Playwright via Browserless.io - real browser, real DOM",
               "axe-core injected for WCAG AA violation detection",
               "Gemini 1.5 Flash for plain-English fix suggestions",
               "Vercel KV (Redis) for persistent shareable result URLs",
@@ -124,7 +124,7 @@ export default function ContrastCaseStudy() {
             350MB of Playwright can&apos;t run in a 50MB serverless function. So it doesn&apos;t.
           </InsightQuote>
           <Prose>
-            Vercel serverless functions have a 50MB bundle limit. Playwright + Chromium weighs ~350MB. The solution: offload the browser to Browserless.io&apos;s free tier (1,000 sessions/month). The Next.js API route stays thin — it orchestrates, stores, and scores. The browser work happens remotely.
+            Vercel serverless functions have a 50MB bundle limit. Playwright + Chromium weighs ~350MB. The solution: offload the browser to Browserless.io&apos;s free tier (1,000 sessions/month). The Next.js API route stays thin - it orchestrates, stores, and scores. The browser work happens remotely.
           </Prose>
 
           <InsightCallout title="Stack">
@@ -132,7 +132,7 @@ export default function ContrastCaseStudy() {
           </InsightCallout>
 
           <Prose>
-            Rate limiting is applied at 10 audits per IP per hour (stored in Vercel KV to survive cold starts). URL results are cached for 24 hours to avoid burning Browserless sessions on repeated audits of the same URL. The tool itself is required to score 90+ on its own audit — enforced as a pre-launch checklist item.
+            Rate limiting is applied at 10 audits per IP per hour (stored in Vercel KV to survive cold starts). URL results are cached for 24 hours to avoid burning Browserless sessions on repeated audits of the same URL. The tool itself is required to score 90+ on its own audit - enforced as a pre-launch checklist item.
           </Prose>
         </EditorialSection>
 
@@ -147,12 +147,12 @@ export default function ContrastCaseStudy() {
             ]}
           />
           <Prose>
-            V1 shipped in two weeks: URL input with validation, full Playwright audit pipeline, scored results page, shareable URLs, OG image generation, and PDF report via browser print. The Gemini integration generates human-readable fix suggestions for each finding — no accessibility jargon, just instructions.
+            V1 shipped in two weeks: URL input with validation, full Playwright audit pipeline, scored results page, shareable URLs, OG image generation, and PDF report via browser print. The Gemini integration generates human-readable fix suggestions for each finding - no accessibility jargon, just instructions.
           </Prose>
 
           <TwoByTwoCards
             cards={[
-              "Scored results page at /audit/[id] — persistent, shareable",
+              "Scored results page at /audit/[id] - persistent, shareable",
               "OG image generation via @vercel/og for social sharing",
               "Gemini 1.5 Flash: plain-English fixes for every finding",
               "PDF report via print-optimised /audit/[id]/report route",
@@ -174,7 +174,7 @@ export default function ContrastCaseStudy() {
               },
               {
                 title: "Caching is a product decision",
-                desc: "24-hour URL result caching prevents redundant browser sessions — but it also means repeated visits to the same URL feel instant. Performance and cost optimization overlapped.",
+                desc: "24-hour URL result caching prevents redundant browser sessions - but it also means repeated visits to the same URL feel instant. Performance and cost optimization overlapped.",
               },
               {
                 title: "Dogfooding is non-negotiable",

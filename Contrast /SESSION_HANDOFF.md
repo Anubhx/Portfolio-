@@ -1,4 +1,4 @@
-# Contrast MVP — Session Handoff & Continuation Guide
+# Contrast MVP - Session Handoff & Continuation Guide
 ## What was built, what's working, what to do next
 
 ---
@@ -85,7 +85,7 @@ contrast/
 ├── constants/
 │   └── index.ts
 │
-├── postcss.config.js                     ← Fixed (was .mjs — DO NOT change back)
+├── postcss.config.js                     ← Fixed (was .mjs - DO NOT change back)
 └── tailwind.config.ts
 ```
 
@@ -95,10 +95,10 @@ contrast/
 
 | File | Why |
 |---|---|
-| `postcss.config.js` | HMR fix — changing back to .mjs breaks Tailwind in dev |
-| `app/globals.css` | All design tokens live here — changing breaks the entire visual system |
-| `lib/types.ts` | All components depend on these strict types — any change cascades |
-| `app/api/audit/route.ts` | Core pipeline — only edit if you're adding a new check |
+| `postcss.config.js` | HMR fix - changing back to .mjs breaks Tailwind in dev |
+| `app/globals.css` | All design tokens live here - changing breaks the entire visual system |
+| `lib/types.ts` | All components depend on these strict types - any change cascades |
+| `app/api/audit/route.ts` | Core pipeline - only edit if you're adding a new check |
 
 ---
 
@@ -107,7 +107,7 @@ contrast/
 ```bash
 # .env.local
 BROWSERLESS_TOKEN=          # browserless.io free tier (1,000 sessions/month)
-GEMINI_API_KEY=             # Google AI Studio — Gemini 1.5 Flash (free)
+GEMINI_API_KEY=             # Google AI Studio - Gemini 1.5 Flash (free)
 NEXT_PUBLIC_URL=            # Your Vercel URL after first deploy
 KV_REST_API_URL=            # Auto-added when you connect Vercel KV
 KV_REST_API_TOKEN=          # Auto-added when you connect Vercel KV
@@ -133,7 +133,7 @@ npx tsc --noEmit     # Type check (passes cleanly)
 
 ## What's NOT done yet (next priorities)
 
-### Priority 1 — OG image (`app/api/og/[id]/route.tsx`)
+### Priority 1 - OG image (`app/api/og/[id]/route.tsx`)
 The route exists but may not be rendering the Instrument Serif font correctly.
 Fix needed:
 ```tsx
@@ -148,7 +148,7 @@ return new ImageResponse(<YourOGComponent />, {
 })
 ```
 
-### Priority 2 — Share button (copy to clipboard)
+### Priority 2 - Share button (copy to clipboard)
 In `ScoreHeader.tsx`, the Share button likely has no handler yet.
 ```tsx
 async function handleShare() {
@@ -160,7 +160,7 @@ async function handleShare() {
 // Button label: copied ? 'Copied!' : 'Share'
 ```
 
-### Priority 3 — PDF download (print route)
+### Priority 3 - PDF download (print route)
 `/audit/[id]/report` exists. Add a window.print() trigger:
 ```tsx
 // In the report page, add:
@@ -177,7 +177,7 @@ And add print CSS in globals.css:
 }
 ```
 
-### Priority 4 — Rate limiting
+### Priority 4 - Rate limiting
 Currently done in-memory (resets on cold start). For production:
 ```ts
 // In app/api/audit/route.ts, replace in-memory Map with:
@@ -187,7 +187,7 @@ if (calls === 1) await kv.expire(key, 3600) // 1 hour window
 if (calls > 10) return NextResponse.json({ error: '...' }, { status: 429 })
 ```
 
-### Priority 5 — URL result caching
+### Priority 5 - URL result caching
 Prevent burning Browserless sessions on the same URL:
 ```ts
 // Before running audit:
@@ -199,7 +199,7 @@ if (cached) return NextResponse.json(cached)
 await kv.set(urlKey, { id, result }, { ex: 86400 }) // 24h cache
 ```
 
-### Priority 6 — Recent audits on landing page
+### Priority 6 - Recent audits on landing page
 `RecentAudits.tsx` is likely still hardcoded. Replace with:
 ```ts
 // New route: app/api/recent/route.ts
@@ -209,7 +209,7 @@ await kv.set(urlKey, { id, result }, { ex: 86400 }) // 24h cache
 
 ---
 
-## Gemini prompt (current — in lib/gemini.ts)
+## Gemini prompt (current - in lib/gemini.ts)
 Make sure your prompt ends with a strict JSON-only instruction:
 ```ts
 const prompt = `
@@ -268,7 +268,7 @@ export function getGrade(score: number) {
 ```bash
 # 1. Push to GitHub
 git add .
-git commit -m "feat: functional MVP — Playwright + axe + Gemini pipeline"
+git commit -m "feat: functional MVP - Playwright + axe + Gemini pipeline"
 git push origin main
 
 # 2. Import to Vercel
@@ -300,18 +300,18 @@ vercel env pull .env.local
 
 Paste this entire document at the start of the next session, then describe exactly what you want to fix or build. The most useful things to say:
 
-- "The OG image route isn't rendering the font — fix it"
-- "The Share button doesn't work — add clipboard copy"
-- "Recent audits on the landing page are hardcoded — make them real"
-- "Rate limiting resets on cold start — move it to Vercel KV"
+- "The OG image route isn't rendering the font - fix it"
+- "The Share button doesn't work - add clipboard copy"
+- "Recent audits on the landing page are hardcoded - make them real"
+- "Rate limiting resets on cold start - move it to Vercel KV"
 - "Add a custom domain to Vercel"
 - "Write the 5 LinkedIn posts for launch"
 
-Do NOT say: "fix the whole thing" — be specific about one feature at a time.
+Do NOT say: "fix the whole thing" - be specific about one feature at a time.
 
 ---
 
-## Browserless free tier — when you run out
+## Browserless free tier - when you run out
 
 Signs: audits return 500 errors, Browserless dashboard shows session count near 1,000.
 
@@ -323,4 +323,4 @@ const token = tokens[Date.now() % tokens.length]
 
 ---
 
-*Last updated: Jun 2025 — Contrast v1 MVP*
+*Last updated: Jun 2025 - Contrast v1 MVP*

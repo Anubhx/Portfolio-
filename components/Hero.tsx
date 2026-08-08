@@ -57,7 +57,7 @@ export default function Hero() {
         />
       </div>
 
-      {/* ── Left-to-right gradient — keeps text legible ── */}
+      {/* ── Left-to-right gradient - keeps text legible ── */}
       <div
         aria-hidden="true"
         className="hero-text-gradient"
@@ -69,7 +69,7 @@ export default function Hero() {
         }}
       />
 
-      {/* ── Engineering grid — discovered, not noticed ── */}
+      {/* ── Engineering grid - discovered, not noticed ── */}
       <div
         aria-hidden="true"
         style={{
@@ -111,7 +111,7 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Headline — 57% width, tighter scale */}
+        {/* Headline - 57% width, tighter scale */}
         <h1
           style={{
             fontFamily: "var(--font-display)",
@@ -205,7 +205,7 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* Proof points — micro metrics */}
+        {/* Proof points - micro metrics */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

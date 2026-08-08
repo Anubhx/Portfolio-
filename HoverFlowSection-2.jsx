@@ -18,7 +18,7 @@ import { useState } from "react";
  */
 
 // Placeholder "screens" so this preview renders with zero network
-// calls — each one is a generated SVG data URI. Replace `ph(...)`
+// calls - each one is a generated SVG data URI. Replace `ph(...)`
 // calls below with your own imported screenshots (see notes above).
 const PALETTE = [
   "#f5c451", "#e8734a", "#8b2e3f", "#7a8ca8",

@@ -1,5 +1,5 @@
 # Component Architecture & Folder Structure
-## Contrast — Design Audit Tool
+## Contrast - Design Audit Tool
 
 ---
 
@@ -21,12 +21,12 @@ contrast/
 │   │
 │   └── api/
 │       ├── audit/
-│       │   ├── route.ts            # POST — trigger audit
+│       │   ├── route.ts            # POST - trigger audit
 │       │   └── [id]/
-│       │       └── route.ts        # GET — fetch stored result
+│       │       └── route.ts        # GET - fetch stored result
 │       └── og/
 │           └── [id]/
-│               └── route.tsx       # GET — OG share image
+│               └── route.tsx       # GET - OG share image
 │
 ├── components/
 │   ├── ui/                         # Pure display, no logic
@@ -94,7 +94,7 @@ interface CategoryCardProps {
   label: string           // e.g. "CONTRAST RATIO"
   score: number           // 0–100
   issueCount: number      // Number of issues in this category
-  icon?: React.ReactNode  // Optional. Keep it simple — a single SVG path
+  icon?: React.ReactNode  // Optional. Keep it simple - a single SVG path
 }
 ```
 
@@ -342,10 +342,10 @@ export const RATE_LIMIT = {
 export const ERROR_MESSAGES = {
   invalidUrl:    "That doesn't look like a valid URL. Try including https://",
   unreachable:   "We couldn't load that page. Is it publicly accessible?",
-  loginWall:     "This page might be behind a login — we can only audit public pages",
+  loginWall:     "This page might be behind a login - we can only audit public pages",
   rateLimit:     "You've run 10 audits this hour. Try again later.",
   timeout:       "This page is taking longer than usual.",
   generic:       "Something went wrong on our end. Try again in a moment.",
-  geminiLimit:   "AI suggestions are resting — your audit scores are still accurate.",
+  geminiLimit:   "AI suggestions are resting - your audit scores are still accurate.",
 } as const
 ```

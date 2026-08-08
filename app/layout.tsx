@@ -44,14 +44,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://anubhavportfolio.vercel.app",
-    title: "Anubhav Raj — UX Designer & Design Engineer",
+    title: "Anubhav Raj - UX Designer & Design Engineer",
     description:
       "UX Designer, Design Engineer, and Agentic Builder at LTI Mindtree. I turn messy problems into products people actually use.",
     siteName: "Anubhav Raj",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anubhav Raj — UX Designer & Design Engineer",
+    title: "Anubhav Raj - UX Designer & Design Engineer",
     description:
       "UX Designer, Design Engineer, and Agentic Builder at LTI Mindtree.",
     creator: "@anubhavRaj0",

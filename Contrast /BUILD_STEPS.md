@@ -1,21 +1,21 @@
-# Build Steps — Contrast (Design Audit Tool)
+# Build Steps - Contrast (Design Audit Tool)
 ## From zero to live URL in 14 days
 **Stack:** Next.js 14 · TypeScript · Tailwind · Browserless.io · Vercel KV · Gemini API (free) · Vercel
 
 ---
 
-## Before you start — accounts to create (all free)
+## Before you start - accounts to create (all free)
 
 | Service | Why | URL |
 |---|---|---|
 | Vercel | Deploy frontend + API routes | vercel.com |
-| Browserless.io | Headless browser (Playwright in the cloud) | browserless.io — free tier: 1,000 sessions/month |
+| Browserless.io | Headless browser (Playwright in the cloud) | browserless.io - free tier: 1,000 sessions/month |
 | Google AI Studio | Gemini API key (free) | aistudio.google.com |
 | Vercel KV | Store audit results (Redis) | In your Vercel dashboard |
 
 ---
 
-## Day 1 — Project setup
+## Day 1 - Project setup
 
 ### 1.1 Create Next.js project
 
@@ -59,7 +59,7 @@ export const metadata = {
 
 ### 1.4 Set up design tokens
 
-Create `app/globals.css` — replace Tailwind defaults with your token system from the design system doc. Paste in all CSS custom properties (dark + light mode).
+Create `app/globals.css` - replace Tailwind defaults with your token system from the design system doc. Paste in all CSS custom properties (dark + light mode).
 
 ### 1.5 Set up environment variables
 
@@ -74,7 +74,7 @@ KV_REST_API_TOKEN=     # Added automatically when you connect Vercel KV
 
 ---
 
-## Day 2 — Landing page UI
+## Day 2 - Landing page UI
 
 Build the page with NO backend logic yet. Use hardcoded data.
 
@@ -92,7 +92,7 @@ Build these sections in order:
 **Hero:**
 ```tsx
 // H1: "Audit any website's design in 10 seconds. Free."
-// Left-aligned, NOT centered — this makes it feel like a tool, not a marketing page
+// Left-aligned, NOT centered - this makes it feel like a tool, not a marketing page
 // Below: single line "Checks contrast · alt text · typography · spacing"
 ```
 
@@ -134,7 +134,7 @@ extend: {
 
 ---
 
-## Day 3 — Results page UI
+## Day 3 - Results page UI
 
 Still no backend. Build with hardcoded mock data.
 
@@ -209,7 +209,7 @@ At the end of Day 3 you should have:
 
 ---
 
-## Day 4 — Audit API (the core engine)
+## Day 4 - Audit API (the core engine)
 
 This is the hardest day. Break it into small pieces.
 
@@ -465,7 +465,7 @@ export function auditTypography(fonts: string[]) {
     issues.push({
       severity: 'warn' as const,
       category: 'typography' as const,
-      message: `${count} font families detected — consider reducing to 2`,
+      message: `${count} font families detected - consider reducing to 2`,
       value: `${count}`
     })
   }
@@ -538,7 +538,7 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
 
 ---
 
-## Day 5 — Wire up the flow
+## Day 5 - Wire up the flow
 
 Connect the UI to the API.
 
@@ -588,7 +588,7 @@ export default async function AuditPage({ params }: { params: { id: string } }) 
 
 ---
 
-## Day 6 — Share card (OG image)
+## Day 6 - Share card (OG image)
 
 ### 6.1 Create OG image route (`app/api/og/[id]/route.tsx`)
 
@@ -609,7 +609,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
         fontFamily: 'Inter',
       }}>
         <div style={{ color: '#52525C', fontSize: '13px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-          CONTRAST — Design Audit
+          CONTRAST - Design Audit
         </div>
         <div style={{ color: '#8A8A96', fontSize: '14px', marginTop: '32px' }}>
           Audit for
@@ -637,7 +637,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const result = await getAuditResult(params.id)
   return {
-    title: `${result?.url} scored ${result?.scores.overall}/100 — Contrast`,
+    title: `${result?.url} scored ${result?.scores.overall}/100 - Contrast`,
     openGraph: {
       images: [`/api/og/${params.id}`],
     },
@@ -647,7 +647,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
 ---
 
-## Day 7 — PDF report + polish
+## Day 7 - PDF report + polish
 
 ### 7.1 Simple PDF approach
 
@@ -655,7 +655,7 @@ Don't use a PDF library. Use the browser's print:
 
 ```tsx
 // In results page, add a "Download Report" button
-// Route: /audit/[id]/report — a print-optimised version of the results
+// Route: /audit/[id]/report - a print-optimised version of the results
 
 // app/audit/[id]/report/page.tsx
 // Same data, but with @media print CSS that removes buttons and backgrounds
@@ -685,7 +685,7 @@ Run each one and check that the scores make intuitive sense. If Stripe scores be
 
 ---
 
-## Day 8-9 — Vercel deploy
+## Day 8-9 - Vercel deploy
 
 ### 8.1 Push to GitHub
 
@@ -703,9 +703,9 @@ git push -u origin main
 1. Go to vercel.com → New Project → Import your repo
 2. Framework: Next.js (auto-detected)
 3. Add environment variables:
-   - `BROWSERLESS_TOKEN` — from browserless.io dashboard
-   - `GEMINI_API_KEY` — from aistudio.google.com (for V2)
-   - `NEXT_PUBLIC_URL` — your Vercel URL (add after first deploy)
+   - `BROWSERLESS_TOKEN` - from browserless.io dashboard
+   - `GEMINI_API_KEY` - from aistudio.google.com (for V2)
+   - `NEXT_PUBLIC_URL` - your Vercel URL (add after first deploy)
 
 ### 8.3 Add Vercel KV
 
@@ -724,7 +724,7 @@ Run 5 real audits on the live site. Check:
 
 ---
 
-## Day 10-11 — Custom domain + final checks
+## Day 10-11 - Custom domain + final checks
 
 ### 10.1 Custom domain
 
@@ -757,15 +757,15 @@ In Vercel → Settings → Domains:
 
 ---
 
-## Day 12-14 — LinkedIn content launch
+## Day 12-14 - LinkedIn content launch
 
 See the content strategy in the main project brief. Order of posts:
 
-**Day 12:** Post 1 (build in public announcement) — include the live URL as "here's where I'll share the result"
+**Day 12:** Post 1 (build in public announcement) - include the live URL as "here's where I'll share the result"
 
 **Day 13:** Run live audits of top Indian startup sites. Screenshot the results.
 
-**Day 14:** Post 3 (the big launch post — "I audited the top 10 Indian startup websites")
+**Day 14:** Post 3 (the big launch post - "I audited the top 10 Indian startup websites")
 
 **One week later:** Post 5 (data insights after N audits)
 
@@ -815,7 +815,7 @@ Free tier limits: 15 requests/minute, 1 million tokens/day. More than enough for
 | Problem | Fix |
 |---|---|
 | Browserless timeout | Add `timeout: 15000` to page.goto, return partial results if timeout |
-| `rgba(0, 0, 0, 0)` background | Skip transparent backgrounds in contrast check — they inherit from parent |
+| `rgba(0, 0, 0, 0)` background | Skip transparent backgrounds in contrast check - they inherit from parent |
 | Vercel function timeout | Default is 10s on free tier. Set `export const maxDuration = 30` in the API route (requires Vercel Pro) or use Vercel's background functions |
 | KV not working locally | Use `npm install @vercel/kv` and run `vercel env pull` to get local env vars |
 | OG image not updating | OG images are cached aggressively. Add a query param: `/api/og/${id}?v=1` |
@@ -823,4 +823,4 @@ Free tier limits: 15 requests/minute, 1 million tokens/day. More than enough for
 
 ---
 
-*Built by Anubhav Raj — ship the 80% version first, polish after users arrive.*
+*Built by Anubhav Raj - ship the 80% version first, polish after users arrive.*

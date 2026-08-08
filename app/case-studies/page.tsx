@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 
 const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -32,7 +31,7 @@ const caseStudies = [
     title: "Contrast",
     metadata: "DESIGNER + ENGINEER / ACCESSIBILITY TOOL",
     description:
-      "A free design audit tool that checks any live URL for WCAG compliance, typography, and spacing — returning a scored, shareable report in under 15 seconds. Built with Playwright, axe-core, and Gemini.",
+      "A free design audit tool that checks any live URL for WCAG compliance, typography, and spacing - returning a scored, shareable report in under 15 seconds. Built with Playwright, axe-core, and Gemini.",
     image: "/images/contrast/hero.png",
     link: "/case-studies/contrast",
   },
@@ -121,7 +120,7 @@ export default function CaseStudiesPage() {
               >
                 Product experiences shaped through research, systems thinking, and implementation. From collaborative ordering experiences to AI-assisted finance products, these case studies document how I approach ambiguity and turn it into usable systems.
               </p>
-              
+
               <Link
                 href="#gallery"
                 style={{
@@ -216,7 +215,7 @@ export default function CaseStudiesPage() {
                   textTransform: "uppercase",
                 }}
               >
-              (03 Selected)
+                (03 Selected)
               </span>
             </div>
 
@@ -238,11 +237,12 @@ export default function CaseStudiesPage() {
                         src={study.image}
                         alt={study.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                         className="gallery-image"
                         style={{ objectFit: "cover" }}
                       />
                     </div>
-                    
+
                     {/* Content */}
                     <div style={{ padding: "32px 0 0 0" }}>
                       <span
@@ -295,10 +295,8 @@ export default function CaseStudiesPage() {
           <section
             style={{
               paddingTop: "120px",
-              paddingBottom: "120px",
+              paddingBottom: "40px",
               borderTop: "1px solid rgba(255,255,255,0.06)",
-              borderBottom: "1px solid rgba(255,255,255,0.06)",
-              marginBottom: "120px",
             }}
           >
             <div className="philosophy-grid">
@@ -323,7 +321,7 @@ export default function CaseStudiesPage() {
                   "Design isn't just how something looks; it's how confidently someone moves through uncertainty."
                 </h3>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -342,16 +340,13 @@ export default function CaseStudiesPage() {
                 >
                   I care about creating products that feel clear, dependable, and humane.
                   <br /><br />
-                  My process balances research, systems thinking, and implementation—ensuring every decision serves both users and the business. From the first wireframe to the final polished component, I build systems that scale gracefully.
+                  My process balances research, systems thinking, and implementation-ensuring every decision serves both users and the business. From the first wireframe to the final polished component, I build systems that scale gracefully.
                 </p>
               </motion.div>
             </div>
           </section>
         </div>
       </main>
-      
-      {/* Footer is handled globally or we can use our custom component */}
-      <Footer />
 
       <style jsx global>{`
         .gallery-grid {

@@ -74,7 +74,7 @@ const values = [
     number: "04",
     title: "Close the implementation gap",
     description:
-      "The best collaboration is no collaboration — when a designer can build what they design, nothing is lost between intent and execution.",
+      "The best collaboration is no collaboration - when a designer can build what they design, nothing is lost between intent and execution.",
   },
 ];
 
@@ -113,7 +113,7 @@ export default function AboutPage() {
               className="text-body-lg"
               style={{ maxWidth: "560px", color: "var(--muted-2)" }}
             >
-              I&apos;m Anubhav Raj — a hybrid UX Designer and Design Engineer at
+              I&apos;m Anubhav Raj - a hybrid UX Designer and Design Engineer at
               LTI Mindtree. I research like a designer, structure like a product
               manager, and ship like an engineer.
             </p>
@@ -141,14 +141,14 @@ export default function AboutPage() {
                 <p>
                   I started at the intersection of two disciplines: the empathy of
                   UX and the precision of software engineering. Most people choose
-                  one. I chose both — because I believe the most impactful work
+                  one. I chose both - because I believe the most impactful work
                   happens in the space between them.
                 </p>
                 <p>
                   At LTI Mindtree, I design and implement experiences across
                   insurance platforms, e-commerce flows, HR tools, and AI-powered
                   products. I write Figma files and React components in the same
-                  week — sometimes the same day.
+                  week - sometimes the same day.
                 </p>
                 <p>
                   Before that, I led UX for Ecstasia, an event platform with 1000+
@@ -163,7 +163,7 @@ export default function AboutPage() {
                 </blockquote>
                 <p>
                   I&apos;m particularly interested in the emerging space where
-                  behavioral design meets AI assistance — building tools that help
+                  behavioral design meets AI assistance - building tools that help
                   users make better decisions, not just faster ones.
                 </p>
               </div>

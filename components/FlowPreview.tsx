@@ -343,50 +343,79 @@ export default function FlowPreview({
 
           {/* CENTER: STAGE PHONE MOCKUP (STICKY AT TOP ON MOBILE SO PREVIEW NEVER LEAVES SCREEN) */}
           <div className="order-1 lg:order-2 flex flex-col items-center min-w-0 sticky top-14 lg:relative lg:top-0 z-30 py-3 lg:py-0 bg-[#141413]/95 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none rounded-2xl lg:rounded-none border lg:border-none border-white/5 shadow-xl lg:shadow-none transition-all">
-            {/* Outer Device Chassis Border */}
-            <div
-              className={[
-                "relative p-2 sm:p-3 rounded-[2.6rem] sm:rounded-[3rem] border transition-all duration-300 bg-[#141416]",
-                activeStep ? "-translate-y-0.5" : "border-neutral-700/60 shadow-2xl",
-              ].join(" ")}
-              style={{
-                borderColor: activeStep ? accentColor : undefined,
-                boxShadow: activeStep
-                  ? `0 0 35px ${accentColor}55, inset 0 0 0 1px rgba(255,255,255,0.2)`
-                  : "0 25px 60px -15px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(255,255,255,0.12)",
-              }}
-            >
-              {/* Inner 390x844 Phone Frame */}
-              <div
-                className="relative w-[210px] xs:w-[240px] sm:w-[280px] md:w-[320px] lg:w-[320px] max-w-[390px] aspect-[390/844] overflow-hidden rounded-[2.1rem] sm:rounded-[2.3rem] border-[3px] sm:border-[4px] border-black bg-black ring-1 ring-white/10"
-              >
-                {/* Phone Notch */}
-                <div className="absolute left-1/2 top-2 z-20 h-3.5 sm:h-4 w-20 sm:w-24 -translate-x-1/2 rounded-full bg-black flex items-center justify-center pointer-events-none">
-                  <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#161616] mr-1.5 sm:mr-2" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#0d0d0d]" />
-                </div>
+            
+            {/* iPhone 12 Pro Max Device Chassis */}
+            <div className="relative w-[230px] xs:w-[260px] sm:w-[290px] md:w-[320px] max-w-[340px] aspect-[433/888] select-none transition-all duration-300">
+              
+              {/* Side Antenna Bands */}
+              <div className="absolute inset-x-0 top-[10%] h-[2px] bg-gradient-to-r from-neutral-600 via-transparent to-neutral-600 z-10 pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-[10%] h-[2px] bg-gradient-to-r from-neutral-600 via-transparent to-neutral-600 z-10 pointer-events-none" />
 
-                {/* Inner Screen Shell */}
-                <div className="relative w-full h-full overflow-hidden bg-[#080808]">
-                  <AnimatePresence mode="popLayout">
-                    <motion.div
-                      key={activeImageSrc}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="absolute inset-0"
-                    >
-                      <Image
-                        src={activeImageSrc}
-                        alt={activeImageAlt}
-                        fill
-                        priority
-                        className="object-cover object-top"
-                        sizes="(max-width: 768px) 320px, 390px"
-                      />
-                    </motion.div>
-                  </AnimatePresence>
+              {/* Hardware Buttons */}
+              <div className="absolute -left-[3px] top-[14%] w-[3px] h-[28px] sm:h-[34px] rounded-l-sm bg-gradient-to-b from-[#232323] via-[#a4a6a8] to-[#232323] z-0" />
+              <div className="absolute -left-[3px] top-[23%] w-[3px] h-[54px] sm:h-[68px] rounded-l-sm bg-gradient-to-b from-[#232323] via-[#a4a6a8] to-[#232323] z-0" />
+              <div className="absolute -left-[3px] top-[34%] w-[3px] h-[54px] sm:h-[68px] rounded-l-sm bg-gradient-to-b from-[#232323] via-[#a4a6a8] to-[#232323] z-0" />
+              <div className="absolute -right-[3px] top-[25%] w-[3px] h-[80px] sm:h-[107px] rounded-r-sm bg-gradient-to-b from-[#232323] via-[#a4a6a8] to-[#232323] z-0" />
+
+              {/* Metallic Outer Chassis Edge */}
+              <div
+                className={[
+                  "relative w-full h-full rounded-[3.2rem] sm:rounded-[3.8rem] p-[4px] sm:p-[5px] transition-all duration-300 z-10",
+                  activeStep ? "-translate-y-0.5" : "",
+                ].join(" ")}
+                style={{
+                  background: activeStep
+                    ? `linear-gradient(180deg, ${accentColor} 0%, #626366 50%, ${accentColor} 100%)`
+                    : "linear-gradient(180deg, #626366 0%, #949699 50%, #626366 100%)",
+                  boxShadow: activeStep
+                    ? `0 0 40px ${accentColor}55, 0 25px 60px -15px rgba(0,0,0,0.9)`
+                    : "0 25px 60px -15px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.1)",
+                }}
+              >
+                {/* Inner Black Bezel Frame */}
+                <div className="relative w-full h-full rounded-[2.9rem] sm:rounded-[3.5rem] p-[8px] sm:p-[12px] bg-[#1f1f1f] shadow-inner">
+                  
+                  {/* Screen Viewport */}
+                  <div className="relative w-full h-full rounded-[2.2rem] sm:rounded-[2.6rem] overflow-hidden bg-black ring-1 ring-white/10">
+
+                    {/* iPhone 12 Notch Assembly */}
+                    <div className="absolute left-1/2 top-0 z-30 h-[22px] sm:h-[28px] w-[50%] -translate-x-1/2 rounded-b-[16px] sm:rounded-b-[18px] bg-[#1f1f1f] flex items-center justify-center pointer-events-none">
+                      {/* Speaker Grill */}
+                      <div className="absolute top-[5px] h-[3px] sm:h-[4px] w-[36px] sm:w-[42px] rounded-full bg-[#030303] border border-neutral-800" />
+                      {/* Camera Lens */}
+                      <div className="absolute top-[11px] sm:top-[13px] right-[22%] h-[7px] sm:h-[8px] w-[7px] sm:w-[8px] rounded-full bg-[#08081a] border border-[#12122b] shadow-inner flex items-center justify-center">
+                        <div className="w-[2.5px] h-[2.5px] rounded-full bg-[#1b2b48]" />
+                      </div>
+                    </div>
+
+                    {/* Inner Screen Image */}
+                    <div className="relative w-full h-full overflow-y-auto overflow-x-hidden no-scrollbar bg-[#080808] scroll-smooth">
+                      <AnimatePresence mode="popLayout">
+                        <motion.div
+                          key={activeImageSrc}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2, ease: "easeInOut" }}
+                          className="relative w-full min-h-full"
+                        >
+                          <Image
+                            src={activeImageSrc}
+                            alt={activeImageAlt}
+                            width={390}
+                            height={844}
+                            priority
+                            className="w-full h-auto min-h-full object-cover object-top"
+                            sizes="(max-width: 768px) 320px, 390px"
+                          />
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+
+                    {/* Home Indicator Bar */}
+                    <div className="absolute bottom-[6px] sm:bottom-[8px] left-1/2 -translate-x-1/2 z-30 h-[3.5px] sm:h-[4px] w-[35%] rounded-full bg-white/40 pointer-events-none" />
+
+                  </div>
                 </div>
               </div>
             </div>
@@ -456,11 +485,11 @@ export default function FlowPreview({
                 {/* Steps List */}
                 <div className="relative z-10 flex flex-col" style={{ gap: '10px' }}>
                   {group.steps.map((step) => {
-                    const isActive = activeStep?.step.id === step.id;
+                    const isActive = activeStep?.step.id === step.id && activeStep?.groupTitle === group.title;
                     const isDashed = group.dashedIds?.includes(step.id);
                     return (
                       <StepRow
-                        key={step.id}
+                        key={`${group.title}-${step.id}`}
                         step={step}
                         isDashed={isDashed}
                         isActive={isActive}
@@ -498,11 +527,11 @@ export default function FlowPreview({
                 {/* Steps List */}
                 <div className="relative z-10 flex flex-col" style={{ gap: '10px' }}>
                   {group.steps.map((step) => {
-                    const isActive = activeStep?.step.id === step.id;
+                    const isActive = activeStep?.step.id === step.id && activeStep?.groupTitle === group.title;
                     const isDashed = group.dashedIds?.includes(step.id);
                     return (
                       <StepRow
-                        key={step.id}
+                        key={`${group.title}-${step.id}`}
                         step={step}
                         isDashed={isDashed}
                         isActive={isActive}
