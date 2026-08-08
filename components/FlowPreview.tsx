@@ -420,10 +420,10 @@ export default function FlowPreview({
                 Steps:
               </span>
               {allSteps.map((s) => {
-                const isSelected = activeStep?.step.id === s.id;
+                const isSelected = activeStep?.step.id === s.id && activeStep?.groupTitle === s.groupTitle;
                 return (
                   <button
-                    key={s.id}
+                    key={`${s.groupTitle}-${s.id}`}
                     type="button"
                     onClick={() => handleStepToggle(s, s.groupTitle)}
                     style={{
