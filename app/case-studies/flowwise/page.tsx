@@ -14,6 +14,127 @@ import {
   LessonsGrid,
   NextProject,
 } from "@/components/case-studies/EditorialComponents";
+import FlowPreview, { FlowGroup } from "@/components/FlowPreview";
+
+const flowwiseDefaultScreen = {
+  screen: "/Flow_wise_Images/Home.png",
+  label: "FLOWWISE DASHBOARD · HOVER ANY STEP",
+  altText: "FlowWise main dashboard screen",
+};
+
+const flowwiseLeftGroups: FlowGroup[] = [
+  {
+    title: "ONBOARDING",
+    subtitle: "setting the philosophy",
+    steps: [
+      {
+        id: "01",
+        label: "Welcome & privacy-first intro",
+        screen: "/Flow_wise_Images/Ounboarding%20flow%201.png",
+        altText: "FlowWise onboarding step 1: Welcome screen",
+      },
+      {
+        id: "02",
+        label: "Financial persona discovery",
+        screen: "/Flow_wise_Images/Ounboarding%20flow%202.png",
+        altText: "FlowWise onboarding step 2: Financial persona",
+      },
+      {
+        id: "03",
+        label: "Flexible monthly budget setup",
+        screen: "/Flow_wise_Images/Ounboarding%20flow%203.png",
+        altText: "FlowWise onboarding step 3: Setting budget",
+      },
+      {
+        id: "04",
+        label: "Offline SQLite storage pledge",
+        screen: "/Flow_wise_Images/Ounboarding%20flow%204.png",
+        altText: "FlowWise onboarding step 4: Privacy & offline pledge",
+      },
+      {
+        id: "05",
+        label: "Empathetic notification preferences",
+        screen: "/Flow_wise_Images/Ounboarding%20flow%205.png",
+        altText: "FlowWise onboarding step 5: AI nudge setup",
+      },
+      {
+        id: "06",
+        label: "Setup complete confirmation",
+        screen: "/Flow_wise_Images/Ounboarding%20flow%206.png",
+        altText: "FlowWise onboarding step 6: Setup complete",
+      },
+    ],
+  },
+  {
+    title: "EXPENSE LOGGING",
+    subtitle: "5-second friction-free entry",
+    steps: [
+      {
+        id: "07",
+        label: "One-tap amount & merchant entry",
+        screen: "/Flow_wise_Images/Add%20expense.png",
+        altText: "FlowWise expense logging: Amount entry",
+      },
+      {
+        id: "08",
+        label: "Category & context tagging",
+        screen: "/Flow_wise_Images/Add%20expense%202.png",
+        altText: "FlowWise expense logging: Category selection",
+      },
+      {
+        id: "09",
+        label: "Proactive budget impact preview",
+        screen: "/Flow_wise_Images/Add%20expense%203.png",
+        altText: "FlowWise expense logging: Budget impact preview",
+      },
+    ],
+  },
+];
+
+const flowwiseRightGroups: FlowGroup[] = [
+  {
+    title: "INTELLIGENCE",
+    subtitle: "nudges without judgment",
+    steps: [
+      {
+        id: "10",
+        label: "Home dashboard with budget health",
+        screen: "/Flow_wise_Images/Home.png",
+        altText: "FlowWise dashboard overview",
+      },
+      {
+        id: "11",
+        label: "AI-driven behavioral insights",
+        screen: "/Flow_wise_Images/Insights.png",
+        altText: "FlowWise behavioral insights screen",
+      },
+      {
+        id: "12",
+        label: "Category spending breakdown",
+        screen: "/Flow_wise_Images/Spending.png",
+        altText: "FlowWise category spending breakdown",
+      },
+      {
+        id: "13",
+        label: "Full transaction history & search",
+        screen: "/Flow_wise_Images/All%20transactions.png",
+        altText: "FlowWise transaction history",
+      },
+      {
+        id: "14",
+        label: "Goal progress & milestone tracking",
+        screen: "/Flow_wise_Images/Goal.png",
+        altText: "FlowWise financial goals screen",
+      },
+      {
+        id: "15",
+        label: "Profile, local backup & security",
+        screen: "/Flow_wise_Images/Profile.png",
+        altText: "FlowWise profile & security settings",
+      },
+    ],
+  },
+];
 
 export default function FlowwiseCaseStudy() {
   return (
@@ -122,6 +243,32 @@ export default function FlowwiseCaseStudy() {
             alt="FlowWise Final Screens"
           />
         </EditorialSection>
+
+      </div>
+
+      {/* FULL-WIDTH CENTERED INTERACTIVE FLOW PREVIEW SECTION */}
+      <section
+        style={{ maxWidth: '1152px', marginLeft: 'auto', marginRight: 'auto', paddingLeft: '16px', paddingRight: '16px' }}
+        className="my-16 w-full"
+      >
+        <FlowPreview
+          className="w-full"
+          accentColor="#6366f1"
+          heading={
+            <>
+              Behavioral finance flows: <br className="hidden sm:inline" />
+              frictionless entry, <em className="font-display italic text-[#6366f1] font-normal">zero guilt</em>.
+            </>
+          }
+          hintText="HOVER ANY STEP TO PREVIEW THE INTERACTIVE SCREEN FLOW"
+          defaultScreen={flowwiseDefaultScreen}
+          leftGroups={flowwiseLeftGroups}
+          rightGroups={flowwiseRightGroups}
+          footerNote="100% offline-first. All data stays encrypted in local SQLite storage."
+        />
+      </section>
+
+      <div className="editorial-container">
 
         {/* 04 OUTCOMES */}
         <EditorialSection number="04" title="Outcomes">

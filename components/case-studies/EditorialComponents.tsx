@@ -121,6 +121,43 @@ export function ImageShowcase({
   );
 }
 
+export function PhoneMockup({
+  src,
+  alt,
+  caption,
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  caption?: string;
+  priority?: boolean;
+}) {
+  return (
+    <div className="flex flex-col items-center my-10 mx-auto w-full">
+      {/* Outer Device Chassis Border */}
+      <div
+        className="relative p-2.5 sm:p-3 rounded-[3rem] border border-neutral-700/60 bg-[#141416]"
+        style={{
+          boxShadow: "0 25px 60px -15px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(255,255,255,0.12)",
+        }}
+      >
+        {/* Inner 390x844 Phone Frame */}
+        <div className="relative w-[270px] sm:w-[310px] md:w-[340px] max-w-[390px] aspect-[390/844] overflow-hidden rounded-[2.3rem] border-[4px] border-black bg-black ring-1 ring-white/10">
+          {/* Notch */}
+          <div className="absolute left-1/2 top-2.5 z-20 h-4 w-24 -translate-x-1/2 rounded-full bg-black flex items-center justify-center pointer-events-none">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#161616] mr-2" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[#0d0d0d]" />
+          </div>
+          <div className="relative w-full h-full overflow-hidden bg-[#080808]">
+            <LightboxImage src={src} alt={alt} priority={priority} />
+          </div>
+        </div>
+      </div>
+      {caption && <p className="mt-3 text-xs text-neutral-400 font-mono text-center">{caption}</p>}
+    </div>
+  );
+}
+
 export function MetricGrid({
   metrics,
 }: {
