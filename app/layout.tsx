@@ -8,15 +8,12 @@ import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-inter",
   display: "swap",
 });
 
 const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["300", "400", "700"],
-  style: ["normal", "italic"],
   variable: "--font-fraunces",
   display: "swap",
 });
