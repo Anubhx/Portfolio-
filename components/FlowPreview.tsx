@@ -1,8 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { Observer } from "gsap/Observer";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(Observer, useGSAP);
 
 export interface FlowStep {
   id: string;
@@ -188,7 +193,7 @@ function StepRow({
         gap: '10px',
         alignItems: 'center',
         padding: '12px 14px',
-        minHeight: '44px', // WCAG 44px touch target
+        minHeight: '44px',
         borderRadius: '8px',
         fontSize: '13px',
         lineHeight: '1.5',
@@ -204,7 +209,6 @@ function StepRow({
           : "border-[#2E2E29] bg-[#1A1A18] text-[#CFCCC2] hover:bg-[#141413] hover:text-[#F0EDE5] active:scale-[0.99]",
       ].join(" ")}
     >
-      {/* Node Dot on timeline */}
       <span
         className={[
           "absolute top-1/2 -translate-y-1/2 w-[7px] h-[7px] rounded-full border-2 border-[#0C0C0B] transition-all duration-200 pointer-events-none",
@@ -212,16 +216,12 @@ function StepRow({
         ].join(" ")}
         style={{ left: '-19.5px', backgroundColor: isActive ? accentColor : undefined }}
       />
-
-      {/* Step Number */}
       <span
         className="font-mono tabular-nums transition-colors"
         style={{ fontSize: '10px', letterSpacing: '0.06em', color: isActive ? accentColor : '#8A8A80' }}
       >
         {step.id}
       </span>
-
-      {/* Step Label */}
       <span className="leading-[1.5]">
         {step.label}
       </span>
@@ -283,7 +283,7 @@ export default function FlowPreview({
   const activeImageSrc = activeStep ? activeStep.step.screen : defaultScreen.screen;
   const activeImageAlt = activeStep ? activeStep.step.altText : defaultScreen.altText;
 
-  // Flatten all steps for mobile quick-scrubber
+  // Flatten all steps for mobile swipe carousel
   const allSteps = [
     ...leftGroups.flatMap((g) => g.steps.map((s) => ({ ...s, groupTitle: g.title }))),
     ...rightGroups.flatMap((g) => g.steps.map((s) => ({ ...s, groupTitle: g.title }))),
@@ -296,6 +296,78 @@ export default function FlowPreview({
       setActiveStep({ step, groupTitle });
     }
   };
+
+  // Mobile swipe carousel refs & state
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const mobileStageRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const nudgeRanRef = useRef(false);
+
+  const currentMobileStep = allSteps[mobileIndex] || allSteps[0];
+
+  // 1. Motion concern: Slide track to active index on index change
+  useGSAP(
+    () => {
+      if (!trackRef.current) return;
+      const isReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      gsap.to(trackRef.current, {
+        xPercent: -100 * mobileIndex,
+        duration: isReduced ? 0 : 0.45,
+        ease: "power3.out",
+      });
+    },
+    { scope: mobileStageRef, dependencies: [mobileIndex] }
+  );
+
+  // 2. Observer & Nudge concern: Wire up swipe gesture Observer and one-time mount nudge
+  useGSAP(
+    () => {
+      if (!mobileStageRef.current || !trackRef.current) return;
+      const isReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const obs = Observer.create({
+        target: mobileStageRef.current,
+        type: "touch,pointer",
+        tolerance: 10,
+        lockAxis: true,
+        preventDefault: false,
+        onLockAxis: (self) => {
+          if (self.axis === "x" && self.event && self.event.cancelable) {
+            self.event.preventDefault();
+          }
+        },
+        onLeft: () => {
+          setMobileIndex((prev) => Math.min(prev + 1, allSteps.length - 1));
+        },
+        onRight: () => {
+          setMobileIndex((prev) => Math.max(prev - 1, 0));
+        },
+      });
+
+      // One-time "swipe me" nudge on initial mount
+      if (!nudgeRanRef.current && !isReduced) {
+        nudgeRanRef.current = true;
+        gsap.fromTo(
+          trackRef.current,
+          { xPercent: 0 },
+          {
+            xPercent: -6,
+            duration: 0.35,
+            delay: 0.6,
+            yoyo: true,
+            repeat: 1,
+            ease: "power1.inOut",
+          }
+        );
+      }
+
+      return () => {
+        obs.kill();
+      };
+    },
+    { scope: mobileStageRef, dependencies: [] }
+  );
 
   return (
     <section
@@ -335,13 +407,12 @@ export default function FlowPreview({
           }}
         />
 
-        {/* 3-COLUMN FLOW BOARD GRID (SYMMETRICAL ON DESKTOP, STICKY STAGE ON MOBILE) */}
+        {/* DESKTOP 3-COLUMN FLOW BOARD GRID (FULL INTAC DESIGN ON LG AND UP) */}
         <div
-          className="relative z-10 grid grid-cols-1 lg:grid-cols-[minmax(0,1.12fr)_auto_minmax(0,1fr)] items-start"
+          className="relative z-10 hidden lg:grid grid-cols-1 lg:grid-cols-[minmax(0,1.12fr)_auto_minmax(0,1fr)] items-start"
           style={{ gap: '32px clamp(32px, 4vw, 64px)' }}
         >
-
-          {/* CENTER: STAGE PHONE MOCKUP (STICKY AT TOP ON MOBILE SO PREVIEW NEVER LEAVES SCREEN) */}
+          {/* CENTER: STAGE PHONE MOCKUP */}
           <div className="order-1 lg:order-2 flex flex-col items-center min-w-0 sticky top-14 lg:relative lg:top-0 z-30 py-3 lg:py-0 bg-[#141413]/95 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none rounded-2xl lg:rounded-none border lg:border-none border-white/5 shadow-xl lg:shadow-none transition-all">
             
             {/* iPhone 12 Pro Max Device Chassis */}
@@ -442,31 +513,6 @@ export default function FlowPreview({
                 </>
               )}
             </div>
-
-            {/* MOBILE SCRUBBER PILLS BAR (VISIBLE ON MOBILE ONLY < 1024PX) */}
-            <div className="flex lg:hidden items-center gap-1.5 overflow-x-auto max-w-full w-full px-1 py-1 mt-2 no-scrollbar border-t border-white/5 pt-2">
-              <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest mr-1 shrink-0">
-                Steps:
-              </span>
-              {allSteps.map((s) => {
-                const isSelected = activeStep?.step.id === s.id && activeStep?.groupTitle === s.groupTitle;
-                return (
-                  <button
-                    key={`${s.groupTitle}-${s.id}`}
-                    type="button"
-                    onClick={() => handleStepToggle(s, s.groupTitle)}
-                    style={{
-                      backgroundColor: isSelected ? accentColor : 'rgba(255,255,255,0.06)',
-                      color: isSelected ? '#ffffff' : '#a1a1aa',
-                    }}
-                    className="shrink-0 font-mono text-[11px] px-2.5 py-1 rounded-full transition-all active:scale-95 touch-manipulation"
-                    aria-label={`Select step ${s.id}`}
-                  >
-                    {s.id}
-                  </button>
-                );
-              })}
-            </div>
           </div>
 
           {/* LEFT COLUMN: ORGANISER / PRIMARY LANES */}
@@ -546,7 +592,102 @@ export default function FlowPreview({
               </div>
             ))}
           </div>
+        </div>
 
+        {/* MOBILE SWIPE CAROUSEL (GSAP OBSERVER PATTERN BELOW LG BREAKPOINT < 1024PX) */}
+        <div className="block lg:hidden relative z-10 max-w-[380px] mx-auto">
+          <div className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase mb-3" style={{ color: accentColor }}>
+            <span>■</span>
+            <span>Swipe screen left / right</span>
+          </div>
+
+          <div
+            ref={mobileStageRef}
+            className="relative bg-[#141413] border border-[#2E2E29] rounded-2xl py-5 px-0 overflow-hidden select-none"
+            style={{ touchAction: "pan-y" }}
+          >
+            {/* Horizontal Track Wrapper with height to fit phone chassis without clipping */}
+            <div className="relative h-[520px] sm:h-[560px] overflow-hidden">
+              <div ref={trackRef} className="absolute inset-0 flex will-change-transform">
+                {allSteps.map((s, idx) => (
+                  <div key={`${s.groupTitle}-${s.id}-${idx}`} className="flex-none w-full flex items-center justify-center px-4">
+                    {/* Reused Phone Chassis */}
+                    <div className="relative w-[220px] xs:w-[240px] sm:w-[260px] aspect-[433/888]">
+                      <div className="relative w-full h-full rounded-[3rem] p-[4px] bg-gradient-to-b from-[#626366] via-[#949699] to-[#626366] shadow-2xl">
+                        <div className="relative w-full h-full rounded-[2.7rem] p-[8px] bg-[#1f1f1f]">
+                          <div className="relative w-full h-full rounded-[2.1rem] overflow-hidden bg-black ring-1 ring-white/10">
+                            <Image
+                              src={s.screen}
+                              alt={s.altText}
+                              width={390}
+                              height={844}
+                              priority={idx === 0}
+                              className="w-full h-auto min-h-full object-cover object-top"
+                              sizes="(max-width: 400px) 260px, 300px"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Active Step Meta Info */}
+            <div className="px-5 pt-4 pb-1 text-center min-h-[64px]" aria-live="polite" aria-atomic="true">
+              <div className="font-mono text-xs font-bold tracking-wider uppercase" style={{ color: accentColor }}>
+                {currentMobileStep.groupTitle}
+              </div>
+              <div className="mt-1 text-sm text-[#F0EDE5]">
+                {currentMobileStep.label}
+              </div>
+            </div>
+
+            {/* Counter */}
+            <div className="text-center font-mono text-[11px] text-[#8A8A80] mt-1">
+              {String(mobileIndex + 1).padStart(2, "0")} / {String(allSteps.length).padStart(2, "0")}
+            </div>
+
+            {/* Step Dots Bar */}
+            <div className="flex justify-center gap-1.5 mt-3 px-5 flex-wrap">
+              {allSteps.map((s, i) => (
+                <button
+                  key={`dot-${s.id}-${i}`}
+                  type="button"
+                  onClick={() => setMobileIndex(i)}
+                  className="w-1.5 h-1.5 rounded-full transition-all duration-200"
+                  style={{
+                    backgroundColor: i === mobileIndex ? accentColor : "#3A3A33",
+                    transform: i === mobileIndex ? "scale(1.3)" : "scale(1)",
+                  }}
+                  aria-label={`Go to step ${s.id}`}
+                />
+              ))}
+            </div>
+
+            {/* Navigation Arrows */}
+            <div className="flex justify-between px-4 mt-3">
+              <button
+                type="button"
+                onClick={() => setMobileIndex((prev) => Math.max(prev - 1, 0))}
+                disabled={mobileIndex === 0}
+                className="w-9 h-9 rounded-full border border-[#2E2E29] text-[#8A8A80] flex items-center justify-center text-sm disabled:opacity-30 active:scale-95 transition-all"
+                aria-label="Previous step"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                onClick={() => setMobileIndex((prev) => Math.min(prev + 1, allSteps.length - 1))}
+                disabled={mobileIndex === allSteps.length - 1}
+                className="w-9 h-9 rounded-full border border-[#2E2E29] text-[#8A8A80] flex items-center justify-center text-sm disabled:opacity-30 active:scale-95 transition-all"
+                aria-label="Next step"
+              >
+                →
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
