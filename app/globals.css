@@ -2,19 +2,26 @@
 
 /* ─── Design Tokens ─────────────────────────────────────────── */
 :root {
-  --bg: #080808;
-  --surface: #0e0e0e;
-  --surface-2: #141414;
-  --border: #1a1a1a;
-  --border-2: #252525;
-  --muted: #5a6270;
-  --muted-2: #8a939f;
-  --body: #c8ced8;
-  --heading: #f4f6f9;
-  --accent: #6366f1;
-  --accent-dim: #4f46e5;
-  --accent-subtle: rgba(99, 102, 241, 0.07);
-  --accent-border: rgba(99, 102, 241, 0.18);
+  /* ── Ultra high-contrast base ── */
+  --bg: #050507;
+  --surface: #0b0b0f;
+  --surface-2: #111116;
+  --border: #1c1c24;
+  --border-2: #28283a;
+  --muted: #52566a;
+  --muted-2: #9099b0;
+  --body: #c2cade;
+  --heading: #ffffff;
+
+  /* ── Electric accent palette ── */
+  --accent: #7c5cfc;
+  --accent-dim: #6344e8;
+  --accent-subtle: rgba(124, 92, 252, 0.08);
+  --accent-border: rgba(124, 92, 252, 0.22);
+  --accent-glow: rgba(124, 92, 252, 0.4);
+  --cyan: #22d3ee;
+  --emerald: #10b981;
+  --gradient-text: linear-gradient(135deg, #a78bfa 0%, #7c5cfc 45%, #38bdf8 100%);
 
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-display: var(--font-fraunces), Georgia, serif;
@@ -27,7 +34,6 @@
   --radius-sm: 6px;
   --radius-lg: 16px;
 
-  /* Refined spacing scale */
   --space-section: 96px;
   --space-block: 48px;
   --space-card: 32px;
@@ -526,8 +532,105 @@ body {
 
 /* ─── Selection ──────────────────────────────────────────────── */
 ::selection {
-  background: var(--accent-subtle);
+  background: rgba(124, 92, 252, 0.25);
   color: var(--heading);
+}
+
+/* ─── Gradient Text Utility ──────────────────────────────────── */
+.text-gradient {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Glow Utilities ─────────────────────────────────────────── */
+.glow-accent {
+  box-shadow: 0 0 24px var(--accent-glow), 0 0 60px rgba(124, 92, 252, 0.15);
+}
+
+.glow-accent-sm {
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* ─── Ambient Orb ─────────────────────────────────────────────── */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Custom Cursor ──────────────────────────────────────────── */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  mix-blend-mode: screen;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(124, 92, 252, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  transition: width 0.2s, height 0.2s, border-color 0.2s;
+}
+
+/* ─── Active-State Card ──────────────────────────────────────── */
+.card-glow:hover {
+  border-color: var(--accent-border);
+  box-shadow: 0 0 0 1px var(--accent-border), 0 8px 40px rgba(124, 92, 252, 0.12);
+}
+
+/* ─── Shimmer tag ────────────────────────────────────────────── */
+.tag-live {
+  background: linear-gradient(90deg, rgba(16,185,129,0.12) 0%, rgba(16,185,129,0.06) 100%);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: #10b981;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag-live::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulse-green 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
 }
 
 /* ─── Scrollbar ──────────────────────────────────────────────── */
@@ -1044,10 +1147,10 @@ body {
 .hero-text-gradient {
   background: linear-gradient(to right,
       var(--bg) 0%,
-      var(--bg) 30%,
-      rgba(8, 8, 8, 0.88) 48%,
-      rgba(8, 8, 8, 0.45) 65%,
-      rgba(8, 8, 8, 0.10) 85%,
+      var(--bg) 28%,
+      rgba(5, 5, 7, 0.90) 46%,
+      rgba(5, 5, 7, 0.50) 64%,
+      rgba(5, 5, 7, 0.12) 84%,
       transparent 100%);
 }
 
@@ -1065,9 +1168,31 @@ body {
 
   /* Mobile: pan the image to show the face (right-side of photo) */
   .hero-bg-image {
-    object-position: 55% top;
+    object-position: 70% center;
+  }
+}
+
+/* Mobile responsive stats strip */
+@media (max-width: 768px) {
+  .hero-proof {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px 16px !important;
+    padding-top: 20px !important;
   }
 
+  .hero-proof-item {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .stat-divider {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
   /* On mobile the text sits on top of the image at the bottom,
      so we need a strong bottom-to-top overlay as well */
   .hero-text-gradient {

@@ -2,10 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FadeUp, StaggerChildren, staggerItem } from "./AnimatedElements";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
-// Tiny 10×10 base64 blur placeholders - generated from the real images
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+// Tiny 10×10 base64 blur placeholders
 const BLUR = {
   zomato:
     "data:image/jpeg;base64,/9j/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAAF/8QAHhAAAQQBBQAAAAAAAAAAAAAAAQACBBEDBRUhUZL/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8ANp0bDJe9rybFEcpu2Ruj6WIpB//Z",
@@ -18,7 +22,7 @@ const BLUR = {
 const featuredWork = [
   {
     slug: "zomato-group-ordering",
-    number: "Project 01",
+    number: "01",
     title: "Zomato Group Ordering",
     subtitle: "Designing the Social Layer of Food Delivery",
     description:
@@ -27,27 +31,23 @@ const featuredWork = [
     year: "2026",
     role: "Lead UX/UI Designer",
     accent: "#ef4444",
+    accentSubtle: "rgba(239,68,68,0.08)",
     screens: "22 screens",
     image: "/Zomato_Hero2.png",
     blur: BLUR.zomato,
   },
   {
     slug: "flowwise",
-    number: "Project 02",
+    number: "02",
     title: "FlowWise",
     subtitle: "A finance app that nudges instead of judges",
     description:
-      "Most finance apps act like historical ledgers. FlowWise was designed to help users before mistakes happen - through behavioral design, AI nudges, and offline-first privacy.",
-    tags: [
-      "Product Design",
-      "React Native",
-      "Design Systems",
-      "AI-assisted UX",
-      "Behavioral Design",
-    ],
+      "Most finance apps act like historical ledgers. FlowWise was designed to help users before mistakes happen — through behavioral design, AI nudges, and offline-first privacy.",
+    tags: ["Product Design", "React Native", "Design Systems", "AI-assisted UX"],
     year: "2026",
     role: "Product Designer & Design Engineer",
-    accent: "#6366f1",
+    accent: "#7c5cfc",
+    accentSubtle: "rgba(124,92,252,0.08)",
     screens: "40+ components",
     image: "/FlowWise_Hero2.png",
     blur: BLUR.flowwise,
@@ -58,21 +58,16 @@ const featuredWork = [
   },
   {
     slug: "contrast",
-    number: "Project 03",
+    number: "03",
     title: "Contrast",
     subtitle: "Paste a URL. Get a score. Know what to fix.",
     description:
-      "A free design audit tool that checks any live URL for WCAG compliance, typography consistency, and spacing - returning a scored, shareable report in under 15 seconds. Built with Playwright, axe-core, and Gemini.",
-    tags: [
-      "Engineering",
-      "Accessibility",
-      "Next.js",
-      "Playwright",
-      "Gemini API",
-    ],
+      "A free design audit tool that checks any live URL for WCAG compliance, typography consistency, and spacing — returning a scored, shareable report in under 15 seconds. Built with Playwright, axe-core, and Gemini.",
+    tags: ["Engineering", "Accessibility", "Next.js", "Playwright", "Gemini API"],
     year: "2026",
     role: "Designer + Engineer",
     accent: "#a3e635",
+    accentSubtle: "rgba(163,230,53,0.07)",
     screens: "Full-stack tool",
     image: "/images/contrast/hero.png",
     blur: BLUR.contrast,
@@ -83,348 +78,357 @@ const featuredWork = [
   },
 ];
 
-const explorations = [
-  {
-    title: "LanguageTalk",
-    category: "Product Design",
-    description: "Language learning reimagined for conversation-first flows.",
-    year: "2024",
-  },
-  {
-    title: "Event Platform",
-    category: "End-to-End UX",
-    description: "Research, wireframes, and handoff for a 1000+ attendee event platform.",
-    year: "2023",
-  },
-  {
-    title: "Agentic AI Experiments",
-    category: "AI + Design",
-    description: "Exploring n8n, Claude, and Gemini to automate design research workflows.",
-    year: "Ongoing",
-  },
-  {
-    title: "Accessibility Reviews",
-    category: "WCAG Audit",
-    description: "WCAG 2.1 AA audits and remediation for real-world digital products.",
-    year: "Ongoing",
-  },
-];
+function WorkCard({ work, index }: { work: (typeof featuredWork)[0]; index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const isEven = index % 2 === 0;
 
-export default function SelectedWork() {
+  useGSAP(
+    () => {
+      const card = cardRef.current!;
+
+      // Scroll-driven reveal
+      gsap.fromTo(
+        card,
+        { opacity: 0, y: 60 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+
+      // Stagger internal elements
+      gsap.fromTo(
+        card.querySelectorAll(".work-meta, .work-title, .work-desc, .work-tags, .work-cta"),
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.65,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    },
+    { scope: cardRef }
+  );
+
+  // Hover parallax on image
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!imageRef.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 8;
+    gsap.to(imageRef.current, { x, y, duration: 0.4, ease: "power2.out" });
+  };
+  const handleMouseLeave = () => {
+    if (!imageRef.current) return;
+    gsap.to(imageRef.current, { x: 0, y: 0, duration: 0.5, ease: "power3.out" });
+  };
+
   return (
-    <>
-      {/* Featured Work */}
-      <section
-        aria-labelledby="featured-work-heading"
-        className="section"
-        style={{ borderTop: "1px solid var(--border)" }}
+    <div ref={cardRef} style={{ opacity: 0 }}>
+      <Link
+        href={`/case-studies/${work.slug}`}
+        style={{ textDecoration: "none", display: "block" }}
+        aria-label={`Read case study: ${work.title}`}
       >
-        <div className="container">
-          <FadeUp style={{ marginBottom: "48px" }}>
+        <article
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "80px",
+            alignItems: "center",
+            padding: "72px 0",
+            borderBottom: "1px solid var(--border)",
+          }}
+          className="work-card-inner"
+        >
+          {/* ── Content side ── */}
+          <div style={{ order: isEven ? 1 : 2 }}>
+            {/* Number + meta */}
             <div
+              className="work-meta"
               style={{
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-end",
-                flexWrap: "wrap",
-                gap: "16px",
+                alignItems: "center",
+                gap: "12px",
+                marginBottom: "20px",
+                opacity: 0,
               }}
             >
-              <div>
-                <p className="section-number" style={{ marginBottom: "16px" }}>
-                  Featured Work
-                </p>
-                <h2 id="featured-work-heading" className="text-h2">
-                  Selected case studies
-                </h2>
-              </div>
-              <Link
-                href="/case-studies"
+              <span
                 style={{
+                  fontFamily: "var(--font-display)",
                   fontSize: "13px",
-                  fontWeight: 500,
-                  color: "var(--muted-2)",
-                  textDecoration: "none",
-                  borderBottom: "1px solid var(--border-2)",
-                  paddingBottom: "2px",
+                  fontWeight: 300,
+                  color: work.accent,
+                  letterSpacing: "0.04em",
                 }}
               >
-                View all →
-              </Link>
+                {work.number}
+              </span>
+              <span
+                style={{
+                  width: "1px",
+                  height: "12px",
+                  background: "var(--border-2)",
+                }}
+              />
+              <span style={{ fontSize: "11px", color: "var(--muted)", letterSpacing: "0.06em" }}>
+                {work.year} · {work.role}
+              </span>
             </div>
-          </FadeUp>
 
-          <StaggerChildren staggerDelay={0.1}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-              {featuredWork.map((work, i) => (
-                <motion.div key={work.slug} variants={staggerItem}>
-                  <Link
-                    href={`/case-studies/${work.slug}`}
-                    style={{ textDecoration: "none", display: "block" }}
-                    aria-label={`Read case study: ${work.title}`}
-                  >
-                    <article
-                      className="work-card grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-[80px] items-center max-w-[1440px] mx-auto py-[40px] md:py-[80px]"
-                      style={{
-                        borderBottom: "1px solid rgba(255,255,255,0.06)",
-                      }}
-                    >
-                      {/* Content */}
-                      <div className={`order-2 ${i % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "12px",
-                            marginBottom: "16px",
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "10px",
-                              fontWeight: 600,
-                              letterSpacing: "0.12em",
-                              textTransform: "uppercase",
-                              color: "var(--muted)",
-                            }}
-                          >
-                            {work.number}
-                          </span>
-                          <span
-                            style={{
-                              width: "1px",
-                              height: "10px",
-                              background: "var(--border-2)",
-                            }}
-                          />
-                          <span
-                            style={{
-                              fontSize: "11px",
-                              color: "var(--muted)",
-                            }}
-                          >
-                            {work.year} · {work.role}
-                          </span>
-                        </div>
+            {/* Title */}
+            <h3
+              className="work-title"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(26px, 2.8vw, 40px)",
+                fontWeight: 300,
+                color: "var(--heading)",
+                letterSpacing: "-0.02em",
+                lineHeight: 1.1,
+                marginBottom: "8px",
+                opacity: 0,
+              }}
+            >
+              {work.title}
+            </h3>
 
-                        <h3
-                          style={{
-                            fontFamily: "var(--font-display)",
-                            fontSize: "clamp(24px, 2.8vw, 36px)",
-                            fontWeight: 300,
-                            color: "var(--heading)",
-                            letterSpacing: "-0.02em",
-                            lineHeight: 1.1,
-                            marginBottom: "6px",
-                          }}
-                        >
-                          {work.title}
-                        </h3>
-                        <p
-                          style={{
-                            fontSize: "13px",
-                            color: "var(--accent)",
-                            fontStyle: "italic",
-                            fontFamily: "var(--font-display)",
-                            marginBottom: "16px",
-                          }}
-                        >
-                          {work.subtitle}
-                        </p>
-                        <p
-                          className="text-body"
-                          style={{
-                            color: "var(--muted-2)",
-                            marginBottom: "24px",
-                            maxWidth: "620px",
-                            fontSize: "16px",
-                            lineHeight: 1.75,
-                          }}
-                        >
-                          {work.description}
-                        </p>
+            <p
+              className="work-desc"
+              style={{
+                fontSize: "13px",
+                color: work.accent,
+                fontStyle: "italic",
+                fontFamily: "var(--font-display)",
+                marginBottom: "16px",
+                opacity: 0,
+              }}
+            >
+              {work.subtitle}
+            </p>
 
-                        <div
-                          style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            gap: "6px",
-                            marginBottom: "24px",
-                          }}
-                        >
-                          {work.tags.map((tag) => (
-                            <span key={tag} className="tag">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
+            <p
+              className="work-desc"
+              style={{
+                fontSize: "15px",
+                color: "var(--body)",
+                lineHeight: 1.75,
+                marginBottom: "24px",
+                maxWidth: "520px",
+                opacity: 0,
+              }}
+            >
+              {work.description}
+            </p>
 
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "16px",
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "13px",
-                              fontWeight: 500,
-                              color: "var(--heading)",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "4px",
-                            }}
-                          >
-                            Read Case Study
-                            <span
-                              style={{
-                                transition: "transform 0.2s",
-                              }}
-                            >
-                              →
-                            </span>
-                          </span>
-                          {work.screens && (
-                            <span className="tag tag-accent">{work.screens}</span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Visual side - real project image */}
-                      <div
-                        className={`order-1 w-full h-auto aspect-[16/10] rounded-[20px] overflow-hidden relative bg-[#090909] ${i % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}
-                      >
-                        <Image
-                          src={work.image}
-                          alt={`${work.title} - case study preview`}
-                          fill
-                          placeholder="blur"
-                          blurDataURL={work.blur}
-                          style={{
-                            objectFit: "cover",
-                            objectPosition: "center",
-                            transition: "opacity 0.6s ease"
-                          }}
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          priority={i === 0}
-                        />
-                        {/* Subtle overlay to keep image from overpowering */}
-                        <div
-                          aria-hidden="true"
-                          style={{
-                            position: "absolute",
-                            inset: 0,
-                            background: "rgba(8,8,8,0.1)",
-                            pointerEvents: "none",
-                          }}
-                        />
-                      </div>
-                    </article>
-                  </Link>
-                </motion.div>
+            {/* Tags */}
+            <div
+              className="work-tags"
+              style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "28px", opacity: 0 }}
+            >
+              {work.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="tag"
+                  style={{
+                    background: work.accentSubtle,
+                    borderColor: `${work.accent}30`,
+                    color: work.accent,
+                  }}
+                >
+                  {tag}
+                </span>
               ))}
             </div>
-          </StaggerChildren>
-        </div>
-      </section>
 
-      {/* Selected Explorations */}
-      {false && (
-        <section
-          aria-labelledby="explorations-heading"
-          className="section"
-          style={{
-            borderTop: "1px solid var(--border)",
-          }}
-        >
-          <div className="container">
-            <FadeUp style={{ marginBottom: "40px" }}>
-              <p className="section-number" style={{ marginBottom: "16px" }}>
-                Selected Explorations
-              </p>
-              <h2 id="explorations-heading" className="text-h3" style={{ color: "var(--muted-2)" }}>
-                Demonstrating range
-              </h2>
-            </FadeUp>
-
-            <StaggerChildren staggerDelay={0.08}>
-              <div
+            {/* CTA row */}
+            <div
+              className="work-cta"
+              style={{ display: "flex", alignItems: "center", gap: "14px", opacity: 0 }}
+            >
+              <span
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                  gap: "1px",
-                  background: "var(--border)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "var(--radius)",
-                  overflow: "hidden",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  color: "var(--heading)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  letterSpacing: "0.02em",
                 }}
               >
-                {explorations.map((exp) => (
-                  <motion.div
-                    key={exp.title}
-                    variants={staggerItem}
-                    style={{
-                      background: "var(--surface)",
-                      padding: "24px",
-                      transition: "background 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.background =
-                        "var(--surface-2)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.background =
-                        "var(--surface)";
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        marginBottom: "12px",
-                      }}
-                    >
-                      <span className="tag tag-accent" style={{ fontSize: "10px" }}>
-                        {exp.category}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "11px",
-                          color: "var(--muted)",
-                        }}
-                      >
-                        {exp.year}
-                      </span>
-                    </div>
-                    <h3
-                      style={{
-                        fontSize: "16px",
-                        fontWeight: 600,
-                        color: "var(--heading)",
-                        letterSpacing: "-0.01em",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      {exp.title}
-                    </h3>
-                    <p
-                      style={{
-                        fontSize: "13px",
-                        color: "var(--muted-2)",
-                        lineHeight: 1.6,
-                      }}
-                    >
-                      {exp.description}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-            </StaggerChildren>
+                Read Case Study →
+              </span>
+              {work.screens && (
+                <span className="tag tag-accent">{work.screens}</span>
+              )}
+            </div>
           </div>
-        </section>
-      )}
-    </>
+
+          {/* ── Image side ── */}
+          <div
+            style={{
+              order: isEven ? 2 : 1,
+              width: "100%",
+              aspectRatio: "16/10",
+              borderRadius: "16px",
+              overflow: "hidden",
+              position: "relative",
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              cursor: "none",
+            }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div
+              ref={imageRef}
+              style={{ position: "absolute", inset: "-6%", width: "112%", height: "112%" }}
+            >
+              <Image
+                src={work.image}
+                alt={`${work.title} preview`}
+                fill
+                placeholder="blur"
+                blurDataURL={work.blur}
+                style={{ objectFit: "cover", objectPosition: "center" }}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority={index === 0}
+              />
+            </div>
+            {/* Subtle color-matched glow at bottom */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "50%",
+                background: `linear-gradient(to top, ${work.accentSubtle}, transparent)`,
+                pointerEvents: "none",
+              }}
+            />
+          </div>
+        </article>
+      </Link>
+
+      {/* Mobile responsive overrides */}
+      <style>{`
+        @media (max-width: 768px) {
+          .work-card-inner {
+            grid-template-columns: 1fr !important;
+            gap: 32px !important;
+            padding: 48px 0 !important;
+          }
+          .work-card-inner > * {
+            order: unset !important;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+export default function SelectedWork() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        ".sw-header",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".sw-header",
+            start: "top 88%",
+          },
+        }
+      );
+    },
+    { scope: sectionRef }
+  );
+
+  return (
+    <section
+      ref={sectionRef}
+      aria-labelledby="featured-work-heading"
+      className="section"
+      style={{ borderTop: "1px solid var(--border)" }}
+    >
+      <div className="container">
+        {/* Section header */}
+        <div
+          className="sw-header"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            flexWrap: "wrap",
+            gap: "16px",
+            marginBottom: "12px",
+            opacity: 0,
+          }}
+        >
+          <div>
+            <p className="section-number" style={{ marginBottom: "16px" }}>
+              Featured Work
+            </p>
+            <h2 id="featured-work-heading" className="text-h2">
+              Selected case studies
+            </h2>
+          </div>
+          <Link
+            href="/case-studies"
+            style={{
+              fontSize: "13px",
+              fontWeight: 500,
+              color: "var(--muted-2)",
+              textDecoration: "none",
+              borderBottom: "1px solid var(--border-2)",
+              paddingBottom: "2px",
+              transition: "color 0.2s, border-color 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "var(--heading)";
+              e.currentTarget.style.borderColor = "var(--accent)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "var(--muted-2)";
+              e.currentTarget.style.borderColor = "var(--border-2)";
+            }}
+          >
+            View all →
+          </Link>
+        </div>
+
+        {/* Work cards */}
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {featuredWork.map((work, i) => (
+            <WorkCard key={work.slug} work={work} index={i} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

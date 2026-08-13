@@ -1,0 +1,2280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SprintMart — Shared Cart · All Screens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ============================================================
+     TOKENS — identical to sprintmart-design-system.html / colours.md
+     Five hues only. Nothing outside this set is used anywhere below.
+     ============================================================ */
+  :root{
+    --c-deep-plum:  #1E1B30;
+    --c-slate:      #6B7888;
+    --c-amber:      #D4921A;
+    --c-orange:     #C05510;
+    --c-burgundy:   #6E1822;
+    --c-white:      #FFFFFF;
+
+    --tint-plum-04:  rgba(30,27,48,0.04);
+    --tint-plum-10:  rgba(30,27,48,0.10);
+    --tint-plum-40:  rgba(30,27,48,0.40);
+    --tint-slate-10: rgba(107,120,136,0.10);
+    --tint-slate-30: rgba(107,120,136,0.30);
+    --tint-burgundy-10: rgba(110,24,34,0.10);
+    --tint-amber-10:    rgba(212,146,26,0.12);
+    --tint-orange-10:   rgba(192,85,16,0.12);
+
+    --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+    --sp-5: 24px; --sp-6: 32px; --sp-8: 48px; --sp-10: 64px;
+
+    --r-sm: 4px; --r-md: 8px; --r-lg: 13px; --r-xl: 24px; --r-full: 999px;
+
+    --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; font-family:var(--font-ui); color:var(--c-deep-plum);
+    background:#EDEBE6; -webkit-font-smoothing:antialiased;
+  }
+  img,svg{ display:block; }
+  a{ color:inherit; }
+  ::selection{ background:var(--c-amber); color:var(--c-white); }
+  .icon{ width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+
+  /* ============================================================
+     PAGE SHELL — sticky index (pure anchor links, no JS) + content
+     ============================================================ */
+  .layout{ display:grid; grid-template-columns:250px 1fr; min-height:100vh; }
+
+  .sidenav{
+    position:sticky; top:0; height:100vh; overflow-y:auto;
+    background:var(--c-deep-plum); color:var(--c-white);
+    padding:var(--sp-6) var(--sp-5);
+  }
+  .sidenav__brand{ display:flex; align-items:center; gap:var(--sp-2); margin-bottom:var(--sp-5); }
+  .sidenav__mark{
+    width:30px; height:30px; border-radius:var(--r-md);
+    background:var(--c-amber); display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:14px; color:var(--c-deep-plum); flex-shrink:0;
+  }
+  .sidenav__title{ font-size:14px; font-weight:600; letter-spacing:0.01em; }
+  .sidenav__sub{ font-size:11px; color:rgba(255,255,255,0.5); margin-top:2px; }
+  .sidenav__count{
+    font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,.5); background:rgba(255,255,255,.08);
+    border-radius:var(--r-md); padding:8px 10px; margin-bottom:var(--sp-5);
+  }
+  .sidenav nav{ display:flex; flex-direction:column; gap:1px; }
+  .sidenav__group-label{
+    font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:rgba(255,255,255,0.35);
+    margin:var(--sp-4) var(--sp-2) var(--sp-1); font-weight:600;
+  }
+  .sidenav__group-label:first-child{ margin-top:0; }
+  .sidenav a.jump{
+    display:block; text-decoration:none; color:rgba(255,255,255,0.65); font-size:12px; font-weight:500;
+    padding:6px 8px; border-radius:var(--r-md); transition:background .15s, color .15s;
+  }
+  .sidenav a.jump:hover{ background:rgba(255,255,255,0.08); color:var(--c-white); }
+
+  .content{ padding:var(--sp-6) var(--sp-8) var(--sp-10); max-width:1900px; }
+
+  .page-header{ margin-bottom:var(--sp-6); padding-bottom:var(--sp-5); border-bottom:1px solid var(--tint-plum-10); }
+  .eyebrow{
+    font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--c-orange); margin:0 0 var(--sp-2);
+  }
+  .page-header h1{ font-size:30px; font-weight:700; margin:0 0 var(--sp-2); letter-spacing:-0.01em; }
+  .page-header p{ font-size:14.5px; color:var(--tint-plum-40); max-width:820px; line-height:1.6; margin:0 0 var(--sp-3); }
+  .page-header p strong{ color:var(--c-deep-plum); }
+  .legend-row{ display:flex; flex-wrap:wrap; gap:var(--sp-4); margin-top:var(--sp-3); align-items:center; }
+  .legend-chip{ display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; color:var(--tint-plum-40); }
+  .legend-dot{ width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .legend-divider{ width:1px; height:16px; background:var(--tint-plum-10); }
+
+  /* ============================================================
+     SECTIONS + FRAME GRID
+     ============================================================ */
+  .section{ margin-bottom:var(--sp-10); scroll-margin-top:var(--sp-5); }
+  .section__head{ display:flex; align-items:baseline; gap:var(--sp-3); margin-bottom:var(--sp-2); }
+  .section__head h2{ font-size:20px; font-weight:700; margin:0; }
+  .section__head .count-pill{
+    font-family:var(--font-mono); font-size:10.5px; font-weight:500; color:var(--c-white);
+    background:var(--c-deep-plum); padding:3px 9px; border-radius:var(--r-full);
+  }
+  .section__note{ font-size:12.5px; color:var(--tint-plum-40); line-height:1.55; max-width:760px; margin:0 0 var(--sp-5); }
+
+  .frame-row{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:var(--sp-6) var(--sp-5); }
+
+  .frame{ width:393px; flex-shrink:0; }
+  .frame__eyebrow{ font-family:var(--font-mono); font-size:10px; color:var(--c-orange); font-weight:700; letter-spacing:.02em; }
+  .frame__title{ font-size:14.5px; font-weight:700; margin:4px 0 5px; }
+  .frame__pills{ display:flex; gap:5px; margin-bottom:8px; flex-wrap:wrap; }
+  .pill{ font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:3px 7px; border-radius:var(--r-sm); }
+  .pill--new{ background:var(--tint-plum-10); color:var(--c-deep-plum); }
+  .pill--reused{ background:var(--tint-slate-10); color:var(--c-slate); }
+  .pill--state{ background:var(--tint-amber-10); color:var(--c-orange); }
+  .pill--component{ background:var(--tint-orange-10); color:var(--c-orange); }
+
+  .device{
+    width:393px; min-height:852px; height:auto; position:relative; background:var(--c-white);
+    border-radius:40px; overflow:hidden;
+    box-shadow:0 0 0 8px #111018, 0 0 0 9px rgba(255,255,255,.05), 0 26px 54px -18px rgba(20,15,10,.35);
+  }
+  .notch{ position:absolute; top:13px; left:50%; transform:translateX(-50%); width:96px; height:26px; background:#000; border-radius:14px; z-index:30; }
+  .statusbar{
+    position:absolute; top:0; left:0; right:0; height:50px; z-index:20;
+    display:flex; align-items:flex-end; justify-content:space-between; padding:0 25px 8px;
+    font-size:13.5px; font-weight:600; color:var(--c-deep-plum);
+  }
+  .statusbar .batt{ display:flex; align-items:center; gap:4px; }
+  .statusbar .bars{ display:flex; align-items:flex-end; gap:2px; height:10px; }
+  .statusbar .bars span{ width:3px; background:var(--c-deep-plum); border-radius:1px; }
+  .statusbar .bars span:nth-child(1){ height:4px; } .statusbar .bars span:nth-child(2){ height:6px; }
+  .statusbar .bars span:nth-child(3){ height:8px; } .statusbar .bars span:nth-child(4){ height:10px; }
+  .statusbar .battery{ width:22px; height:11px; border:1.5px solid var(--c-deep-plum); border-radius:3px; position:relative; padding:1.5px; }
+  .statusbar .battery::after{ content:''; position:absolute; right:-4px; top:3px; width:2px; height:5px; background:var(--c-deep-plum); border-radius:0 1px 1px 0; }
+  .statusbar .battery i{ display:block; height:100%; width:78%; background:var(--c-deep-plum); border-radius:1px; }
+  .home-indicator{
+    position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:134px; height:5px;
+    background:var(--c-deep-plum); opacity:.85; border-radius:var(--r-full); z-index:20;
+  }
+  .screen{ position:relative; padding-top:50px; padding-bottom:30px; min-height:852px; }
+
+  /* ============================================================
+     IN-SCREEN CHROME + SHARED UI COMPONENTS
+     (same component set as sprintmart-design-system.html)
+     ============================================================ */
+  .app-header{ display:flex; align-items:center; gap:var(--sp-2); padding:var(--sp-2) var(--sp-4) var(--sp-3); }
+  .app-header__icon-btn{
+    width:34px; height:34px; border-radius:50%; border:none; background:var(--tint-plum-10); color:var(--c-deep-plum);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .app-header__title{ flex:1; min-width:0; }
+  .app-header__title h1{ font-size:17px; font-weight:600; margin:0; line-height:1.25; }
+  .app-header__title span{ font-size:11px; color:var(--tint-plum-40); }
+  .app-header__trail{ display:flex; align-items:center; gap:6px; flex-shrink:0; }
+
+  .scr-body{ padding:0 var(--sp-4) var(--sp-4); }
+  .scr-title{ font-size:22px; font-weight:600; margin:var(--sp-1) 0 var(--sp-1); }
+  .scr-lead{ font-size:13px; color:var(--tint-plum-40); line-height:1.5; margin:0 0 var(--sp-5); }
+  .scr-section-label{ font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--c-slate); margin:0 0 var(--sp-3); }
+
+  .btn{
+    font-family:var(--font-ui); font-size:14px; font-weight:600; border:none;
+    border-radius:var(--r-md); padding:13px 18px; display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .btn--block{ width:100%; }
+  .btn--sm{ padding:9px 14px; font-size:12.5px; border-radius:var(--r-md); }
+  .btn--primary{ background:var(--c-deep-plum); color:var(--c-white); }
+  .btn--primary.is-disabled{ background:var(--tint-slate-30); color:var(--tint-plum-40); }
+  .btn--secondary{ background:var(--c-amber); color:var(--c-white); }
+  .btn--destructive{ background:var(--c-burgundy); color:var(--c-white); }
+  .btn--ghost{ background:transparent; color:var(--c-deep-plum); border:1.5px solid var(--tint-plum-10); }
+  .btn--text{ background:transparent; color:var(--c-burgundy); padding:8px 4px; font-weight:600; }
+  .btn--text.neutral{ color:var(--c-slate); }
+  .btn--loading{ background:var(--c-deep-plum); color:rgba(255,255,255,.55); position:relative; }
+
+  .spinner{ width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff; }
+  .spinner--dark{ border:2.5px solid var(--tint-plum-10); border-top-color:var(--c-deep-plum); }
+
+  .card{ background:var(--c-white); border:1px solid var(--tint-plum-10); border-radius:var(--r-lg); padding:var(--sp-4); }
+  .card + .card{ margin-top:var(--sp-3); }
+
+  .field{
+    width:100%; font-family:var(--font-ui); font-size:14.5px; padding:12px 14px; border-radius:10px;
+    background:var(--c-white); border:1.5px solid var(--tint-slate-30); color:var(--c-deep-plum);
+  }
+  .field--focused{ border-color:var(--c-deep-plum); box-shadow:0 0 0 3px var(--tint-plum-10); }
+  .field--error{ border-color:var(--c-burgundy); }
+  .field-label{ display:block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--c-slate); margin-bottom:var(--sp-2); }
+  .field-caption{ font-size:11.5px; color:var(--tint-plum-40); margin-top:6px; }
+  .field-caption--error{ color:var(--c-burgundy); font-weight:500; }
+
+  .search-field{ display:flex; align-items:center; gap:8px; border:1.5px solid var(--tint-slate-30); border-radius:var(--r-full); padding:11px 16px; color:var(--c-slate); background:var(--c-white); }
+  .search-field span{ font-size:13.5px; }
+  .search-field.is-focused{ border-color:var(--c-deep-plum); box-shadow:0 0 0 3px var(--tint-plum-10); }
+
+  .badge{ font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.03em; padding:4px 9px; border-radius:var(--r-sm); display:inline-block; }
+  .badge--amber{ background:var(--c-amber); color:var(--c-white); }
+  .badge--orange{ background:var(--c-orange); color:var(--c-white); }
+  .badge--burgundy{ background:var(--c-burgundy); color:var(--c-white); }
+  .badge--slate{ background:var(--tint-slate-10); color:var(--c-slate); }
+  .badge--outline{ background:transparent; border:1px solid var(--tint-plum-10); color:var(--tint-plum-40); }
+
+  .avatar{ border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:600; color:var(--c-white); background:var(--c-deep-plum); border-style:solid; flex-shrink:0; }
+  .avatar--ring-amber{ border-color:var(--c-amber); }
+  .avatar--ring-orange{ border-color:var(--c-orange); }
+  .avatar--ring-burgundy{ border-color:var(--c-burgundy); }
+  .avatar--ring-slate{ border-color:var(--c-slate); border-style:dashed; background:var(--tint-slate-10); color:var(--c-slate); }
+  .avatar-row{ display:flex; }
+  .avatar-row .avatar{ margin-left:-8px; }
+  .avatar-row .avatar:first-child{ margin-left:0; }
+
+  .added-by-pill{ display:inline-flex; align-items:center; gap:6px; background:var(--tint-slate-10); padding:4px 10px 4px 4px; border-radius:var(--r-full); font-size:11px; color:var(--c-deep-plum); }
+  .added-by-pill .mini-avatar{ width:16px; height:16px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:white; font-size:8px; font-weight:700; }
+
+  .track{ height:9px; background:var(--tint-slate-10); border-radius:var(--r-full); overflow:hidden; flex:1; }
+  .fill{ height:100%; border-radius:var(--r-full); }
+  .fill--ok{ background:var(--c-amber); }
+  .fill--warn{ background:var(--c-orange); }
+  .fill--over{ background:var(--c-burgundy); }
+
+  .budget-item{ display:grid; grid-template-columns:88px 1fr 76px; align-items:center; gap:var(--sp-3); padding:8px 0; }
+  .budget-item__who{ display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; }
+  .budget-item__mini-avatar{ width:22px; height:22px; border-radius:50%; color:white; font-size:9px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .budget-item__amt{ text-align:right; font-family:var(--font-mono); font-size:11px; color:var(--tint-plum-40); }
+  .budget-item__amt b{ font-family:var(--font-ui); font-size:12.5px; color:var(--c-deep-plum); }
+  .budget-item__amt.warn b{ color:var(--c-orange); } .budget-item__amt.warn{ color:var(--c-orange); }
+  .budget-item__amt.over b{ color:var(--c-burgundy); } .budget-item__amt.over{ color:var(--c-burgundy); }
+
+  .status-chip{ font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.03em; padding:4px 9px; border-radius:var(--r-full); white-space:nowrap; }
+  .status-chip--paid{ background:var(--tint-plum-10); color:var(--c-deep-plum); }
+  .status-chip--pending{ background:var(--tint-orange-10); color:var(--c-orange); }
+  .status-chip--covered{ background:var(--tint-slate-10); color:var(--c-slate); }
+
+  .split-row{ display:flex; align-items:center; justify-content:space-between; padding:var(--sp-3) 0; border-bottom:1px solid var(--tint-plum-10); }
+  .split-row:last-of-type{ border-bottom:none; }
+  .split-row__who{ display:flex; align-items:center; gap:10px; }
+  .split-row__who-info b{ display:block; font-size:13px; } .split-row__who-info span{ font-size:11px; color:var(--tint-plum-40); }
+  .split-row__amt{ font-family:var(--font-mono); font-size:13px; font-weight:500; margin-right:10px; }
+  .split-row__right{ display:flex; align-items:center; }
+  .mode-toggle{ display:inline-flex; background:var(--tint-slate-10); border-radius:var(--r-full); padding:3px; font-size:11px; font-weight:600; }
+  .mode-toggle span{ padding:5px 11px; border-radius:var(--r-full); color:var(--tint-plum-40); }
+  .mode-toggle span.active{ background:var(--c-deep-plum); color:var(--c-white); }
+
+  .nudge{ display:flex; flex-direction:column; gap:10px; background:var(--tint-orange-10); border:1px solid rgba(192,85,16,0.25); border-radius:var(--r-md); padding:var(--sp-3) var(--sp-4); margin:var(--sp-2) 0; }
+  .nudge p{ margin:0; font-size:12.5px; color:var(--c-deep-plum); line-height:1.4; }
+  .nudge__actions{ display:flex; gap:8px; }
+  .nudge__actions .btn{ flex:1; padding:9px; font-size:12.5px; }
+  .nudge--shared{ background:var(--tint-plum-04); border-color:var(--tint-plum-10); }
+
+  .live-pill{ display:inline-flex; align-items:center; gap:6px; background:var(--c-deep-plum); color:white; padding:5px 11px; border-radius:var(--r-full); font-size:10.5px; font-weight:600; }
+  .live-dot{ width:6px; height:6px; border-radius:50%; background:var(--c-amber); }
+
+  .segmented{ display:flex; border:1.5px solid var(--tint-plum-10); border-radius:var(--r-md); overflow:hidden; }
+  .segmented span{ flex:1; text-align:center; background:var(--c-white); color:var(--c-deep-plum); font-size:12.5px; font-weight:600; padding:11px 6px; }
+  .segmented span.active{ background:var(--c-deep-plum); color:var(--c-white); }
+
+  .switch-row{ display:flex; align-items:center; justify-content:space-between; }
+  .switch{ width:42px; height:24px; border-radius:var(--r-full); background:var(--tint-slate-30); position:relative; flex-shrink:0; }
+  .switch::after{ content:''; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:var(--c-white); box-shadow:0 1px 2px rgba(0,0,0,.2); }
+  .switch.on{ background:var(--c-deep-plum); }
+  .switch.on::after{ left:auto; right:3px; }
+
+  .item-row{ display:flex; align-items:flex-start; gap:10px; padding:10px 0; }
+  .item-row__thumb{ width:42px; height:42px; border-radius:var(--r-md); background:var(--tint-slate-10); flex-shrink:0; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; border:1px solid rgba(30,27,48,0.08); }
+  .item-row__thumb img{ width:100%; height:100%; object-fit:cover; display:block; border-radius:inherit; }
+  .item-row__thumb .icon{ display:none !important; }
+  .item-row__thumb .icon{ width:20px; height:20px; stroke-width:1.8; }
+  .item-row__thumb--dairy{ background:var(--tint-amber-10); color:var(--c-amber); }
+  .item-row__thumb--bakery{ background:var(--tint-slate-10); color:var(--c-deep-plum); }
+  .item-row__thumb--pantry{ background:var(--tint-orange-10); color:var(--c-orange); }
+  .item-row__thumb--homecare{ background:var(--tint-orange-10); color:var(--c-orange); }
+  .item-row__thumb--beverage{ background:var(--tint-burgundy-10); color:var(--c-burgundy); }
+  .item-row__thumb--personalcare{ background:var(--tint-plum-10); color:var(--c-deep-plum); }
+  .item-row__mid{ flex:1; min-width:0; }
+  .item-row__name{ font-size:13.5px; font-weight:500; margin:0 0 2px; }
+  .item-row__price{ font-size:12px; color:var(--tint-plum-40); font-family:var(--font-mono); }
+  .stepper{ display:flex; align-items:center; gap:8px; background:var(--tint-plum-10); border-radius:var(--r-full); padding:4px 8px; flex-shrink:0; }
+  .stepper span{ font-size:12px; font-weight:600; min-width:12px; text-align:center; }
+  .greyed{ opacity:.45; }
+  .tier{ border-radius:var(--r-lg); padding:var(--sp-3); margin-bottom:var(--sp-4); }
+  .tier--shared{ background:var(--tint-plum-04); border:1px solid var(--tint-plum-10); }
+  .tier--flagged{ background:var(--tint-burgundy-10); border:1px solid rgba(110,24,34,.25); }
+  .split-pill{ display:inline-flex; font-size:9.5px; font-weight:700; color:var(--c-slate); background:var(--tint-slate-10); border-radius:var(--r-sm); padding:2px 5px; margin-left:6px; }
+
+  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .sugg-chip{ font-size:11.5px; font-weight:600; color:var(--c-deep-plum); background:var(--tint-slate-10); padding:7px 12px; border-radius:var(--r-full); white-space:nowrap; }
+  .sugg-chip.active{ background:var(--c-deep-plum); color:#fff; }
+
+  .empty-state{ display:flex; flex-direction:column; align-items:center; text-align:center; padding:var(--sp-8) var(--sp-5); color:var(--tint-plum-40); }
+  .empty-state__icon{ width:56px; height:56px; border-radius:50%; background:var(--tint-plum-10); display:flex; align-items:center; justify-content:center; margin-bottom:var(--sp-4); color:var(--c-deep-plum); }
+  .empty-state h3{ font-size:15px; color:var(--c-deep-plum); margin:0 0 6px; }
+  .empty-state p{ font-size:12.5px; margin:0; max-width:260px; line-height:1.5; }
+
+  .bottom-bar{ border-top:1px solid var(--tint-plum-10); padding:var(--sp-3) var(--sp-4) 0; display:flex; align-items:center; gap:var(--sp-3); margin-top:var(--sp-4); }
+  .bottom-bar__total{ flex:1; min-width:0; }
+  .bottom-bar__total span{ display:block; font-size:10.5px; color:var(--tint-plum-40); }
+  .bottom-bar__total b{ font-size:16px; }
+
+  .count-big{ font-family:var(--font-mono); font-size:44px; font-weight:600; letter-spacing:-.01em; }
+  .count-mid{ font-family:var(--font-mono); font-size:20px; font-weight:600; }
+  .list-plain{ list-style:none; margin:0; padding:0; }
+  .divider{ height:1px; background:var(--tint-plum-10); margin:var(--sp-4) 0; border:none; }
+
+  .skeleton{ background:linear-gradient(90deg, var(--tint-plum-10) 25%, var(--tint-slate-10) 37%, var(--tint-plum-10) 63%); background-size:400% 100%; border-radius:var(--r-md); }
+
+  /* ============================================================
+     BOTTOM TAB NAV — root/tab screens only (Home). Sits above the
+     home-indicator, safe-area aware; content gets bottom padding
+     via .has-bottomnav so nothing sits underneath it.
+     ============================================================ */
+  .has-bottomnav{ padding-bottom:82px !important; }
+  .bottomnav{
+    position:absolute; left:0; right:0; bottom:0; z-index:25;
+    display:flex; background:var(--c-white); border-top:1px solid var(--tint-plum-10);
+    padding:9px 6px 24px;
+  }
+  .bottomnav__item{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;
+    color:var(--tint-plum-40); position:relative; text-decoration:none;
+  }
+  .bottomnav__item .icon{ width:21px; height:21px; }
+  .bottomnav__item.active{ color:var(--c-deep-plum); }
+  .bottomnav__item.active .icon{ stroke-width:2.3; }
+  .bottomnav__label{ font-size:9.5px; font-weight:600; letter-spacing:.01em; }
+  .bottomnav__badge{
+    position:absolute; top:-3px; right:calc(50% - 15px); min-width:14px; height:14px; padding:0 3px;
+    background:var(--c-burgundy); color:var(--c-white); border-radius:var(--r-full);
+    font-size:8.5px; font-weight:700; display:flex; align-items:center; justify-content:center;
+    border:1.5px solid var(--c-white);
+  }
+
+  @media (max-width:900px){
+    .layout{ grid-template-columns:1fr; }
+    .sidenav{ position:relative; height:auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     ICON SPRITE
+     ============================================================ -->
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <symbol id="icon-back" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="14" cy="6" r="2"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="8" cy="12" r="2"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="16" cy="18" r="2"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+    <symbol id="icon-share" viewBox="0 0 24 24"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></symbol>
+    <symbol id="icon-truck" viewBox="0 0 24 24"><rect x="1" y="7" width="14" height="10" rx="1"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="6.5" cy="19" r="1.8"/><circle cx="17.5" cy="19" r="1.8"/></symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+    <symbol id="icon-minus" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 17h.01"/></symbol>
+    <symbol id="icon-basket" viewBox="0 0 24 24"><path d="M5 9h14l-1.5 11.5a1 1 0 0 1-1 .5H7.5a1 1 0 0 1-1-.5L5 9Z"/><path d="M3 9h18"/><path d="M8 9 10 3"/><path d="M16 9 14 3"/></symbol>
+    <symbol id="icon-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/></symbol>
+    <symbol id="icon-milk" viewBox="0 0 24 24"><path d="M9 2h6v4l2.2 3.2c.5.7.8 1.6.8 2.5V20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-8.3c0-.9.3-1.8.8-2.5L9 6V2Z"/><line x1="9" y1="2" x2="15" y2="2"/><line x1="6.5" y1="13" x2="17.5" y2="13"/></symbol>
+    <symbol id="icon-bread" viewBox="0 0 24 24"><path d="M4 11c0-4 3.5-7 8-7s8 3 8 7v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6Z"/><path d="M4 12h16"/><path d="M8 12v7"/><path d="M12 12v7"/><path d="M16 12v7"/></symbol>
+    <symbol id="icon-noodles" viewBox="0 0 24 24"><path d="M3 11h18l-1.6 8.2a2 2 0 0 1-2 1.8H6.6a2 2 0 0 1-2-1.8L3 11Z"/><path d="M7 11c0-3 1-5 1-7"/><path d="M12 11c0-3-1-5-1-7"/><path d="M17 11c0-3-1-5-1-7"/></symbol>
+    <symbol id="icon-salt" viewBox="0 0 24 24"><path d="M8 4h8l1.2 3.6a3 3 0 0 1 .8 2V19a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9.6a3 3 0 0 1 .8-2L8 4Z"/><path d="M6 10h12"/><circle cx="10" cy="14.5" r=".6" fill="currentColor" stroke="none"/><circle cx="14" cy="14.5" r=".6" fill="currentColor" stroke="none"/><circle cx="12" cy="17.5" r=".6" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="icon-bottle" viewBox="0 0 24 24"><path d="M10 2h4v3.2l1.6 2A3 3 0 0 1 16.3 9H7.7a3 3 0 0 1 .7-1.8l1.6-2V2Z"/><path d="M7.5 9h9L17 20a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L7.5 9Z"/><line x1="7.8" y1="13.5" x2="16.2" y2="13.5"/></symbol>
+    <symbol id="icon-jar" viewBox="0 0 24 24"><rect x="6" y="9" width="12" height="12" rx="2"/><path d="M8 9V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3"/><line x1="6" y1="13.5" x2="18" y2="13.5"/></symbol>
+    <symbol id="icon-juice" viewBox="0 0 24 24"><path d="M7 3h10l-1 4H8L7 3Z"/><path d="M8 7h8l-1.2 12.8a2 2 0 0 1-2 1.2h-1.6a2 2 0 0 1-2-1.2L8 7Z"/><line x1="7.6" y1="12" x2="16.4" y2="12"/></symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></symbol>
+  </defs>
+</svg>
+
+<div class="layout">
+
+  <!-- ============================================================
+       SIDEBAR — plain anchor jump-links only (no JS)
+       ============================================================ -->
+  <aside class="sidenav">
+    <div class="sidenav__brand">
+      <div class="sidenav__mark">S</div>
+      <div>
+        <div class="sidenav__title">SprintMart</div>
+        <div class="sidenav__sub">Shared Cart · All Screens</div>
+      </div>
+    </div>
+    <div class="sidenav__count">37 static frames · 393×852px · ready for html.to.design</div>
+
+    <nav>
+      <div class="sidenav__group-label">0 · Reused Base App</div>
+      <a class="jump" href="#sec-home">Home / Products</a>
+
+      <div class="sidenav__group-label">1 · Household Setup</div>
+      <a class="jump" href="#sec-create">1.1 Create Shared Cart</a>
+      <a class="jump" href="#sec-invite">1.2 Invite Members</a>
+      <a class="jump" href="#sec-join">1.3 Join Shared Cart</a>
+
+      <div class="sidenav__group-label">2 · Live Shared Cart</div>
+      <a class="jump" href="#sec-dashboard">2.1 Dashboard</a>
+      <a class="jump" href="#sec-activity">2.2 Activity Timeline</a>
+
+      <div class="sidenav__group-label">3 · Adding Items</div>
+      <a class="jump" href="#sec-search">3.1 Search &amp; Duplicate Nudge</a>
+      <a class="jump" href="#sec-sharednudge">3.2 Shared-Item Nudge</a>
+
+      <div class="sidenav__group-label">4 · Budget &amp; Approval</div>
+      <a class="jump" href="#sec-approval">4.1 Budget Cap Approval</a>
+      <a class="jump" href="#sec-editcap">4.2 Edit Budget Cap</a>
+
+      <div class="sidenav__group-label">5 · Checkout</div>
+      <a class="jump" href="#sec-review">5.1 Checkout Review</a>
+      <a class="jump" href="#sec-locked">5.2 Cart Locked</a>
+      <a class="jump" href="#sec-split">5.3 Bill Split / Payment</a>
+      <a class="jump" href="#sec-adminpay">5.4 Admin Pays Checkout</a>
+
+      <div class="sidenav__group-label">6 · Confirmation</div>
+      <a class="jump" href="#sec-confirmed">6.1 Order Confirmed</a>
+      <a class="jump" href="#sec-tracking">6.2 Live Order Tracking</a>
+
+      <div class="sidenav__group-label">7 · Settings</div>
+      <a class="jump" href="#sec-settings">7.1 Shared Cart Settings</a>
+    </nav>
+  </aside>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main class="content">
+
+    <div class="page-header">
+      <p class="eyebrow">Mini Project · Session 18 Review — 4 July 2026</p>
+      <h1>Shared Cart — All Screens</h1>
+      <p>Every screen and UI state for the SprintMart Shared Cart feature, built to the locked design system in <strong>colours.md</strong> and the screen list in <strong>screens.md</strong>, at native iPhone size (<strong>393×852</strong>). Static high-fidelity HTML/CSS only — no scripts, no simulated navigation. Frames are laid out side by side, grouped by flow section, ready to pull into Figma with <strong>html.to.design</strong>.</p>
+      <div class="legend-row">
+        <span class="legend-chip"><span class="legend-dot" style="background:#1E1B30"></span>Deep Plum — structure</span>
+        <span class="legend-chip"><span class="legend-dot" style="background:#6B7888"></span>Slate — neutral</span>
+        <span class="legend-chip"><span class="legend-dot" style="background:#D4921A"></span>Amber — action / on-track</span>
+        <span class="legend-chip"><span class="legend-dot" style="background:#C05510"></span>Orange — emphasis / warning</span>
+        <span class="legend-chip"><span class="legend-dot" style="background:#6E1822"></span>Burgundy — urgency / over-cap</span>
+        <span class="legend-divider"></span>
+        <span class="legend-chip"><span class="pill pill--new">new</span></span>
+        <span class="legend-chip"><span class="pill pill--reused">reused</span></span>
+        <span class="legend-chip"><span class="pill pill--state">state</span></span>
+        <span class="legend-chip"><span class="pill pill--component">component</span></span>
+      </div>
+    </div>
+
+    <section class="section" id="sec-home">
+      <div class="section__head"><h2>0 · Home / Products</h2><span class="count-pill">reused base screen</span></div>
+      <p class="section__note">Unchanged from the base SprintMart app per screens.md — the only addition is the household banner layered on top (Jakob's Law: nothing else about Home should feel new).</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">0.1 · HOME</p>
+          <h3 class="frame__title">Home — no active cart</h3>
+          <div class="frame__pills"><span class="pill pill--reused">Reused + banner</span><span class="pill pill--state">Default</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+              <div class="app-header">
+                <div class="app-header__title"><h1 style="font-size:16px;font-weight:700;letter-spacing:-.02em;">SprintMart</h1><span>HSR Layout, Bengaluru 560102 · 10-min delivery</span></div>
+                <div class="app-header__trail"><div class="app-header__icon-btn"><svg class="icon" style="width:19px;height:19px"><use href="#icon-search"/></svg></div></div>
+              </div>
+              <div class="scr-body has-bottomnav">
+                <div class="card" style="display:flex;align-items:center;gap:12px;background:var(--tint-plum-04)">
+                  <span class="live-dot" style="width:9px;height:9px;flex-shrink:0"></span>
+                  <span style="flex:1"><b style="display:block;font-size:13.5px;">Shopping with flatmates?</b><span style="font-size:11.5px;color:var(--tint-plum-40)">Start a Shared Cart — everyone adds, one bill, no chasing.</span></span>
+                  <svg class="icon" style="color:var(--c-slate);width:16px;height:16px"><use href="#icon-back" style="transform:scaleX(-1)"/></svg>
+                </div>
+                <div class="chip-row" style="margin:var(--sp-4) 0;">
+                  <span class="sugg-chip active">All</span><span class="sugg-chip">Dairy &amp; Bread</span><span class="sugg-chip">Snacks</span><span class="sugg-chip">Home Care</span>
+                </div>
+                <p class="scr-section-label">Fresh picks today</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Amul Taaza Milk 1L" loading="lazy"></div><p class="item-row__name">Amul Taaza Milk 1L</p><p class="item-row__price">₹66</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=250&auto=format&fit=crop&q=80" alt="Britannia Bread 400g" loading="lazy"></div><p class="item-row__name">Britannia Bread 400g</p><p class="item-row__price">₹45</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1612927601601-6638404737ce?w=250&auto=format&fit=crop&q=80" alt="Maggi Noodles ×4" loading="lazy"></div><p class="item-row__name">Maggi Noodles ×4</p><p class="item-row__price">₹56</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1518110165400-11b33364f8ca?w=250&auto=format&fit=crop&q=80" alt="Tata Salt 1kg" loading="lazy"></div><p class="item-row__name">Tata Salt 1kg</p><p class="item-row__price">₹28</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=250&auto=format&fit=crop&q=80" alt="Nescafe Coffee 200g" loading="lazy"></div><p class="item-row__name">Nescafe Coffee 200g</p><p class="item-row__price">₹210</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=250&auto=format&fit=crop&q=80" alt="Amul Butter 500g" loading="lazy"></div><p class="item-row__name">Amul Butter 500g</p><p class="item-row__price">₹275</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=250&auto=format&fit=crop&q=80" alt="Real Fruit Juice 1L" loading="lazy"></div><p class="item-row__name">Real Fruit Juice 1L</p><p class="item-row__price">₹130</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1516448620398-c5f44bf9f441?w=250&auto=format&fit=crop&q=80" alt="Farm Fresh Eggs ×6" loading="lazy"></div><p class="item-row__name">Farm Fresh Eggs ×6</p><p class="item-row__price">₹78</p></div>
+</div>
+</div>
+<nav class="bottomnav">
+                <a class="bottomnav__item active"><svg class="icon"><use href="#icon-home"/></svg><span class="bottomnav__label">Home</span></a>
+                <a class="bottomnav__item"><svg class="icon"><use href="#icon-grid"/></svg><span class="bottomnav__label">Categories</span></a>
+                <a class="bottomnav__item"><svg class="icon"><use href="#icon-basket"/></svg><span class="bottomnav__label">Cart</span></a>
+                <a class="bottomnav__item"><svg class="icon"><use href="#icon-truck"/></svg><span class="bottomnav__label">Orders</span></a>
+                <a class="bottomnav__item"><svg class="icon"><use href="#icon-user"/></svg><span class="bottomnav__label">Account</span></a>
+              </nav>
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">0.2 · HOME</p>
+          <h3 class="frame__title">Home — Shared Cart live</h3>
+          <div class="frame__pills"><span class="pill pill--reused">Reused + banner</span><span class="pill pill--state">Alternate</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+              <div class="app-header">
+                <div class="app-header__title"><h1 style="font-size:16px;font-weight:700;letter-spacing:-.02em;">SprintMart</h1><span>HSR Layout, Bengaluru 560102 · 10-min delivery</span></div>
+                <div class="app-header__trail"><div class="app-header__icon-btn"><svg class="icon" style="width:19px;height:19px"><use href="#icon-search"/></svg></div></div>
+              </div>
+              <div class="scr-body has-bottomnav">
+                <div class="card" style="display:flex;align-items:center;gap:12px;border-color:var(--c-deep-plum)">
+                  <div class="avatar-row">
+                    <div class="avatar avatar--ring-amber" style="width:30px;height:30px;font-size:11px;border-width:2px;">A</div>
+                    <div class="avatar avatar--ring-orange" style="width:30px;height:30px;font-size:11px;border-width:2px;">R</div>
+                    <div class="avatar avatar--ring-burgundy" style="width:30px;height:30px;font-size:11px;border-width:2px;">K</div>
+                  </div>
+                  <span style="flex:1"><b style="display:flex;align-items:center;gap:6px;font-size:13.5px;"><span class="live-dot"></span>Flatmates' Cart is live</b><span style="font-size:11.5px;color:var(--tint-plum-40)">3 members · ₹1,384 so far — tap to open</span></span>
+                  <svg class="icon" style="color:var(--c-slate);width:16px;height:16px"><use href="#icon-back" style="transform:scaleX(-1)"/></svg>
+                </div>
+                <div class="chip-row" style="margin:var(--sp-4) 0;">
+                  <span class="sugg-chip active">All</span><span class="sugg-chip">Dairy &amp; Bread</span><span class="sugg-chip">Snacks</span><span class="sugg-chip">Home Care</span>
+                </div>
+                <p class="scr-section-label">Fresh picks today</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Amul Taaza Milk 1L" loading="lazy"></div><p class="item-row__name">Amul Taaza Milk 1L</p><p class="item-row__price">₹66</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=250&auto=format&fit=crop&q=80" alt="Britannia Bread 400g" loading="lazy"></div><p class="item-row__name">Britannia Bread 400g</p><p class="item-row__price">₹45</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1612927601601-6638404737ce?w=250&auto=format&fit=crop&q=80" alt="Maggi Noodles ×4" loading="lazy"></div><p class="item-row__name">Maggi Noodles ×4</p><p class="item-row__price">₹56</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1518110165400-11b33364f8ca?w=250&auto=format&fit=crop&q=80" alt="Tata Salt 1kg" loading="lazy"></div><p class="item-row__name">Tata Salt 1kg</p><p class="item-row__price">₹28</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=250&auto=format&fit=crop&q=80" alt="Nescafe Coffee 200g" loading="lazy"></div><p class="item-row__name">Nescafe Coffee 200g</p><p class="item-row__price">₹210</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=250&auto=format&fit=crop&q=80" alt="Amul Butter 500g" loading="lazy"></div><p class="item-row__name">Amul Butter 500g</p><p class="item-row__price">₹275</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=250&auto=format&fit=crop&q=80" alt="Real Fruit Juice 1L" loading="lazy"></div><p class="item-row__name">Real Fruit Juice 1L</p><p class="item-row__price">₹130</p></div>
+  <div class="card" style="padding:10px;"><div class="item-row__thumb" style="width:100%;height:72px;margin-bottom:8px;"><img src="https://images.unsplash.com/photo-1516448620398-c5f44bf9f441?w=250&auto=format&fit=crop&q=80" alt="Farm Fresh Eggs ×6" loading="lazy"></div><p class="item-row__name">Farm Fresh Eggs ×6</p><p class="item-row__price">₹78</p></div>
+</div>
+</div>
+<nav class="bottomnav">
+                <a class="bottomnav__item active"><svg class="icon"><use href="#icon-home"/></svg><span class="bottomnav__label">Home</span></a>
+                <a class="bottomnav__item"><svg class="icon"><use href="#icon-grid"/></svg><span class="bottomnav__label">Categories</span></a>
+                <a class="bottomnav__item"><svg class="icon"><use href="#icon-basket"/></svg><span class="bottomnav__badge">3</span><span class="bottomnav__label">Cart</span></a>
+                <a class="bottomnav__item"><svg class="icon"><use href="#icon-truck"/></svg><span class="bottomnav__label">Orders</span></a>
+                <a class="bottomnav__item"><svg class="icon"><use href="#icon-user"/></svg><span class="bottomnav__label">Account</span></a>
+              </nav>
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-create">
+      <div class="section__head"><h2>1.1 &middot; Create Shared Cart</h2><span class="count-pill">3 states</span></div>
+      <p class="section__note">Two payment modes exist because flatmate money dynamics differ fundamentally from family ones &#8212; a single mode would over- or under-serve one group. Traces to both personas' need for an agreed-upfront contract.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">1.1 &middot; CREATE SHARED CART</p>
+          <h3 class="frame__title">Create Shared Cart</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Default &#183; cap off</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Create Shared Cart</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-lead">Set this up once &#8212; everyone you invite shops inside it the same way they already know.</p>
+                <label class="field-label">Cart name</label>
+                <input class="field" value="Flatmates' Cart" style="margin-bottom:var(--sp-4)">
+                <label class="field-label">Who pays?</label>
+                <div class="segmented" style="margin-bottom:6px;">
+                  <span class="active">Each Pays Own</span><span>Admin Pays</span>
+                </div>
+                <p class="field-caption" style="margin-bottom:var(--sp-4)">Flatmates usually want equal independence &#8212; nobody's "the bank." Switch to Admin Pays if one person prefers to cover it all.</p>
+                <div class="card" style="margin-bottom:var(--sp-4)">
+          <div class="switch-row">
+            <div><b style="font-size:13px;">Set a budget cap</b><p class="field-caption" style="margin-top:2px;">Per-person spend limit &#8212; agreed before anyone adds a thing.</p></div>
+            <div class="switch "></div>
+          </div>
+          
+        </div>
+                <div class="card">
+          <div class="switch-row">
+            <div><b style="font-size:13px;">Checkout deadline</b><p class="field-caption" style="margin-top:2px;">Optional &#8212; nudges the group to close the cart by a set time.</p></div>
+            <div class="switch"></div>
+          </div>
+        </div>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block">Create cart</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">1.1 &middot; CREATE SHARED CART</p>
+          <h3 class="frame__title">Create Shared Cart</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Cap enabled</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Create Shared Cart</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-lead">Set this up once &#8212; everyone you invite shops inside it the same way they already know.</p>
+                <label class="field-label">Cart name</label>
+                <input class="field" value="Flatmates' Cart" style="margin-bottom:var(--sp-4)">
+                <label class="field-label">Who pays?</label>
+                <div class="segmented" style="margin-bottom:6px;">
+                  <span class="active">Each Pays Own</span><span>Admin Pays</span>
+                </div>
+                <p class="field-caption" style="margin-bottom:var(--sp-4)">Flatmates usually want equal independence &#8212; nobody's "the bank." Switch to Admin Pays if one person prefers to cover it all.</p>
+                <div class="card" style="margin-bottom:var(--sp-4)">
+          <div class="switch-row">
+            <div><b style="font-size:13px;">Set a budget cap</b><p class="field-caption" style="margin-top:2px;">Per-person spend limit &#8212; agreed before anyone adds a thing.</p></div>
+            <div class="switch on"></div>
+          </div>
+          <div style="margin-top:var(--sp-4)">
+            <label class="field-label">Cap per person</label>
+            <input class="field" value="&#8377;500">
+          </div>
+        </div>
+                <div class="card">
+          <div class="switch-row">
+            <div><b style="font-size:13px;">Checkout deadline</b><p class="field-caption" style="margin-top:2px;">Optional &#8212; nudges the group to close the cart by a set time.</p></div>
+            <div class="switch"></div>
+          </div>
+        </div>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block">Create cart</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">1.1 &middot; CREATE SHARED CART</p>
+          <h3 class="frame__title">Create Shared Cart</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Validation error</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Create Shared Cart</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-lead">Set this up once &#8212; everyone you invite shops inside it the same way they already know.</p>
+                <label class="field-label">Cart name</label>
+                <input class="field field--error" placeholder="Name your cart" style="margin-bottom:6px;">
+                <p class="field-caption field-caption--error" style="margin-bottom:var(--sp-4)">&#9888; Cart name is required.</p>
+                <label class="field-label">Who pays?</label>
+                <div class="segmented" style="margin-bottom:6px;">
+                  <span class="active">Each Pays Own</span><span>Admin Pays</span>
+                </div>
+                <p class="field-caption" style="margin-bottom:var(--sp-4)">Flatmates usually want equal independence &#8212; nobody's "the bank."</p>
+                <div class="card" style="margin-bottom:var(--sp-4)">
+          <div class="switch-row">
+            <div><b style="font-size:13px;">Set a budget cap</b><p class="field-caption" style="margin-top:2px;">Per-person spend limit &#8212; agreed before anyone adds a thing.</p></div>
+            <div class="switch on"></div>
+          </div>
+          <div style="margin-top:var(--sp-4)">
+            <label class="field-label">Cap per person</label>
+            <input class="field" value="&#8377;500">
+          </div>
+        </div>
+                <div class="card">
+          <div class="switch-row">
+            <div><b style="font-size:13px;">Checkout deadline</b><p class="field-caption" style="margin-top:2px;">Optional &#8212; nudges the group to close the cart by a set time.</p></div>
+            <div class="switch"></div>
+          </div>
+        </div>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block is-disabled">Create cart</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-invite">
+      <div class="section__head"><h2>1.2 &middot; Invite Members</h2><span class="count-pill">3 states</span></div>
+      <p class="section__note">Joining must take under 30 seconds for the Contributor persona (Rohan) &#8212; no separate sign-up step for existing SprintMart users.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">1.2 &middot; INVITE MEMBERS</p>
+          <h3 class="frame__title">Invite Members</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Waiting for joins</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Invite flatmates</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="text-align:center;padding:var(--sp-5) var(--sp-4);margin-bottom:var(--sp-4)">
+      <p class="field-label" style="margin-bottom:10px;">Invite code</p>
+      <div class="count-big" style="letter-spacing:.08em;margin-bottom:12px;">7421</div>
+      <div style="display:flex;gap:8px;justify-content:center;">
+        <button class="btn btn--ghost btn--sm"><svg class="icon" style="width:14px;height:14px"><use href="#icon-copy"/></svg>Copy code</button>
+        <button class="btn btn--ghost btn--sm"><svg class="icon" style="width:14px;height:14px"><use href="#icon-share"/></svg>Copy link</button>
+      </div>
+      <p class="field-caption" style="margin-top:10px;">Invite expires in 24h</p>
+    </div>
+                <p class="scr-section-label">Members &#183; 2/4 joined</p>
+                <div class="card"><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-amber" style="width:38px;height:38px;font-size:13px;border-width:2.5px;">A</div>
+        <div style="flex:1"><b style="font-size:13px;display:block;">Ananya Kulkarni <span style='color:var(--tint-plum-40);font-weight:400'>&#183; You</span></b><span style="font-size:11px;color:var(--tint-plum-40)">Organiser</span></div>
+        <span class="badge badge--slate">Joined</span>
+      </div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-orange" style="width:38px;height:38px;font-size:13px;border-width:2.5px;">R</div>
+        <div style="flex:1"><b style="font-size:13px;display:block;">Rohan Mehta</b><span style="font-size:11px;color:var(--tint-plum-40)">Joined 2 min ago</span></div>
+        <span class="badge badge--slate">Joined</span>
+      </div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-slate" style="width:38px;height:38px;font-size:13px;border-width:2.5px;">K</div>
+        <div style="flex:1"><b style="font-size:13px;display:block;">Kabir Rao</b><span style="font-size:11px;color:var(--tint-plum-40)">Invite sent &#183; pending</span></div>
+        <button class="btn btn--ghost btn--sm">Remind</button>
+      </div></div>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block is-disabled">Continue to shared cart &#8594;</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">1.2 &middot; INVITE MEMBERS</p>
+          <h3 class="frame__title">Invite Members</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">All slots filled 4/4</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Invite flatmates</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="text-align:center;padding:var(--sp-5) var(--sp-4);margin-bottom:var(--sp-4)">
+      <p class="field-label" style="margin-bottom:10px;">Invite code</p>
+      <div class="count-big" style="letter-spacing:.08em;margin-bottom:12px;">7421</div>
+      <div style="display:flex;gap:8px;justify-content:center;">
+        <button class="btn btn--ghost btn--sm"><svg class="icon" style="width:14px;height:14px"><use href="#icon-copy"/></svg>Copy code</button>
+        <button class="btn btn--ghost btn--sm"><svg class="icon" style="width:14px;height:14px"><use href="#icon-share"/></svg>Copy link</button>
+      </div>
+      <p class="field-caption" style="margin-top:10px;">Invite expires in 24h</p>
+    </div>
+                <p class="scr-section-label">Members &#183; 4/4 joined</p>
+                <div class="card"><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-amber" style="width:38px;height:38px;font-size:13px;border-width:2.5px;">A</div>
+        <div style="flex:1"><b style="font-size:13px;display:block;">Ananya Kulkarni <span style='color:var(--tint-plum-40);font-weight:400'>&#183; You</span></b><span style="font-size:11px;color:var(--tint-plum-40)">Organiser</span></div>
+        <span class="badge badge--slate">Joined</span>
+      </div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-orange" style="width:38px;height:38px;font-size:13px;border-width:2.5px;">R</div>
+        <div style="flex:1"><b style="font-size:13px;display:block;">Rohan Mehta</b><span style="font-size:11px;color:var(--tint-plum-40)">Joined 2 min ago</span></div>
+        <span class="badge badge--slate">Joined</span>
+      </div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-burgundy" style="width:38px;height:38px;font-size:13px;border-width:2.5px;">K</div>
+        <div style="flex:1"><b style="font-size:13px;display:block;">Kabir Rao</b><span style="font-size:11px;color:var(--tint-plum-40)">Joined just now</span></div>
+        <span class="badge badge--slate">Joined</span>
+      </div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-slate" style="width:38px;height:38px;font-size:13px;border-width:2.5px;">P</div>
+        <div style="flex:1"><b style="font-size:13px;display:block;">Priya Nair</b><span style="font-size:11px;color:var(--tint-plum-40)">Joined 1 min ago</span></div>
+        <span class="badge badge--slate">Joined</span>
+      </div></div>
+                <p class="field-caption" style="margin-top:8px;">This cart is full &#8212; new invite links will show as unavailable.</p>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block">Continue to shared cart &#8594;</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">1.2 &middot; INVITE MEMBERS</p>
+          <h3 class="frame__title">Invite Members</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Invite expired</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Invite flatmates</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="text-align:center;padding:var(--sp-5) var(--sp-4);margin-bottom:var(--sp-4);opacity:.5">
+                  <p class="field-label" style="margin-bottom:10px;">Invite code</p>
+                  <div class="count-big" style="letter-spacing:.08em;margin-bottom:4px;">7421</div>
+                </div>
+                <div class="card" style="background:var(--tint-burgundy-10);border-color:transparent;display:flex;gap:10px;align-items:flex-start;margin-bottom:var(--sp-4)">
+                  <svg class="icon" style="color:var(--c-burgundy);flex-shrink:0"><use href="#icon-alert"/></svg>
+                  <div><b style="font-size:13px;color:var(--c-burgundy);">This invite has expired</b><p class="field-caption" style="margin-top:2px;">Codes stay active for 24h. Generate a new one to keep inviting flatmates.</p></div>
+                </div>
+                <p class="scr-section-label">Members &#183; 2/4 joined</p>
+                <div class="card"><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-amber" style="width:38px;height:38px;font-size:13px;border-width:2.5px;">A</div>
+        <div style="flex:1"><b style="font-size:13px;display:block;">Ananya Kulkarni <span style='color:var(--tint-plum-40);font-weight:400'>&#183; You</span></b><span style="font-size:11px;color:var(--tint-plum-40)">Organiser</span></div>
+        <span class="badge badge--slate">Joined</span>
+      </div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-orange" style="width:38px;height:38px;font-size:13px;border-width:2.5px;">R</div>
+        <div style="flex:1"><b style="font-size:13px;display:block;">Rohan Mehta</b><span style="font-size:11px;color:var(--tint-plum-40)">Joined 2 min ago</span></div>
+        <span class="badge badge--slate">Joined</span>
+      </div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-slate" style="width:38px;height:38px;font-size:13px;border-width:2.5px;">K</div>
+        <div style="flex:1"><b style="font-size:13px;display:block;">Kabir Rao</b><span style="font-size:11px;color:var(--tint-plum-40)">Invite sent &#183; pending</span></div>
+        <button class="btn btn--ghost btn--sm">Remind</button>
+      </div></div>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block">Generate new invite</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-join">
+      <div class="section__head"><h2>1.3 &middot; Join Shared Cart</h2><span class="count-pill">3 states</span></div>
+      <p class="section__note">What a Contributor sees when they tap the invite link. Showing the cap upfront is the contract-agreed-before-shopping principle.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">1.3 &middot; JOIN SHARED CART</p>
+          <h3 class="frame__title">Join Shared Cart</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Normal join</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>You're invited</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="text-align:center;padding:var(--sp-6) var(--sp-4)">
+                  <div class="avatar-row" style="justify-content:center;margin-bottom:var(--sp-3)">
+                    <div class="avatar avatar--ring-amber" style="width:44px;height:44px;font-size:15px;border-width:3px;">A</div>
+                    <div class="avatar avatar--ring-burgundy" style="width:44px;height:44px;font-size:15px;border-width:3px;">K</div>
+                  </div>
+                  <h2 style="font-size:19px;margin:0 0 4px;">Flatmates' Cart</h2>
+                  <p style="font-size:12.5px;color:var(--tint-plum-40);margin:0 0 var(--sp-4)">Ananya Kulkarni invited you to shop together</p>
+                  <div class="card" style="background:var(--tint-amber-10);border-color:transparent;text-align:left;margin-bottom:var(--sp-4)">
+                    <b style="font-size:12.5px;">Your budget cap: &#8377;500</b>
+                    <p class="field-caption" style="margin-top:2px;">Agreed upfront &#8212; add freely up to this before anything needs approval.</p>
+                  </div>
+                  <button class="btn btn--primary btn--block">Join cart</button>
+                  <p class="field-caption" style="margin-top:10px;">Joining as Rohan Mehta &#183; no separate sign-up needed</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">1.3 &middot; JOIN SHARED CART</p>
+          <h3 class="frame__title">Join Shared Cart</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Cart full 4/4</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>You're invited</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="text-align:center;padding:var(--sp-6) var(--sp-4)">
+                  <div class="avatar-row" style="justify-content:center;margin-bottom:var(--sp-3)">
+                    <div class="avatar avatar--ring-amber" style="width:40px;height:40px;font-size:13px;border-width:3px;">A</div>
+                    <div class="avatar avatar--ring-orange" style="width:40px;height:40px;font-size:13px;border-width:3px;">R</div>
+                    <div class="avatar avatar--ring-burgundy" style="width:40px;height:40px;font-size:13px;border-width:3px;">K</div>
+                    <div class="avatar avatar--ring-slate" style="width:40px;height:40px;font-size:13px;border-width:3px;">P</div>
+                  </div>
+                  <h2 style="font-size:19px;margin:0 0 4px;">Flatmates' Cart</h2>
+                  <p style="font-size:12.5px;color:var(--tint-plum-40);margin:0 0 var(--sp-4)">4 of 4 seats are already taken</p>
+                  <div class="card" style="background:var(--tint-burgundy-10);border-color:transparent;display:flex;gap:10px;align-items:flex-start;text-align:left;margin-bottom:var(--sp-4)">
+                    <svg class="icon" style="color:var(--c-burgundy);flex-shrink:0"><use href="#icon-alert"/></svg>
+                    <div><b style="font-size:13px;color:var(--c-burgundy);">This cart is full</b><p class="field-caption" style="margin-top:2px;">Shared carts hold up to 4 people. Ask Ananya to free up a seat, or start your own cart.</p></div>
+                  </div>
+                  <button class="btn btn--ghost btn--block">Start your own cart</button>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">1.3 &middot; JOIN SHARED CART</p>
+          <h3 class="frame__title">Enter Invite Code</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Error &#183; invalid code</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>You're invited</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-lead">Enter the 4-digit code a flatmate shared with you.</p>
+                <label class="field-label">Invite code</label>
+                <input class="field field--error" value="0000" style="text-align:center;letter-spacing:.3em;font-family:var(--font-mono);font-size:18px;margin-bottom:6px;">
+                <p class="field-caption field-caption--error" style="margin-bottom:var(--sp-5)">&#9888; That code doesn't match an active cart. Double-check with whoever invited you.</p>
+                <button class="btn btn--primary btn--block is-disabled">Join cart</button>
+                <p class="field-caption" style="margin-top:14px;text-align:center;">Got a link instead? <span style="color:var(--c-deep-plum);text-decoration:underline;">Paste it here</span></p>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-dashboard">
+      <div class="section__head"><h2>2.1 &middot; Shared Cart Dashboard</h2><span class="count-pill">4 states</span></div>
+      <p class="section__note">The home base of the whole feature. Three-tier item list is the 'visibility without surveillance' mechanism: everyone can see, only the owner (or admin) can touch &#8212; greyed controls on others' items are the actual UI expression of that rule. Budget bars chunk four people's numbers into one glanceable unit each (Miller's Law).</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">2.1 &middot; DASHBOARD</p>
+          <h3 class="frame__title">Shared Cart Dashboard</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Empty</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Flatmates' Cart</h1><span class="badge badge--slate" style="margin-top:3px;">No live activity yet</span></div>
+                <div class="app-header__trail">
+                  <div class="app-header__icon-btn"><svg class="icon" style="width:17px;height:17px"><use href="#icon-clock"/></svg></div>
+                  <div class="app-header__icon-btn"><svg class="icon" style="width:17px;height:17px"><use href="#icon-settings"/></svg></div>
+                </div>
+              </div>
+              <div class="scr-body">
+                <div class="avatar-row" style="margin-bottom:var(--sp-4)">
+      <div class="avatar avatar--ring-amber" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">A</div>
+      <div class="avatar avatar--ring-orange" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">R</div>
+      <div class="avatar avatar--ring-burgundy" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">K</div>
+      <div class="avatar avatar--ring-slate" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">P</div>
+    </div>
+                <div class="search-field" style="margin-bottom:10px;">
+      <svg class="icon" style="width:16px;height:16px"><use href="#icon-search"/></svg>
+      <span style="color:var(--c-slate)">Search milk, snacks, breakfast&#8230;</span>
+    </div>
+                <div class="empty-state">
+                  <div class="empty-state__icon"><svg class="icon" style="width:26px;height:26px"><use href="#icon-basket"/></svg></div>
+                  <h3>The cart's empty for now</h3>
+                  <p>Search above to add the first item &#8212; everyone in Flatmates' Cart will see it instantly.</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">2.1 &middot; DASHBOARD</p>
+          <h3 class="frame__title">Shared Cart Dashboard</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Normal</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Flatmates' Cart</h1><span class="live-pill" style="margin-top:3px;"><span class="live-dot"></span>Live &#183; Rohan adding now&#8230;</span></div>
+                <div class="app-header__trail">
+                  <div class="app-header__icon-btn"><svg class="icon" style="width:17px;height:17px"><use href="#icon-clock"/></svg></div>
+                  <div class="app-header__icon-btn"><svg class="icon" style="width:17px;height:17px"><use href="#icon-settings"/></svg></div>
+                </div>
+              </div>
+              <div class="scr-body">
+                <div class="avatar-row" style="margin-bottom:var(--sp-4)">
+      <div class="avatar avatar--ring-amber" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">A</div>
+      <div class="avatar avatar--ring-orange" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">R</div>
+      <div class="avatar avatar--ring-burgundy" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">K</div>
+      <div class="avatar avatar--ring-slate" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">P</div>
+    </div>
+                <div class="search-field" style="margin-bottom:10px;">
+      <svg class="icon" style="width:16px;height:16px"><use href="#icon-search"/></svg>
+      <span style="color:var(--c-slate)">Search milk, snacks, breakfast&#8230;</span>
+    </div>
+                <div class="chip-row" style="margin-bottom:var(--sp-5)">
+      <span style="font-size:10.5px;color:var(--tint-plum-40);align-self:center;flex-shrink:0;">Often forgotten:</span>
+      <span class="sugg-chip">Dish soap</span><span class="sugg-chip">Eggs</span><span class="sugg-chip">Rice 5kg</span>
+    </div>
+                <p class="scr-section-label">Budget <span style="float:right;font-weight:400;text-transform:none;color:var(--tint-plum-40)">&#8377;500 cap each</span></p>
+                <div class="card" style="margin-bottom:var(--sp-5)">
+      <div class="budget-item">
+        <div class="budget-item__who"><span class="budget-item__mini-avatar" style="background:var(--c-amber)">A</span>Ananya</div>
+        <div class="track"><div class="fill fill--ok" style="width:75%"></div></div>
+        <div class="budget-item__amt "><b>&#8377;374</b> / &#8377;500</div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-item__who"><span class="budget-item__mini-avatar" style="background:var(--c-orange)">R</span>Rohan</div>
+        <div class="track"><div class="fill fill--warn" style="width:96%"></div></div>
+        <div class="budget-item__amt warn"><b>&#8377;480</b> / &#8377;500</div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-item__who"><span class="budget-item__mini-avatar" style="background:var(--c-burgundy)">K</span>Kabir</div>
+        <div class="track"><div class="fill fill--ok" style="width:68%"></div></div>
+        <div class="budget-item__amt "><b>&#8377;340</b> / &#8377;500</div>
+      </div>
+    </div>
+                <div class="tier tier--shared">
+      <p class="scr-section-label" style="margin-bottom:10px;">Shared items <span class="split-pill">&#247;3 each</span></p>
+      <ul class="list-plain">
+        <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Amul Taaza Milk 1L" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Amul Taaza Milk 1L</p><p class="item-row__price">&#8377;66</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-amber)">A</span>Added by Ananya</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+        <li class="item-row greyed">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=250&auto=format&fit=crop&q=80" alt="Britannia Bread 400g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Britannia Bread 400g</p><p class="item-row__price">&#8377;45</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-burgundy)">K</span>Added by Kabir</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+        <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1518110165400-11b33364f8ca?w=250&auto=format&fit=crop&q=80" alt="Tata Salt 1kg" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Tata Salt 1kg</p><p class="item-row__price">&#8377;28</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-amber)">A</span>Added by Ananya</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+        <li class="item-row greyed">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1585832770485-e68a5fcfad52?w=250&auto=format&fit=crop&q=80" alt="Surf Excel Detergent 1kg" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Surf Excel Detergent 1kg</p><p class="item-row__price">&#8377;221</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-orange)">R</span>Added by Rohan</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+      </ul>
+    </div>
+                <p class="scr-section-label">Your items</p>
+    <ul class="list-plain" style="margin-bottom:var(--sp-4)">
+      <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=250&auto=format&fit=crop&q=80" alt="Nescafe Coffee 200g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Nescafe Coffee 200g</p><p class="item-row__price">&#8377;210 &#183; Personal</p></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+      <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=250&auto=format&fit=crop&q=80" alt="Amul Butter 500g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Amul Butter 500g</p><p class="item-row__price">&#8377;70 &#183; Personal</p></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+    </ul>
+                <p class="scr-section-label">Others' items</p>
+    <ul class="list-plain">
+      <li class="item-row greyed">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1612927601601-6638404737ce?w=250&auto=format&fit=crop&q=80" alt="Maggi Noodles &#215;4" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Maggi Noodles &#215;4</p><p class="item-row__price">&#8377;56</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-orange)">R</span>Added by Rohan &#183; personal</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+      <li class="item-row greyed">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=250&auto=format&fit=crop&q=80" alt="Bournvita 500g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Bournvita 500g</p><p class="item-row__price">&#8377;180</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-orange)">R</span>Added by Rohan &#183; personal</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+    </ul>
+              </div>
+              <div class="bottom-bar">
+                <div class="bottom-bar__total"><span>Your total</span><b>&#8377;400</b></div>
+                <button class="btn btn--primary" style="flex-shrink:0;">Review &amp; Checkout</button>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">2.1 &middot; DASHBOARD</p>
+          <h3 class="frame__title">Shared Cart Dashboard</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Awaiting approval</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Flatmates' Cart</h1><span class="live-pill" style="margin-top:3px;"><span class="live-dot"></span>Live &#183; Rohan adding now&#8230;</span></div>
+                <div class="app-header__trail">
+                  <div class="app-header__icon-btn"><svg class="icon" style="width:17px;height:17px"><use href="#icon-clock"/></svg></div>
+                  <div class="app-header__icon-btn"><svg class="icon" style="width:17px;height:17px"><use href="#icon-settings"/></svg></div>
+                </div>
+              </div>
+              <div class="scr-body">
+                <div class="avatar-row" style="margin-bottom:var(--sp-4)">
+      <div class="avatar avatar--ring-amber" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">A</div>
+      <div class="avatar avatar--ring-orange" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">R</div>
+      <div class="avatar avatar--ring-burgundy" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">K</div>
+      <div class="avatar avatar--ring-slate" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">P</div>
+    </div>
+                <div class="search-field" style="margin-bottom:10px;">
+      <svg class="icon" style="width:16px;height:16px"><use href="#icon-search"/></svg>
+      <span style="color:var(--c-slate)">Search milk, snacks, breakfast&#8230;</span>
+    </div>
+                <div class="chip-row" style="margin-bottom:var(--sp-5)">
+      <span style="font-size:10.5px;color:var(--tint-plum-40);align-self:center;flex-shrink:0;">Often forgotten:</span>
+      <span class="sugg-chip">Dish soap</span><span class="sugg-chip">Eggs</span><span class="sugg-chip">Rice 5kg</span>
+    </div>
+                <p class="scr-section-label">Budget <span style="float:right;font-weight:400;text-transform:none;color:var(--tint-plum-40)">&#8377;500 cap each</span></p>
+                <div class="card" style="margin-bottom:var(--sp-5)">
+      <div class="budget-item">
+        <div class="budget-item__who"><span class="budget-item__mini-avatar" style="background:var(--c-amber)">A</span>Ananya</div>
+        <div class="track"><div class="fill fill--ok" style="width:75%"></div></div>
+        <div class="budget-item__amt "><b>&#8377;374</b> / &#8377;500</div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-item__who"><span class="budget-item__mini-avatar" style="background:var(--c-orange)">R</span>Rohan</div>
+        <div class="track"><div class="fill fill--warn" style="width:96%"></div></div>
+        <div class="budget-item__amt warn"><b>&#8377;480</b> / &#8377;500</div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-item__who"><span class="budget-item__mini-avatar" style="background:var(--c-burgundy)">K</span>Kabir</div>
+        <div class="track"><div class="fill fill--over" style="width:100%"></div></div>
+        <div class="budget-item__amt over"><b>&#8377;530</b> / &#8377;500</div>
+      </div><span class="badge badge--burgundy" style="margin-left:6px;">Awaiting approval</span>
+    </div>
+                <div class="tier tier--shared">
+      <p class="scr-section-label" style="margin-bottom:10px;">Shared items <span class="split-pill">&#247;3 each</span></p>
+      <ul class="list-plain">
+        <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Amul Taaza Milk 1L" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Amul Taaza Milk 1L</p><p class="item-row__price">&#8377;66</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-amber)">A</span>Added by Ananya</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+        <li class="item-row greyed">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=250&auto=format&fit=crop&q=80" alt="Britannia Bread 400g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Britannia Bread 400g</p><p class="item-row__price">&#8377;45</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-burgundy)">K</span>Added by Kabir</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+        <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1518110165400-11b33364f8ca?w=250&auto=format&fit=crop&q=80" alt="Tata Salt 1kg" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Tata Salt 1kg</p><p class="item-row__price">&#8377;28</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-amber)">A</span>Added by Ananya</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+        <li class="item-row greyed">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1585832770485-e68a5fcfad52?w=250&auto=format&fit=crop&q=80" alt="Surf Excel Detergent 1kg" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Surf Excel Detergent 1kg</p><p class="item-row__price">&#8377;221</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-orange)">R</span>Added by Rohan</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+      </ul>
+    </div>
+                <p class="scr-section-label">Your items</p>
+    <ul class="list-plain" style="margin-bottom:var(--sp-4)">
+      <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=250&auto=format&fit=crop&q=80" alt="Nescafe Coffee 200g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Nescafe Coffee 200g</p><p class="item-row__price">&#8377;210 &#183; Personal</p></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+      <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=250&auto=format&fit=crop&q=80" alt="Amul Butter 500g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Amul Butter 500g</p><p class="item-row__price">&#8377;70 &#183; Personal</p></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+    </ul>
+                <p class="scr-section-label">Others' items</p>
+                <ul class="list-plain">
+                  <li class="item-row greyed">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1612927601601-6638404737ce?w=250&auto=format&fit=crop&q=80" alt="Maggi Noodles &#215;4" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Maggi Noodles &#215;4</p><p class="item-row__price">&#8377;56</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-orange)">R</span>Added by Rohan &#183; personal</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+                  <li class="item-row greyed">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=250&auto=format&fit=crop&q=80" alt="Bournvita 500g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Bournvita 500g</p><p class="item-row__price">&#8377;180</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-orange)">R</span>Added by Rohan &#183; personal</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+                </ul>
+                <div class="tier tier--flagged">
+      <div class="item-row" style="padding:0;">
+        <div class="item-row__thumb item-row__thumb--personalcare"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+        <div class="item-row__mid">
+          <p class="item-row__name">Parachute Hair Oil 200ml</p>
+          <p class="item-row__price">&#8377;60</p>
+          <span class="added-by-pill" style="margin-top:4px;background:rgba(110,24,34,.12)"><span class="mini-avatar" style="background:var(--c-burgundy)">K</span>Kabir &#183; personal</span>
+        </div>
+        <span class="badge badge--burgundy">Awaiting approval</span>
+      </div>
+    </div>
+              </div>
+              <div class="bottom-bar">
+                <div class="bottom-bar__total"><span>Your total</span><b>&#8377;400</b></div>
+                <button class="btn btn--primary is-disabled" style="flex-shrink:0;">Review &amp; Checkout</button>
+              </div>
+              <p style="text-align:center;font-size:11px;color:var(--c-burgundy);margin-top:8px;">1 item awaiting your approval &#8594;</p>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">2.1 &middot; DASHBOARD</p>
+          <h3 class="frame__title">Shared Cart Dashboard</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Locked &#183; read-only</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Flatmates' Cart</h1><span class="badge badge--slate" style="margin-top:3px;display:inline-flex;align-items:center;gap:4px;"><svg class="icon" style="width:10px;height:10px"><use href="#icon-lock"/></svg>Locked &#183; payment in progress</span></div>
+                <div class="app-header__trail">
+                  <div class="app-header__icon-btn"><svg class="icon" style="width:17px;height:17px"><use href="#icon-clock"/></svg></div>
+                  <div class="app-header__icon-btn"><svg class="icon" style="width:17px;height:17px"><use href="#icon-settings"/></svg></div>
+                </div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="background:var(--tint-plum-04);display:flex;gap:10px;align-items:center;margin-bottom:var(--sp-4)">
+                  <svg class="icon" style="color:var(--c-deep-plum)"><use href="#icon-lock"/></svg>
+                  <div><b style="font-size:13px;">Cart locked by Ananya</b><p class="field-caption" style="margin-top:2px;">No new items can be added &#8212; payment window is open.</p></div>
+                </div>
+                <div class="avatar-row" style="margin-bottom:var(--sp-4)">
+      <div class="avatar avatar--ring-amber" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">A</div>
+      <div class="avatar avatar--ring-orange" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">R</div>
+      <div class="avatar avatar--ring-burgundy" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">K</div>
+      <div class="avatar avatar--ring-slate" style="width:34px;height:34px;font-size:12px;border-width:2.5px;">P</div>
+    </div>
+                <p class="scr-section-label">Final items <span class="split-pill">read-only</span></p>
+                <div class="tier tier--shared greyed">
+                  <p class="scr-section-label" style="margin-bottom:10px;">Shared items <span class="split-pill">&#247;3 each</span></p>
+                  <ul class="list-plain">
+                    <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Amul Taaza Milk 1L" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Amul Taaza Milk 1L</p><p class="item-row__price">&#8377;66</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-amber)">A</span>Added by Ananya</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+                    <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=250&auto=format&fit=crop&q=80" alt="Britannia Bread 400g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Britannia Bread 400g</p><p class="item-row__price">&#8377;45</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-burgundy)">K</span>Added by Kabir</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+                    <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1518110165400-11b33364f8ca?w=250&auto=format&fit=crop&q=80" alt="Tata Salt 1kg" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Tata Salt 1kg</p><p class="item-row__price">&#8377;28</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-amber)">A</span>Added by Ananya</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+                    <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1585832770485-e68a5fcfad52?w=250&auto=format&fit=crop&q=80" alt="Surf Excel Detergent 1kg" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Surf Excel Detergent 1kg</p><p class="item-row__price">&#8377;221</p><span class="added-by-pill" style="margin-top:4px;"><span class="mini-avatar" style="background:var(--c-orange)">R</span>Added by Rohan</span></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+                  </ul>
+                </div>
+                <ul class="list-plain greyed">
+                  <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=250&auto=format&fit=crop&q=80" alt="Nescafe Coffee 200g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Nescafe Coffee 200g</p><p class="item-row__price">&#8377;210 &#183; Personal</p></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+                  <li class="item-row">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=250&auto=format&fit=crop&q=80" alt="Amul Butter 500g" loading="lazy"></div>
+        <div class="item-row__mid"><p class="item-row__name">Amul Butter 500g</p><p class="item-row__price">&#8377;70 &#183; Personal</p></div>
+        <div class="stepper"><span>&#8722;</span><span>1</span><span>+</span></div>
+      </li>
+                </ul>
+              </div>
+              <div class="bottom-bar">
+                <div class="bottom-bar__total"><span>Order total</span><b>&#8377;1,384</b></div>
+                <button class="btn btn--ghost" style="flex-shrink:0;">View payment &#8594;</button>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-activity">
+      <div class="section__head"><h2>2.2 &middot; Activity Timeline</h2><span class="count-pill">2 states</span></div>
+      <p class="section__note">Directly answers the recurring pain point &#8220;nobody knows who removed an item.&#8221; Chronological, read-only, ambient &#8212; ties into the ownership rules shown on the Dashboard.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">2.2 &middot; ACTIVITY</p>
+          <h3 class="frame__title">Activity Timeline</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Empty</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Activity</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="empty-state">
+                  <div class="empty-state__icon"><svg class="icon" style="width:26px;height:26px"><use href="#icon-inbox"/></svg></div>
+                  <h3>Nothing here yet</h3>
+                  <p>Once someone adds, removes, or edits an item, you'll see it logged here &#8212; no undo, just the record.</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">2.2 &middot; ACTIVITY</p>
+          <h3 class="frame__title">Activity Timeline</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Populated</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Activity</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-lead">A single ambient log &#8212; so nobody has to ask "who removed the bread?" No undo here; it's a record, not a control.</p>
+                <ul class="list-plain"><li style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--tint-plum-10);">
+        <div class="avatar avatar--ring-orange" style="width:30px;height:30px;font-size:11px;border-width:2px;">R</div>
+        <div style="flex:1;font-size:12.5px;"><b>Rohan</b> added <b>Surf Excel Detergent 1kg</b> <span class="split-pill">shared</span><br><span style="color:var(--tint-plum-40);font-size:11px;">2 min ago</span></div>
+      </li><li style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--tint-plum-10);">
+        <div class="avatar avatar--ring-burgundy" style="width:30px;height:30px;font-size:11px;border-width:2px;">K</div>
+        <div style="flex:1;font-size:12.5px;"><b>Kabir</b> added <b>Parachute Hair Oil 200ml</b> &#8212; flagged over cap<br><span style="color:var(--tint-plum-40);font-size:11px;">6 min ago</span></div>
+      </li><li style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--tint-plum-10);">
+        <div class="avatar avatar--ring-amber" style="width:30px;height:30px;font-size:11px;border-width:2px;">A</div>
+        <div style="flex:1;font-size:12.5px;"><b>Ananya</b> set the budget cap to <b>&#8377;500</b><br><span style="color:var(--tint-plum-40);font-size:11px;">18 min ago</span></div>
+      </li><li style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--tint-plum-10);">
+        <div class="avatar avatar--ring-burgundy" style="width:30px;height:30px;font-size:11px;border-width:2px;">K</div>
+        <div style="flex:1;font-size:12.5px;"><b>Kabir</b> added <b>Britannia Bread 400g</b> <span class="split-pill">shared</span><br><span style="color:var(--tint-plum-40);font-size:11px;">22 min ago</span></div>
+      </li><li style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--tint-plum-10);">
+        <div class="avatar avatar--ring-amber" style="width:30px;height:30px;font-size:11px;border-width:2px;">A</div>
+        <div style="flex:1;font-size:12.5px;"><b>Ananya</b> created <b>Flatmates' Cart</b><br><span style="color:var(--tint-plum-40);font-size:11px;">34 min ago</span></div>
+      </li></ul>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-search">
+      <div class="section__head"><h2>3.1 &middot; Search &amp; Duplicate Nudge</h2><span class="count-pill">4 states</span></div>
+      <p class="section__note">Search, browse and add stay pixel-identical to the base single-user app (Jakob's Law) &#8212; the only new layer is the duplicate nudge. Hick's Law in practice: exactly two choices, one inline banner, never a modal, so the under-30-second Contributor never has to think twice.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">3.1 &middot; SEARCH</p>
+          <h3 class="frame__title">Search &amp; Add Items</h3>
+          <div class="frame__pills"><span class="pill pill--reused">Reused</span><span class="pill pill--state">Default</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="search-field is-focused" style="flex:1;"><svg class="icon" style="width:16px;height:16px"><use href="#icon-search"/></svg><span style="color:var(--c-slate)">Search milk, snacks, breakfast&#8230;</span></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-section-label">Recent searches</p>
+                <div class="chip-row" style="margin-bottom:var(--sp-5)">
+                  <span class="sugg-chip">Milk</span><span class="sugg-chip">Bread</span><span class="sugg-chip">Detergent</span>
+                </div>
+                <p class="scr-section-label">Often forgotten in this cart</p>
+                <div class="chip-row"><span class="sugg-chip">Dish soap</span><span class="sugg-chip">Eggs</span><span class="sugg-chip">Rice 5kg</span></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">3.1 &middot; SEARCH</p>
+          <h3 class="frame__title">Search &amp; Add Items</h3>
+          <div class="frame__pills"><span class="pill pill--reused">Reused</span><span class="pill pill--state">Loading</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="search-field is-focused" style="flex:1;"><svg class="icon" style="width:16px;height:16px"><use href="#icon-search"/></svg><span style="color:var(--c-deep-plum)">Amul Taaza Milk 1L</span></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-section-label">Searching&#8230;</p>
+                <div class="item-row" style="align-items:center;">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+        <div class="item-row__mid">
+          <div class="skeleton" style="height:13px;width:70%;margin-bottom:6px;"></div>
+          <div class="skeleton" style="height:11px;width:30%;"></div>
+        </div>
+        <div class="skeleton" style="width:56px;height:30px;border-radius:8px;"></div>
+      </div><div class="item-row" style="align-items:center;">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+        <div class="item-row__mid">
+          <div class="skeleton" style="height:13px;width:70%;margin-bottom:6px;"></div>
+          <div class="skeleton" style="height:11px;width:30%;"></div>
+        </div>
+        <div class="skeleton" style="width:56px;height:30px;border-radius:8px;"></div>
+      </div><div class="item-row" style="align-items:center;">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+        <div class="item-row__mid">
+          <div class="skeleton" style="height:13px;width:70%;margin-bottom:6px;"></div>
+          <div class="skeleton" style="height:11px;width:30%;"></div>
+        </div>
+        <div class="skeleton" style="width:56px;height:30px;border-radius:8px;"></div>
+      </div><div class="item-row" style="align-items:center;">
+        <div class="item-row__thumb"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+        <div class="item-row__mid">
+          <div class="skeleton" style="height:13px;width:70%;margin-bottom:6px;"></div>
+          <div class="skeleton" style="height:11px;width:30%;"></div>
+        </div>
+        <div class="skeleton" style="width:56px;height:30px;border-radius:8px;"></div>
+      </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">3.1 &middot; SEARCH</p>
+          <h3 class="frame__title">Search &amp; Add Items</h3>
+          <div class="frame__pills"><span class="pill pill--reused">Reused</span><span class="pill pill--component">Duplicate nudge</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="search-field is-focused" style="flex:1;"><svg class="icon" style="width:16px;height:16px"><use href="#icon-search"/></svg><span style="color:var(--c-deep-plum)">Amul Taaza Milk 1L</span></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-section-label">Results</p>
+                <div class="item-row" style="align-items:center;">
+                  <div class="item-row__thumb item-row__thumb--dairy"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+                  <div class="item-row__mid"><p class="item-row__name">Amul Taaza Milk 1L</p><p class="item-row__price">&#8377;66</p></div>
+                  <button class="btn btn--secondary btn--sm">Add</button>
+                </div>
+                <div class="nudge">
+                  <p><b>Ananya already added</b> Amul Taaza Milk 1L. Add another or increase quantity?</p>
+                  <div class="nudge__actions"><button class="btn btn--ghost">Skip</button><button class="btn btn--secondary">Add anyway</button></div>
+                </div>
+                <div class="item-row" style="align-items:center;border-top:1px solid var(--tint-plum-10);padding-top:14px;">
+                  <div class="item-row__thumb item-row__thumb--dairy"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+                  <div class="item-row__mid"><p class="item-row__name">Amul Taaza Milk 500ml</p><p class="item-row__price">&#8377;36</p></div>
+                  <button class="btn btn--ghost btn--sm">Add</button>
+                </div>
+                <div class="item-row" style="align-items:center;border-top:1px solid var(--tint-plum-10);padding-top:14px;">
+                  <div class="item-row__thumb item-row__thumb--dairy"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+                  <div class="item-row__mid"><p class="item-row__name">Nandini Toned Milk 1L</p><p class="item-row__price">&#8377;58</p></div>
+                  <button class="btn btn--ghost btn--sm">Add</button>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">3.1 &middot; SEARCH</p>
+          <h3 class="frame__title">Search &amp; Add Items</h3>
+          <div class="frame__pills"><span class="pill pill--reused">Reused</span><span class="pill pill--state">No results</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="search-field is-focused" style="flex:1;"><svg class="icon" style="width:16px;height:16px"><use href="#icon-search"/></svg><span style="color:var(--c-deep-plum)">Kombucha starter kit</span></div>
+              </div>
+              <div class="scr-body">
+                <div class="empty-state">
+                  <div class="empty-state__icon"><svg class="icon" style="width:26px;height:26px"><use href="#icon-search"/></svg></div>
+                  <h3>No matches for &#8220;Kombucha starter kit&#8221;</h3>
+                  <p>Try a shorter or more general search term.</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-sharednudge">
+      <div class="section__head"><h2>3.2 &middot; Shared-Item Nudge</h2><span class="count-pill">1 state</span></div>
+      <p class="section__note">Every item defaults Personal. A soft, dismissible prompt catches obviously-household products (cooking oil, detergent) so contributors don't have to remember to toggle every time &#8212; matching the instinct people already have offline.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">3.2 &middot; SHARED-ITEM NUDGE</p>
+          <h3 class="frame__title">Shared vs Personal Toggle</h3>
+          <div class="frame__pills"><span class="pill pill--component">Component</span><span class="pill pill--state">Nudge shown</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="search-field is-focused" style="flex:1;"><svg class="icon" style="width:16px;height:16px"><use href="#icon-search"/></svg><span style="color:var(--c-deep-plum)">Fortune Sunflower Oil 1L</span></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-section-label">Results</p>
+                <div class="item-row" style="align-items:center;">
+                  <div class="item-row__thumb item-row__thumb--homecare"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+                  <div class="item-row__mid"><p class="item-row__name">Fortune Sunflower Oil 1L</p><p class="item-row__price">&#8377;165</p></div>
+                  <span class="badge badge--slate">Added</span>
+                </div>
+
+                <div class="nudge nudge--shared">
+                  <p>&#127968; This looks like a shared item. Split with the group?</p>
+                  <div class="nudge__actions"><button class="btn btn--ghost">Keep personal</button><button class="btn btn--primary">Mark as shared</button></div>
+                </div>
+
+                <div style="display:flex;justify-content:flex-end;margin-bottom:var(--sp-4)">
+                  <div class="segmented" style="width:auto;"><span class="active">Personal</span><span>Shared</span></div>
+                </div>
+
+                <p class="field-caption" style="margin-bottom:var(--sp-5)">Defaults to Personal. Self-classification, with this smart nudge for obvious household items, keeps a human in the loop instead of guessing automatically.</p>
+
+                <div class="item-row" style="align-items:center;border-top:1px solid var(--tint-plum-10);padding-top:14px;">
+                  <div class="item-row__thumb item-row__thumb--beverage"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+                  <div class="item-row__mid"><p class="item-row__name">Real Fruit Juice 1L</p><p class="item-row__price">&#8377;120</p></div>
+                  <button class="btn btn--ghost btn--sm">Add</button>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-approval">
+      <div class="section__head"><h2>4.1 &middot; Budget Cap Approval</h2><span class="count-pill">2 states</span></div>
+      <p class="section__note">A hard block would be a dead end with no recourse. Request-and-approve respects the contributor's autonomy while keeping the admin in control &#8212; mirroring how households actually negotiate.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">4.1 &middot; BUDGET APPROVAL</p>
+          <h3 class="frame__title">Budget Cap Approval</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Pending</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-close"/></svg></div>
+                <div class="app-header__title"><h1>Budget approval</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="text-align:center;padding:var(--sp-5) var(--sp-4);margin-bottom:var(--sp-4)">
+                  <div class="avatar avatar--ring-burgundy" style="width:52px;height:52px;font-size:18px;border-width:3px;margin:0 auto 12px;">K</div>
+                  <b style="font-size:14.5px;">Kabir has exceeded his &#8377;500 cap</b>
+                  <p class="field-caption" style="margin-top:4px;">Now at &#8377;530 &#183; 106% of cap</p>
+                  <div class="track" style="margin-top:14px;"><div class="fill fill--over" style="width:100%"></div></div>
+                </div>
+
+                <p class="scr-section-label">Flagged item</p>
+                <div class="card" style="display:flex;gap:10px;align-items:center;margin-bottom:var(--sp-5);background:var(--tint-burgundy-10);border-color:transparent;">
+                  <div class="item-row__thumb item-row__thumb--personalcare"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+                  <div style="flex:1"><b style="font-size:13px;display:block;">Parachute Hair Oil 200ml</b><span style="font-size:11.5px;color:var(--tint-plum-40)">&#8377;60 &#8212; pushed him &#8377;30 over cap</span></div>
+                </div>
+
+                <button class="btn btn--primary btn--block" style="margin-bottom:10px;">Approve</button>
+                <button class="btn btn--ghost btn--block" style="margin-bottom:10px;border-color:var(--c-amber);color:var(--c-orange);">Increase cap to &#8377;550</button>
+                <div style="text-align:center;"><button class="btn btn--text">Deny &#8212; ask Kabir to remove it</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">4.1 &middot; BUDGET APPROVAL</p>
+          <h3 class="frame__title">Budget Cap Approval</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Resolved &#183; approved</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-close"/></svg></div>
+                <div class="app-header__title"><h1>Budget approval</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="empty-state">
+                  <div class="empty-state__icon" style="background:var(--tint-plum-10);"><svg class="icon" style="width:26px;height:26px;color:var(--c-deep-plum)"><use href="#icon-check"/></svg></div>
+                  <h3>Approved</h3>
+                  <p>Kabir's Parachute Hair Oil is back in the cart. He won't see this as a callout &#8212; just a normal added item.</p>
+                </div>
+                <div class="card" style="display:flex;gap:10px;align-items:center;">
+                  <div class="item-row__thumb item-row__thumb--personalcare"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&auto=format&fit=crop&q=80" alt="Product"></div>
+                  <div style="flex:1"><b style="font-size:13px;display:block;">Parachute Hair Oil 200ml</b><span style="font-size:11.5px;color:var(--tint-plum-40)">&#8377;60 &#8212; approved by Ananya</span></div>
+                  <span class="badge badge--slate">Resolved</span>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-editcap">
+      <div class="section__head"><h2>4.2 &middot; Edit Budget Cap</h2><span class="count-pill">1 state</span></div>
+      <p class="section__note">Explicit, per-person control rather than automatic reallocation &#8212; redistributing unused cap would create perverse incentives to spend less so others can spend more.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">4.2 &middot; EDIT BUDGET CAP</p>
+          <h3 class="frame__title">Edit Budget Cap</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Editing &#183; focused field</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Edit budget caps</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-lead">Unused cap isn't shared with others &#8212; each cap stays personal, so raising one doesn't take from another.</p>
+                <div class="card">
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-amber" style="width:36px;height:36px;font-size:12px;border-width:2.5px;">A</div>
+        <div style="flex:1;font-size:13px;font-weight:600;">Ananya</div>
+        <input class="field" style="width:100px;padding:9px 10px;text-align:right;font-family:var(--font-mono);" value="&#8377;500">
+      </div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-orange" style="width:36px;height:36px;font-size:12px;border-width:2.5px;">R</div>
+        <div style="flex:1;font-size:13px;font-weight:600;">Rohan</div>
+        <input class="field" style="width:100px;padding:9px 10px;text-align:right;font-family:var(--font-mono);" value="&#8377;500">
+      </div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-burgundy" style="width:36px;height:36px;font-size:12px;border-width:2.5px;">K</div>
+        <div style="flex:1;font-size:13px;font-weight:600;">Kabir</div>
+        <input class="field field--focused" style="width:100px;padding:9px 10px;text-align:right;font-family:var(--font-mono);" value="&#8377;550">
+      </div>
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--tint-plum-10)">
+        <div class="avatar avatar--ring-slate" style="width:36px;height:36px;font-size:12px;border-width:2.5px;">P</div>
+        <div style="flex:1;font-size:13px;font-weight:600;">Priya</div>
+        <input class="field" style="width:100px;padding:9px 10px;text-align:right;font-family:var(--font-mono);" value="&#8377;500">
+      </div>
+                </div>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block">Save changes</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-review">
+      <div class="section__head"><h2>5.1 &middot; Checkout Review</h2><span class="count-pill">2 states</span></div>
+      <p class="section__note">The admin's last look before locking &#8212; the explicit, visible conflict-resolution moment for shared-item classification, resolved before payment rather than during or after.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">5.1 &middot; CHECKOUT REVIEW</p>
+          <h3 class="frame__title">Checkout Review</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Blocked</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Checkout review</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="background:var(--tint-burgundy-10);border-color:transparent;display:flex;gap:10px;align-items:flex-start;margin-bottom:var(--sp-4)">
+                  <svg class="icon" style="color:var(--c-burgundy);flex-shrink:0"><use href="#icon-alert"/></svg>
+                  <div><b style="font-size:13px;color:var(--c-burgundy);">1 item still needs your approval</b><p class="field-caption" style="margin-top:2px;">Resolve Kabir's flagged item before the cart can lock.</p></div>
+                </div>
+                <p class="scr-section-label">Shared items <span style="float:right;font-weight:400;text-transform:none;color:var(--tint-plum-40)">&#247;3 each &#183; &#8377;120</span></p>
+    <div class="card" style="margin-bottom:var(--sp-4)">
+      <div class="split-row"><span style="font-size:12.5px;">Amul Taaza Milk 1L</span><span style="display:flex;align-items:center;gap:8px;"><span class="split-row__amt" style="margin-right:0;">&#8377;66</span><button class="btn btn--text neutral" style="padding:0;font-size:10.5px;">Not shared</button></span></div>
+      <div class="split-row"><span style="font-size:12.5px;">Britannia Bread 400g</span><span style="display:flex;align-items:center;gap:8px;"><span class="split-row__amt" style="margin-right:0;">&#8377;45</span><button class="btn btn--text neutral" style="padding:0;font-size:10.5px;">Not shared</button></span></div>
+      <div class="split-row"><span style="font-size:12.5px;">Tata Salt 1kg</span><span style="display:flex;align-items:center;gap:8px;"><span class="split-row__amt" style="margin-right:0;">&#8377;28</span><button class="btn btn--text neutral" style="padding:0;font-size:10.5px;">Not shared</button></span></div>
+      <div class="split-row"><span style="font-size:12.5px;">Surf Excel Detergent 1kg</span><span style="display:flex;align-items:center;gap:8px;"><span class="split-row__amt" style="margin-right:0;">&#8377;221</span><button class="btn btn--text neutral" style="padding:0;font-size:10.5px;">Not shared</button></span></div>
+    </div>
+                <div class="card" style="margin-bottom:var(--sp-4)">
+      <div class="split-row"><span style="font-size:12.5px;color:var(--tint-plum-40)">Items total</span><span class="split-row__amt" style="margin-right:0;">&#8377;1,384</span></div>
+      <div class="split-row"><span style="font-size:12.5px;color:var(--tint-plum-40)">Delivery</span><span class="split-row__amt" style="margin-right:0;color:var(--c-amber);">Free</span></div>
+      <div class="split-total" style="display:flex;justify-content:space-between;padding-top:10px;font-weight:700;font-size:14px;"><span>Grand total</span><span>&#8377;1,384</span></div>
+    </div>
+                <div class="card" style="display:flex;gap:10px;align-items:center;">
+      <svg class="icon" style="color:var(--c-deep-plum)"><use href="#icon-truck"/></svg>
+      <div style="flex:1"><b style="font-size:12.5px;">HSR Layout, Bengaluru 560102</b><p class="field-caption" style="margin-top:2px;">Estimated delivery</p></div>
+      <span class="badge badge--amber">10 min</span>
+    </div>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block is-disabled">Lock cart &amp; start checkout</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">5.1 &middot; CHECKOUT REVIEW</p>
+          <h3 class="frame__title">Checkout Review</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Ready to lock</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Checkout review</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-section-label">Shared items <span style="float:right;font-weight:400;text-transform:none;color:var(--tint-plum-40)">&#247;3 each &#183; &#8377;120</span></p>
+    <div class="card" style="margin-bottom:var(--sp-4)">
+      <div class="split-row"><span style="font-size:12.5px;">Amul Taaza Milk 1L</span><span style="display:flex;align-items:center;gap:8px;"><span class="split-row__amt" style="margin-right:0;">&#8377;66</span><button class="btn btn--text neutral" style="padding:0;font-size:10.5px;">Not shared</button></span></div>
+      <div class="split-row"><span style="font-size:12.5px;">Britannia Bread 400g</span><span style="display:flex;align-items:center;gap:8px;"><span class="split-row__amt" style="margin-right:0;">&#8377;45</span><button class="btn btn--text neutral" style="padding:0;font-size:10.5px;">Not shared</button></span></div>
+      <div class="split-row"><span style="font-size:12.5px;">Tata Salt 1kg</span><span style="display:flex;align-items:center;gap:8px;"><span class="split-row__amt" style="margin-right:0;">&#8377;28</span><button class="btn btn--text neutral" style="padding:0;font-size:10.5px;">Not shared</button></span></div>
+      <div class="split-row"><span style="font-size:12.5px;">Surf Excel Detergent 1kg</span><span style="display:flex;align-items:center;gap:8px;"><span class="split-row__amt" style="margin-right:0;">&#8377;221</span><button class="btn btn--text neutral" style="padding:0;font-size:10.5px;">Not shared</button></span></div>
+    </div>
+                <div class="card" style="margin-bottom:var(--sp-4)">
+      <div class="split-row"><span style="font-size:12.5px;color:var(--tint-plum-40)">Items total</span><span class="split-row__amt" style="margin-right:0;">&#8377;1,384</span></div>
+      <div class="split-row"><span style="font-size:12.5px;color:var(--tint-plum-40)">Delivery</span><span class="split-row__amt" style="margin-right:0;color:var(--c-amber);">Free</span></div>
+      <div class="split-total" style="display:flex;justify-content:space-between;padding-top:10px;font-weight:700;font-size:14px;"><span>Grand total</span><span>&#8377;1,384</span></div>
+    </div>
+                <div class="card" style="display:flex;gap:10px;align-items:center;">
+      <svg class="icon" style="color:var(--c-deep-plum)"><use href="#icon-truck"/></svg>
+      <div style="flex:1"><b style="font-size:12.5px;">HSR Layout, Bengaluru 560102</b><p class="field-caption" style="margin-top:2px;">Estimated delivery</p></div>
+      <span class="badge badge--amber">10 min</span>
+    </div>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block">Lock cart &amp; start checkout &#8594;</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-locked">
+      <div class="section__head"><h2>5.2 &middot; Cart Locked</h2><span class="count-pill">1 state &#183; transition</span></div>
+      <p class="section__note">Brief by design (screens.md marks this a transition state, not a full screen) &#8212; confirms to everyone the cart is frozen and the payment clock has started.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">5.2 &middot; CART LOCKED</p>
+          <h3 class="frame__title">Cart Locked / Window Opening</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Transition</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="scr-body" style="padding-top:80px;text-align:center;">
+                <div class="empty-state__icon" style="margin:0 auto 20px;width:64px;height:64px;background:var(--tint-plum-10);"><svg class="icon" style="width:28px;height:28px;color:var(--c-deep-plum)"><use href="#icon-lock"/></svg></div>
+                <h2 style="font-size:19px;margin:0 0 6px;">Cart locked by Ananya</h2>
+                <p style="font-size:12.5px;color:var(--tint-plum-40);max-width:260px;margin:0 auto var(--sp-6);">No new items can be added. Payment window starting&#8230;</p>
+                <div class="count-big" style="margin-bottom:var(--sp-5);">10:00</div>
+                <div class="avatar-row" style="justify-content:center;margin-bottom:10px;">
+                  <div class="avatar avatar--ring-orange" style="width:32px;height:32px;font-size:11px;border-width:2px;">R</div>
+                  <div class="avatar avatar--ring-burgundy" style="width:32px;height:32px;font-size:11px;border-width:2px;">K</div>
+                  <div class="avatar avatar--ring-slate" style="width:32px;height:32px;font-size:11px;border-width:2px;">P</div>
+                </div>
+                <p class="field-caption">Notifying Rohan, Kabir, Priya&#8230;</p>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-split">
+      <div class="section__head"><h2>5.3 &middot; Bill Split / Payment</h2><span class="count-pill">4 states</span></div>
+      <p class="section__note">10 minutes echoes SprintMart's own delivery promise &#8212; long enough to open the app, short enough to feel like a real deadline. Nobody fronts anything: each payment is personal and direct, not collective and asymmetric.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">5.3 &middot; BILL SPLIT / PAYMENT</p>
+          <h3 class="frame__title">Bill Split Payment</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Counting down</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__title"><h1>Your payment</h1><span>Flatmates' Cart &#183; Each Pays Own</span></div>
+                <div class="app-header__trail"><span class="badge badge--amber">07:42</span></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="margin-bottom:var(--sp-5)">
+      <div class="split-row"><span style="font-size:12.5px;color:var(--tint-plum-40)">Personal items</span><span class="split-row__amt" style="margin-right:0;">&#8377;280</span></div>
+      <div class="split-row"><span style="font-size:12.5px;color:var(--tint-plum-40)">Shared split (4 items &#247;3)</span><span class="split-row__amt" style="margin-right:0;">&#8377;120</span></div>
+      <div style="display:flex;justify-content:space-between;padding-top:12px;font-weight:700;font-size:16px;"><span>You owe</span><span>&#8377;400</span></div>
+    </div>
+                <p class="scr-section-label">Pay with</p>
+                <div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px; border-color:var(--c-deep-plum);box-shadow:0 0 0 3px var(--tint-plum-10);">
+          <div style="width:16px;height:16px;border-radius:50%;background:var(--c-deep-plum);flex-shrink:0;"></div><div style="flex:1"><b style="font-size:12.5px;display:block;">UPI</b><span style="font-size:11px;color:var(--tint-plum-40)">upi&#64;okhdfcbank</span></div>
+        </div><div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid var(--tint-slate-30);flex-shrink:0;"></div><div style="flex:1"><b style="font-size:12.5px;display:block;">Credit / Debit card</b><span style="font-size:11px;color:var(--tint-plum-40)">&#8226;&#8226;&#8226;&#8226; 4471</span></div>
+        </div><div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid var(--tint-slate-30);flex-shrink:0;"></div><div style="flex:1"><b style="font-size:12.5px;display:block;">Wallet</b><span style="font-size:11px;color:var(--tint-plum-40)">SprintMart Pay</span></div>
+        </div>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block">Pay &#8377;400</button></div>
+                <p class="field-caption" style="margin-top:var(--sp-4);text-align:center;">A nudge fires at minute 8 if unpaid. Anyone who doesn't pay in time is covered by the admin as a fallback &#8212; the order still goes through.</p>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">5.3 &middot; BILL SPLIT / PAYMENT</p>
+          <h3 class="frame__title">Bill Split Payment</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Loading</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__title"><h1>Your payment</h1><span>Flatmates' Cart &#183; Each Pays Own</span></div>
+                <div class="app-header__trail"><span class="badge badge--amber">07:42</span></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="margin-bottom:var(--sp-5)">
+      <div class="split-row"><span style="font-size:12.5px;color:var(--tint-plum-40)">Personal items</span><span class="split-row__amt" style="margin-right:0;">&#8377;280</span></div>
+      <div class="split-row"><span style="font-size:12.5px;color:var(--tint-plum-40)">Shared split (4 items &#247;3)</span><span class="split-row__amt" style="margin-right:0;">&#8377;120</span></div>
+      <div style="display:flex;justify-content:space-between;padding-top:12px;font-weight:700;font-size:16px;"><span>You owe</span><span>&#8377;400</span></div>
+    </div>
+                <p class="scr-section-label">Pay with</p>
+                <div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px; border-color:var(--c-deep-plum);box-shadow:0 0 0 3px var(--tint-plum-10);">
+          <div style="width:16px;height:16px;border-radius:50%;background:var(--c-deep-plum);flex-shrink:0;"></div><div style="flex:1"><b style="font-size:12.5px;display:block;">UPI</b><span style="font-size:11px;color:var(--tint-plum-40)">upi&#64;okhdfcbank</span></div>
+        </div><div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid var(--tint-slate-30);flex-shrink:0;"></div><div style="flex:1"><b style="font-size:12.5px;display:block;">Credit / Debit card</b><span style="font-size:11px;color:var(--tint-plum-40)">&#8226;&#8226;&#8226;&#8226; 4471</span></div>
+        </div><div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid var(--tint-slate-30);flex-shrink:0;"></div><div style="flex:1"><b style="font-size:12.5px;display:block;">Wallet</b><span style="font-size:11px;color:var(--tint-plum-40)">SprintMart Pay</span></div>
+        </div>
+                <div class="bottom-bar"><button class="btn btn--loading btn--block" style="display:flex;gap:8px;"><span class="spinner"></span>Processing payment&#8230;</button></div>
+                <p class="field-caption" style="margin-top:var(--sp-4);text-align:center;">A nudge fires at minute 8 if unpaid. Anyone who doesn't pay in time is covered by the admin as a fallback &#8212; the order still goes through.</p>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">5.3 &middot; BILL SPLIT / PAYMENT</p>
+          <h3 class="frame__title">Bill Split Payment</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Success &#183; paid</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__title"><h1>Your payment</h1><span>Flatmates' Cart &#183; Each Pays Own</span></div>
+                <div class="app-header__trail"><span class="badge badge--slate">Paid</span></div>
+              </div>
+              <div class="scr-body">
+                <div class="empty-state">
+                  <div class="empty-state__icon" style="background:var(--tint-plum-10);"><svg class="icon" style="width:26px;height:26px;color:var(--c-deep-plum)"><use href="#icon-check"/></svg></div>
+                  <h3>You're all paid up</h3>
+                  <p>&#8377;400 paid via UPI. Waiting on Rohan and Kabir to finish within the window.</p>
+                </div>
+                <div class="card" style="display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:12.5px;">Your payment</span><span class="status-chip status-chip--paid">Paid &#8377;400</span>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">5.3 &middot; BILL SPLIT / PAYMENT</p>
+          <h3 class="frame__title">Bill Split Payment</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Window expired</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__title"><h1>Your payment</h1><span>Flatmates' Cart &#183; Each Pays Own</span></div>
+                <div class="app-header__trail"><span class="badge badge--burgundy">Window closed</span></div>
+              </div>
+              <div class="scr-body">
+                <div class="empty-state">
+                  <div class="empty-state__icon" style="background:var(--tint-slate-10);"><svg class="icon" style="width:26px;height:26px;color:var(--c-slate)"><use href="#icon-clock"/></svg></div>
+                  <h3>Payment window closed</h3>
+                  <p>Kabir didn't pay in time. Ananya covered his &#8377;605 share as the agreed fallback &#8212; the order is going ahead.</p>
+                </div>
+                <div class="card" style="display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:12.5px;">Kabir's share</span><span class="status-chip status-chip--covered">Covered by admin</span>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-adminpay">
+      <div class="section__head"><h2>5.4 &middot; Admin Pays Checkout</h2><span class="count-pill">1 state</span></div>
+      <p class="section__note">The simpler path when Admin Pays was selected at creation &#8212; reuses the base app's cost-summary checkout pattern; no multi-payer window needed.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">5.4 &middot; ADMIN PAYS CHECKOUT</p>
+          <h3 class="frame__title">Admin Pays &#8212; Single Checkout</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Default</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Checkout</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <span class="badge badge--slate" style="margin-bottom:var(--sp-4);display:inline-block;">Admin Pays mode</span>
+                <div class="card" style="margin-bottom:var(--sp-4)">
+                  <div class="split-row"><span style="font-size:12.5px;color:var(--tint-plum-40)">Items total</span><span class="split-row__amt" style="margin-right:0;">&#8377;1,384</span></div>
+                  <div class="split-row"><span style="font-size:12.5px;color:var(--tint-plum-40)">Delivery</span><span class="split-row__amt" style="margin-right:0;color:var(--c-amber);">Free</span></div>
+                  <div style="display:flex;justify-content:space-between;padding-top:10px;font-weight:700;font-size:16px;"><span>Grand total</span><span>&#8377;1,384</span></div>
+                </div>
+                <p class="field-caption" style="margin-bottom:var(--sp-4)">Contributors don't need to pay &#8212; you've got this one. This keeps the existing single-user checkout pattern intact.</p>
+                <p class="scr-section-label">Pay with</p>
+                <div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px; border-color:var(--c-deep-plum);box-shadow:0 0 0 3px var(--tint-plum-10);">
+          <div style="width:16px;height:16px;border-radius:50%;background:var(--c-deep-plum);flex-shrink:0;"></div><div style="flex:1"><b style="font-size:12.5px;display:block;">UPI</b><span style="font-size:11px;color:var(--tint-plum-40)">upi&#64;okhdfcbank</span></div>
+        </div><div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid var(--tint-slate-30);flex-shrink:0;"></div><div style="flex:1"><b style="font-size:12.5px;display:block;">Credit / Debit card</b><span style="font-size:11px;color:var(--tint-plum-40)">&#8226;&#8226;&#8226;&#8226; 4471</span></div>
+        </div><div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid var(--tint-slate-30);flex-shrink:0;"></div><div style="flex:1"><b style="font-size:12.5px;display:block;">Wallet</b><span style="font-size:11px;color:var(--tint-plum-40)">SprintMart Pay</span></div>
+        </div>
+                <div class="bottom-bar"><button class="btn btn--primary btn--block">Pay &#8377;1,384</button></div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-confirmed">
+      <div class="section__head"><h2>6.1 &middot; Order Confirmed</h2><span class="count-pill">1 state</span></div>
+      <p class="section__note">Closes the social loop &#8212; the admin-covers fallback stays neutral Slate, never Burgundy, so Kabir's missed window never reads as a public callout.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">6.1 &middot; ORDER CONFIRMED</p>
+          <h3 class="frame__title">Order Confirmed / Breakdown</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Success</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="scr-body" style="padding-top:var(--sp-5);text-align:center;">
+                <div class="empty-state__icon" style="margin:0 auto 16px;width:60px;height:60px;background:var(--tint-plum-10);"><svg class="icon" style="width:26px;height:26px;color:var(--c-deep-plum)"><use href="#icon-check"/></svg></div>
+                <h2 style="font-size:20px;margin:0 0 4px;">Order confirmed</h2>
+                <p style="font-size:12px;color:var(--tint-plum-40);margin:0 0 var(--sp-5);">#SM-88421 &#183; placed 9:41 AM</p>
+              </div>
+              <div class="scr-body" style="text-align:left;padding-top:0;">
+                <p class="scr-section-label">Who paid what</p>
+                <div class="card" style="margin-bottom:var(--sp-4)">
+                  <div class="split-row">
+                    <div class="split-row__who"><div class="avatar avatar--ring-amber" style="width:32px;height:32px;font-size:12px;border-width:2px;">A</div><div class="split-row__who-info"><b>Ananya</b><span>Organiser</span></div></div>
+                    <div class="split-row__right"><span class="split-row__amt">&#8377;400</span><span class="status-chip status-chip--paid">Paid</span></div>
+                  </div>
+                  <div class="split-row">
+                    <div class="split-row__who"><div class="avatar avatar--ring-orange" style="width:32px;height:32px;font-size:12px;border-width:2px;">R</div><div class="split-row__who-info"><b>Rohan</b><span>Contributor</span></div></div>
+                    <div class="split-row__right"><span class="split-row__amt">&#8377;379</span><span class="status-chip status-chip--paid">Paid</span></div>
+                  </div>
+                  <div class="split-row">
+                    <div class="split-row__who"><div class="avatar avatar--ring-burgundy" style="width:32px;height:32px;font-size:12px;border-width:2px;">K</div><div class="split-row__who-info"><b>Kabir</b><span>Contributor</span></div></div>
+                    <div class="split-row__right"><span class="split-row__amt">&#8377;605</span><span class="status-chip status-chip--covered">Covered by admin</span></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;padding-top:12px;font-weight:700;font-size:14px;"><span>Total</span><span>&#8377;1,384</span></div>
+                </div>
+                <div class="card" style="display:flex;gap:10px;align-items:center;margin-bottom:var(--sp-5)">
+                  <svg class="icon" style="color:var(--c-deep-plum)"><use href="#icon-truck"/></svg>
+                  <div><b style="font-size:12.5px;">Arriving in 8 minutes</b><p class="field-caption" style="margin-top:2px;">HSR Layout, Bengaluru 560102</p></div>
+                </div>
+                <button class="btn btn--primary btn--block">Track order &#8594;</button>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-tracking">
+      <div class="section__head"><h2>6.2 &middot; Live Order Tracking</h2><span class="count-pill">2 states</span></div>
+      <p class="section__note">Unchanged from the base app, per screens.md &#8212; shared with all members, not just whoever placed the order.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">6.2 &middot; ORDER TRACKING</p>
+          <h3 class="frame__title">Live Order Tracking</h3>
+          <div class="frame__pills"><span class="pill pill--reused">Reused</span><span class="pill pill--state">Preparing</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Track your order</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="height:180px;background:var(--tint-slate-10);display:flex;align-items:center;justify-content:center;margin-bottom:var(--sp-5);"><span style="font-size:11px;color:var(--tint-plum-40)">Map view</span></div>
+                <div class="card" style="margin-bottom:var(--sp-5)"><div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--c-deep-plum);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg class='icon' style='width:12px;height:12px;color:#fff'><use href='#icon-check'/></svg>
+          </div>
+          <span style="font-size:12.5px;font-weight:600;color:var(--c-deep-plum)">Confirmed</span>
+        </div><div style="width:2px;height:20px;background:var(--c-deep-plum);margin-left:10px;"></div><div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--c-deep-plum);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg class='icon' style='width:12px;height:12px;color:#fff'><use href='#icon-check'/></svg>
+          </div>
+          <span style="font-size:12.5px;font-weight:600;color:var(--c-deep-plum)">Packed</span>
+        </div><div style="width:2px;height:20px;background:var(--c-deep-plum);margin-left:10px;"></div><div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--tint-slate-30);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            
+          </div>
+          <span style="font-size:12.5px;font-weight:400;color:var(--tint-plum-40)">Out for delivery</span>
+        </div><div style="width:2px;height:20px;background:var(--tint-slate-30);margin-left:10px;"></div><div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--tint-slate-30);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            
+          </div>
+          <span style="font-size:12.5px;font-weight:400;color:var(--tint-plum-40)">Delivered</span>
+        </div></div>
+                <div class="card" style="display:flex;gap:10px;align-items:center;">
+                  <svg class="icon" style="color:var(--c-deep-plum)"><use href="#icon-truck"/></svg>
+                  <div><b style="font-size:12.5px;">Packing your order</b><p class="field-caption" style="margin-top:2px;">Arriving in 8 minutes</p></div>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+        <figure class="frame">
+          <p class="frame__eyebrow">6.2 &middot; ORDER TRACKING</p>
+          <h3 class="frame__title">Live Order Tracking</h3>
+          <div class="frame__pills"><span class="pill pill--reused">Reused</span><span class="pill pill--state">Out for delivery</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Track your order</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <div class="card" style="height:180px;background:var(--tint-slate-10);display:flex;align-items:center;justify-content:center;margin-bottom:var(--sp-5);"><span style="font-size:11px;color:var(--tint-plum-40)">Map view &#183; rider en route</span></div>
+                <div class="card" style="margin-bottom:var(--sp-5)"><div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--c-deep-plum);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg class='icon' style='width:12px;height:12px;color:#fff'><use href='#icon-check'/></svg>
+          </div>
+          <span style="font-size:12.5px;font-weight:600;color:var(--c-deep-plum)">Confirmed</span>
+        </div><div style="width:2px;height:20px;background:var(--c-deep-plum);margin-left:10px;"></div><div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--c-deep-plum);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg class='icon' style='width:12px;height:12px;color:#fff'><use href='#icon-check'/></svg>
+          </div>
+          <span style="font-size:12.5px;font-weight:600;color:var(--c-deep-plum)">Packed</span>
+        </div><div style="width:2px;height:20px;background:var(--c-deep-plum);margin-left:10px;"></div><div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--c-deep-plum);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg class='icon' style='width:12px;height:12px;color:#fff'><use href='#icon-check'/></svg>
+          </div>
+          <span style="font-size:12.5px;font-weight:600;color:var(--c-deep-plum)">Out for delivery</span>
+        </div><div style="width:2px;height:20px;background:var(--c-deep-plum);margin-left:10px;"></div><div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--tint-slate-30);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            
+          </div>
+          <span style="font-size:12.5px;font-weight:400;color:var(--tint-plum-40)">Delivered</span>
+        </div></div>
+                <div class="card" style="display:flex;gap:10px;align-items:center;">
+                  <div class="avatar" style="width:36px;height:36px;font-size:13px;border-width:0;">SR</div>
+                  <div style="flex:1"><b style="font-size:12.5px;">Suresh is on the way</b><p class="field-caption" style="margin-top:2px;">Arriving in 3 minutes</p></div>
+                  <span class="badge badge--amber">3 min</span>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="sec-settings">
+      <div class="section__head"><h2>7.1 &middot; Shared Cart Settings</h2><span class="count-pill">1 state</span></div>
+      <p class="section__note">One simple list for the permission controls the user stories call for &#8212; payment mode, per-member caps, and permissions all in one place, not buried across screens.</p>
+      <div class="frame-row">
+
+        <figure class="frame">
+          <p class="frame__eyebrow">7.1 &middot; SETTINGS</p>
+          <h3 class="frame__title">Shared Cart Settings</h3>
+          <div class="frame__pills"><span class="pill pill--new">New</span><span class="pill pill--state">Default</span></div>
+          <div class="device">
+            <div class="notch"></div>
+            <div class="statusbar"><span>9:41</span><div class="batt"><div class="bars"><span></span><span></span><span></span><span></span></div><div class="battery"><i></i></div></div></div>
+            <div class="screen">
+
+              <div class="app-header">
+                <div class="app-header__icon-btn"><svg class="icon"><use href="#icon-back"/></svg></div>
+                <div class="app-header__title"><h1>Cart settings</h1></div>
+                <div class="app-header__trail"></div>
+              </div>
+              <div class="scr-body">
+                <p class="scr-section-label">Payment mode</p>
+                <div class="card" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-5);opacity:.7">
+                  <span style="font-size:12.5px;">Each Pays Own</span>
+                  <span class="badge badge--outline" style="display:flex;align-items:center;gap:4px;"><svg class="icon" style="width:11px;height:11px"><use href="#icon-lock"/></svg>Locked after first checkout</span>
+                </div>
+
+                <p class="scr-section-label">Member caps</p>
+                <div class="card" style="margin-bottom:var(--sp-5)">
+                  <div class="split-row"><div class="split-row__who"><div class="avatar avatar--ring-amber" style="width:28px;height:28px;font-size:10px;border-width:2px;">A</div><span style="font-size:12.5px;">Ananya</span></div><span class="split-row__amt" style="margin-right:0;">&#8377;500</span></div>
+                  <div class="split-row"><div class="split-row__who"><div class="avatar avatar--ring-orange" style="width:28px;height:28px;font-size:10px;border-width:2px;">R</div><span style="font-size:12.5px;">Rohan</span></div><span class="split-row__amt" style="margin-right:0;">&#8377;500</span></div>
+                  <div class="split-row"><div class="split-row__who"><div class="avatar avatar--ring-burgundy" style="width:28px;height:28px;font-size:10px;border-width:2px;">K</div><span style="font-size:12.5px;">Kabir</span></div><span class="split-row__amt" style="margin-right:0;">&#8377;550</span></div>
+                  <button class="btn btn--text" style="padding:8px 0 0;">Edit caps &#8594;</button>
+                </div>
+
+                <p class="scr-section-label">Permissions</p>
+                <div class="card" style="margin-bottom:var(--sp-5)">
+                  <div style="display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--tint-plum-10)"><svg class="icon" style="width:15px;height:15px;color:var(--c-deep-plum)"><use href="#icon-check"/></svg><span style="font-size:12.5px;">Only admin can remove others' items</span></div>
+                  <div style="display:flex;gap:8px;align-items:center;padding:8px 0;"><svg class="icon" style="width:15px;height:15px;color:var(--c-deep-plum)"><use href="#icon-check"/></svg><span style="font-size:12.5px;">Only admin can trigger checkout</span></div>
+                </div>
+
+                <p class="scr-section-label" style="color:var(--c-burgundy);">Danger zone</p>
+                <div class="card" style="border-color:rgba(110,24,34,.2)">
+                  <button class="btn btn--text" style="padding:6px 0;">Leave cart</button><br>
+                  <button class="btn btn--destructive btn--block" style="margin-top:10px;">Disband cart</button>
+                </div>
+              </div>
+
+            </div>
+            <div class="home-indicator"></div>
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- SECTIONS_GO_HERE -->
+
+  </main>
+</div>
+
+</body>
+</html>

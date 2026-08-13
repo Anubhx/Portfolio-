@@ -1,5 +1,12 @@
 "use client";
+
 import Link from "next/link";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const socialLinks = [
   { href: "mailto:anubhav0427@gmail.com", label: "Email" },
@@ -10,48 +17,101 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        ".footer-cta",
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".footer-cta", start: "top 90%" },
+        }
+      );
+      gsap.fromTo(
+        ".footer-bottom",
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.8,
+          delay: 0.2,
+          ease: "power2.out",
+          scrollTrigger: { trigger: ".footer-bottom", start: "top 95%" },
+        }
+      );
+    },
+    { scope: footerRef }
+  );
+
   return (
     <footer
+      ref={footerRef}
       role="contentinfo"
       style={{
         borderTop: "1px solid var(--border)",
-        padding: "64px 0 40px",
+        padding: "80px 0 40px",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <div className="container">
+      {/* Ambient orb behind CTA */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          bottom: "0",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "600px",
+          height: "300px",
+          background:
+            "radial-gradient(ellipse, rgba(124,92,252,0.07) 0%, transparent 70%)",
+          filter: "blur(60px)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div className="container" style={{ position: "relative" }}>
         {/* CTA */}
-        <div
-          style={{
-            marginBottom: "56px",
-            maxWidth: "600px",
-          }}
-        >
-          <p className="section-number" style={{ marginBottom: "16px" }}>
+        <div className="footer-cta" style={{ marginBottom: "64px", maxWidth: "680px", opacity: 0 }}>
+          <p className="section-number" style={{ marginBottom: "20px" }}>
             Let&apos;s talk
           </p>
           <h2
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(32px, 4.5vw, 56px)",
+              fontSize: "clamp(36px, 5vw, 64px)",
               fontWeight: 300,
-              color: "var(--heading)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.1,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.05,
               marginBottom: "20px",
+              color: "var(--heading)",
             }}
           >
             Let&apos;s build something{" "}
-            <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
+            <em
+              style={{
+                fontStyle: "italic",
+                background: "var(--gradient-text)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
               meaningful.
             </em>
           </h2>
-          <p className="text-body-lg" style={{ marginBottom: "32px", fontSize: "15px" }}>
+          <p className="text-body-lg" style={{ marginBottom: "36px", fontSize: "15px" }}>
             Open to product design and design engineering opportunities.
           </p>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <a
               href="mailto:anubhav0427@gmail.com"
-              className="btn btn-primary"
+              className="btn btn-primary glow-accent-sm"
               aria-label="Send Anubhav an email"
             >
               <span
@@ -79,52 +139,51 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="divider" style={{ marginBottom: "24px" }} />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "16px",
-          }}
-        >
-          <p className="text-sm" style={{ color: "var(--muted)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-            © {new Date().getFullYear()} Anubhav Raj. Designed & built with
-            precision.
-          </p>
-          <nav
-            aria-label="Social links"
-            style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}
+        <div className="footer-bottom" style={{ opacity: 0 }}>
+          <div className="divider" style={{ marginBottom: "24px" }} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "16px",
+            }}
           >
-            {socialLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-                style={{
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: "var(--muted)",
-                  textDecoration: "none",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLElement).style.color =
-                    "var(--heading)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLElement).style.color =
-                    "var(--muted)")
-                }
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
+            <p
+              style={{
+                fontSize: "11px",
+                color: "var(--muted)",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+              }}
+            >
+              © {new Date().getFullYear()} Anubhav Raj — Designed &amp; built with precision.
+            </p>
+            <nav aria-label="Social links" style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+              {socialLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "var(--muted)",
+                    textDecoration: "none",
+                    transition: "color 0.2s",
+                  }}
+                  onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--heading)")}
+                  onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--muted)")}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+          </div>
         </div>
       </div>
     </footer>

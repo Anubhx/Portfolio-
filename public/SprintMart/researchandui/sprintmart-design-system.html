@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SprintMart — Shared Cart Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  /* ============================================================
+     TOKENS — these five hues + scales are the entire system.
+     No colour, radius, spacing, or opacity is used anywhere in
+     this file that isn't declared here. That constraint is the
+     whole point of a design system.
+     ============================================================ */
+  :root{
+    /* — Core palette (named + hex, per project rubric) — */
+    --c-deep-plum:  #1E1B30;
+    --c-slate:      #6B7888;
+    --c-amber:      #D4921A;
+    --c-orange:     #C05510;
+    --c-burgundy:   #6E1822;
+    --c-white:      #FFFFFF;
+
+    /* — Opacity scale (tints are built FROM the 5 hues, never a new hue) — */
+    --op-90: 0.90;
+    --op-60: 0.60;
+    --op-40: 0.40;
+    --op-30: 0.30;
+    --op-10: 0.10;
+
+    /* convenience tints, all derived from Deep Plum / Slate */
+    --tint-plum-04:  rgba(30,27,48,0.04);
+    --tint-plum-10:  rgba(30,27,48,0.10);
+    --tint-plum-40:  rgba(30,27,48,0.40);
+    --tint-slate-10: rgba(107,120,136,0.10);
+    --tint-slate-30: rgba(107,120,136,0.30);
+    --tint-burgundy-10: rgba(110,24,34,0.10);
+    --tint-amber-10:    rgba(212,146,26,0.12);
+    --tint-orange-10:   rgba(192,85,16,0.12);
+
+    /* — Spacing, base-8 grid — */
+    --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+    --sp-5: 24px; --sp-6: 32px; --sp-8: 48px; --sp-10: 64px;
+
+    /* — Radius — */
+    --r-sm: 4px; --r-md: 8px; --r-lg: 13px; --r-xl: 24px; --r-full: 999px;
+
+    /* — Type — */
+    --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; font-family:var(--font-ui); color:var(--c-deep-plum);
+    background:#FBFAF8; -webkit-font-smoothing:antialiased;
+  }
+  img,svg{ display:block; }
+  ::selection{ background:var(--c-amber); color:var(--c-white); }
+  a{ color:inherit; }
+
+  /* focus visibility — accessibility floor */
+  :focus-visible{ outline:2px solid var(--c-amber); outline-offset:2px; border-radius:var(--r-sm); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  }
+
+  /* ============================================================
+     LAYOUT SHELL
+     ============================================================ */
+  .layout{ display:grid; grid-template-columns:240px 1fr; min-height:100vh; }
+
+  .sidenav{
+    position:sticky; top:0; height:100vh; overflow-y:auto;
+    background:var(--c-deep-plum); color:var(--c-white);
+    padding:var(--sp-6) var(--sp-5);
+  }
+  .sidenav__brand{ display:flex; align-items:center; gap:var(--sp-2); margin-bottom:var(--sp-6); }
+  .sidenav__mark{
+    width:30px; height:30px; border-radius:var(--r-md);
+    background:var(--c-amber); display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:14px; color:var(--c-deep-plum);
+  }
+  .sidenav__title{ font-size:14px; font-weight:600; letter-spacing:0.01em; }
+  .sidenav__sub{ font-size:11px; color:rgba(255,255,255,0.5); margin-top:2px; }
+
+  .sidenav nav{ display:flex; flex-direction:column; gap:var(--sp-1); margin-top:var(--sp-5); }
+  .sidenav nav a{
+    text-decoration:none; color:rgba(255,255,255,0.65); font-size:13px; font-weight:500;
+    padding:var(--sp-2) var(--sp-3); border-radius:var(--r-md); transition:background .15s, color .15s;
+  }
+  .sidenav nav a:hover{ background:rgba(255,255,255,0.08); color:var(--c-white); }
+  .sidenav__group-label{
+    font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:rgba(255,255,255,0.35);
+    margin:var(--sp-4) var(--sp-3) var(--sp-1); font-weight:600;
+  }
+
+  .content{ padding:var(--sp-8) var(--sp-10) var(--sp-10); max-width:1180px; }
+
+  .page-header{ margin-bottom:var(--sp-8); padding-bottom:var(--sp-6); border-bottom:1px solid var(--tint-plum-10); }
+  .eyebrow{
+    font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--c-orange); margin:0 0 var(--sp-2);
+  }
+  .page-header h1{ font-size:34px; font-weight:700; margin:0 0 var(--sp-2); letter-spacing:-0.01em; }
+  .page-header p{ font-size:15px; color:var(--tint-plum-40); max-width:640px; line-height:1.55; margin:0; }
+  .page-header p strong{ color:var(--c-deep-plum); }
+
+  section{ margin-bottom:var(--sp-10); scroll-margin-top:var(--sp-6); }
+  .section-head{ display:flex; align-items:baseline; gap:var(--sp-3); margin-bottom:var(--sp-5); }
+  .section-head h2{ font-size:22px; font-weight:700; margin:0; }
+  .section-head .count-pill{
+    font-family:var(--font-mono); font-size:11px; font-weight:500; color:var(--c-white);
+    background:var(--c-deep-plum); padding:3px 10px; border-radius:var(--r-full);
+  }
+  .section-note{ font-size:13.5px; color:var(--tint-plum-40); line-height:1.6; max-width:760px; margin:0 0 var(--sp-5); }
+  .section-note code{ font-family:var(--font-mono); background:var(--tint-plum-10); padding:1px 5px; border-radius:4px; font-size:12px; }
+
+  /* ============================================================
+     1 — COLOUR
+     ============================================================ */
+  .swatch-grid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:var(--sp-4); }
+  .swatch{
+    border-radius:var(--r-lg); overflow:hidden; border:1px solid var(--tint-plum-10);
+    background:var(--c-white); cursor:pointer; transition:transform .15s ease;
+  }
+  .swatch:hover{ transform:translateY(-2px); }
+  .swatch__fill{ height:104px; }
+  .swatch__body{ padding:var(--sp-3) var(--sp-4) var(--sp-4); }
+  .swatch__name{ font-size:14px; font-weight:600; margin:0 0 2px; }
+  .swatch__hex{ font-family:var(--font-mono); font-size:12px; color:var(--tint-plum-40); margin:0 0 var(--sp-2); }
+  .swatch__role{
+    font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;
+    color:var(--c-white); display:inline-block; padding:3px 8px; border-radius:var(--r-sm);
+  }
+  .copy-hint{ font-size:10px; color:var(--tint-plum-40); margin-top:var(--sp-2); opacity:0; transition:opacity .15s; }
+  .swatch:hover .copy-hint{ opacity:1; }
+
+  .role-table{ width:100%; border-collapse:collapse; margin-top:var(--sp-5); font-size:13.5px; }
+  .role-table th,.role-table td{ text-align:left; padding:var(--sp-3) var(--sp-3); border-bottom:1px solid var(--tint-plum-10); }
+  .role-table th{ font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--tint-plum-40); font-weight:600; }
+  .role-dot{ display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:var(--sp-2); vertical-align:-1px; }
+
+  /* ============================================================
+     2 — TYPE SCALE
+     ============================================================ */
+  .type-card{
+    background:var(--c-white); border:1px solid var(--tint-plum-10); border-radius:var(--r-lg);
+    padding:var(--sp-5); display:flex; align-items:baseline; justify-content:space-between; gap:var(--sp-5);
+    margin-bottom:var(--sp-3);
+  }
+  .type-card__sample{ flex:1; min-width:0; color:var(--c-deep-plum); }
+  .type-card__meta{
+    flex-shrink:0; text-align:right; font-family:var(--font-mono); font-size:12px; color:var(--tint-plum-40);
+    line-height:1.6;
+  }
+  .type-card__meta b{ color:var(--c-deep-plum); display:block; font-family:var(--font-ui); font-size:13px; font-weight:600; }
+
+  .t-screen-title{ font-size:22px; font-weight:600; }
+  .t-section-header{ font-size:17px; font-weight:600; }
+  .t-body{ font-size:14px; font-weight:400; }
+  .t-caption{ font-size:12px; font-weight:400; color:var(--tint-plum-40); }
+
+  .extended-scale{ margin-top:var(--sp-6); padding-top:var(--sp-6); border-top:1px dashed var(--tint-plum-10); }
+  .extended-tag{
+    display:inline-block; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--c-slate); background:var(--tint-slate-10); padding:3px 8px; border-radius:var(--r-sm); margin-bottom:var(--sp-3);
+  }
+  .t-display{ font-size:40px; font-weight:700; line-height:1.1; }
+  .t-h1{ font-size:30px; font-weight:700; }
+  .t-h2{ font-size:22px; font-weight:700; }
+  .t-h3{ font-size:17px; font-weight:500; }
+
+  /* ============================================================
+     3 — SPACING / RADIUS / OPACITY (supplementary tokens)
+     ============================================================ */
+  .token-row{ display:flex; gap:var(--sp-6); flex-wrap:wrap; }
+  .token-col{ flex:1; min-width:220px; }
+  .token-col h3{ font-size:13px; font-weight:600; margin:0 0 var(--sp-3); color:var(--c-slate); text-transform:uppercase; letter-spacing:0.04em; }
+  .token-item{ display:flex; align-items:center; gap:var(--sp-3); padding:var(--sp-2) 0; border-bottom:1px solid var(--tint-plum-10); font-size:13px; }
+  .token-item .bar{ background:var(--c-deep-plum); height:8px; border-radius:2px; }
+  .token-item .box{ background:var(--tint-plum-10); border:1.5px solid var(--c-deep-plum); }
+  .token-item .label{ font-family:var(--font-mono); color:var(--tint-plum-40); width:64px; flex-shrink:0; }
+  .op-chip{ background:var(--c-deep-plum); }
+
+  /* ============================================================
+     4 — BUTTONS
+     ============================================================ */
+  .btn{
+    font-family:var(--font-ui); font-size:14px; font-weight:600; border:none; cursor:pointer;
+    border-radius:var(--r-md); padding:11px 20px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .btn--primary.is-default{ background:var(--c-deep-plum); color:var(--c-white); }
+  .btn--primary.is-pressed{ background:#15131F; color:var(--c-white); transform:scale(0.97); }
+  .btn--primary.is-disabled{ background:var(--tint-slate-30); color:var(--tint-plum-40); cursor:not-allowed; }
+
+  .btn--secondary.is-default{ background:var(--c-amber); color:var(--c-white); }
+  .btn--secondary.is-pressed{ background:#B27C13; color:var(--c-white); transform:scale(0.97); }
+  .btn--secondary.is-disabled{ background:var(--tint-amber-10); color:var(--c-amber); opacity:.5; cursor:not-allowed; }
+
+  .btn--destructive.is-default{ background:var(--c-burgundy); color:var(--c-white); }
+  .btn--destructive.is-pressed{ background:#54121A; color:var(--c-white); transform:scale(0.97); }
+  .btn--destructive.is-disabled{ background:var(--tint-burgundy-10); color:var(--c-burgundy); opacity:.5; cursor:not-allowed; }
+
+  .btn--ghost.is-default{ background:transparent; color:var(--c-deep-plum); border:1.5px solid var(--tint-plum-10); box-shadow:inset 0 0 0 0; }
+  .btn--ghost.is-pressed{ background:var(--tint-plum-04); color:var(--c-deep-plum); border:1.5px solid var(--c-deep-plum); }
+  .btn--ghost.is-disabled{ background:transparent; color:var(--tint-plum-40); border:1.5px solid var(--tint-plum-10); cursor:not-allowed; }
+
+  .btn-matrix{ display:grid; grid-template-columns:120px repeat(3,1fr); gap:var(--sp-3); align-items:center; margin-bottom:var(--sp-5); }
+  .btn-matrix__label{ font-size:12px; font-weight:600; color:var(--c-slate); text-transform:uppercase; letter-spacing:0.04em; }
+  .state-col-head{ display:grid; grid-template-columns:120px repeat(3,1fr); gap:var(--sp-3); margin-bottom:var(--sp-2); }
+  .state-col-head span{ font-family:var(--font-mono); font-size:11px; color:var(--tint-plum-40); }
+
+  /* ============================================================
+     5 — INPUTS
+     ============================================================ */
+  .input-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--sp-5); }
+  .input-demo label{ display:block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--c-slate); margin-bottom:var(--sp-2); }
+  .field{
+    width:100%; font-family:var(--font-ui); font-size:14.5px; padding:12px 14px; border-radius:10px;
+    background:var(--c-white); outline:none;
+  }
+  .field--default{ border:1.5px solid var(--tint-slate-30); color:var(--c-deep-plum); }
+  .field--default::placeholder{ color:var(--c-slate); }
+  .field--focused{ border:1.5px solid var(--c-deep-plum); color:var(--c-deep-plum); box-shadow:0 0 0 3px var(--tint-plum-10); }
+  .field--error{ border:1.5px solid var(--c-burgundy); color:var(--c-deep-plum); }
+  .field-caption{ font-size:12px; margin-top:var(--sp-2); }
+  .field-caption--error{ color:var(--c-burgundy); }
+  .field-caption--neutral{ color:var(--tint-plum-40); }
+
+  /* ============================================================
+     6 — BADGES
+     ============================================================ */
+  .badge-row{ display:flex; flex-wrap:wrap; gap:var(--sp-2); }
+  .badge{
+    font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.03em;
+    padding:5px 10px; border-radius:var(--r-sm); display:inline-block;
+  }
+  .badge--amber{ background:var(--c-amber); color:var(--c-white); }
+  .badge--orange{ background:var(--c-orange); color:var(--c-white); }
+  .badge--burgundy{ background:var(--c-burgundy); color:var(--c-white); }
+  .badge--slate{ background:var(--tint-slate-10); color:var(--c-slate); }
+  .badge--outline{ background:transparent; border:1px solid var(--tint-plum-10); color:var(--tint-plum-40); }
+
+  /* ============================================================
+     7 — MEMBER AVATAR / TAG  (new — Shared Cart)
+     ============================================================ */
+  .avatar-row{ display:flex; gap:var(--sp-5); flex-wrap:wrap; }
+  .avatar-demo{ display:flex; flex-direction:column; align-items:center; gap:var(--sp-2); }
+  .avatar{
+    width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-weight:600; font-size:15px; color:var(--c-white); background:var(--c-deep-plum);
+    border:3px solid; box-shadow:0 1px 2px rgba(0,0,0,.08);
+  }
+  .avatar--ring-amber{ border-color:var(--c-amber); }
+  .avatar--ring-orange{ border-color:var(--c-orange); }
+  .avatar--ring-burgundy{ border-color:var(--c-burgundy); }
+  .avatar--ring-slate{ border-color:var(--c-slate); }
+  .avatar-demo__name{ font-size:12px; font-weight:600; }
+  .avatar-demo__role{ font-size:10.5px; color:var(--tint-plum-40); margin-top:-4px; }
+
+  .added-by-pill{
+    display:inline-flex; align-items:center; gap:6px; background:var(--tint-slate-10);
+    padding:5px 10px 5px 5px; border-radius:var(--r-full); font-size:11.5px; color:var(--c-deep-plum); margin-top:var(--sp-5);
+  }
+  .added-by-pill .mini-avatar{
+    width:18px; height:18px; border-radius:50%; background:var(--c-orange); border:1.5px solid var(--c-orange);
+    display:inline-flex; align-items:center; justify-content:center; color:white; font-size:9px; font-weight:700;
+  }
+
+  /* ============================================================
+     8 — BUDGET BAR (new — Shared Cart)
+     ============================================================ */
+  .budget-row{ display:flex; flex-direction:column; gap:var(--sp-4); }
+  .budget-item{ display:grid; grid-template-columns:120px 1fr 90px; align-items:center; gap:var(--sp-4); }
+  .budget-item__who{ display:flex; align-items:center; gap:var(--sp-2); font-size:13px; font-weight:600; }
+  .budget-item__mini-avatar{ width:26px; height:26px; border-radius:50%; color:white; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .track{ height:10px; background:var(--tint-slate-10); border-radius:var(--r-full); overflow:hidden; }
+  .fill{ height:100%; border-radius:var(--r-full); transition:width .3s ease; }
+  .fill--ok{ background:var(--c-amber); }
+  .fill--warn{ background:var(--c-orange); }
+  .fill--over{ background:var(--c-burgundy); animation:flash 1.6s ease-in-out infinite; }
+  @keyframes flash{ 0%,100%{ opacity:1; } 50%{ opacity:.55; } }
+  .budget-item__amt{ text-align:right; font-family:var(--font-mono); font-size:12.5px; }
+  .budget-item__amt b{ font-family:var(--font-ui); font-size:13.5px; }
+  .budget-item__amt.over{ color:var(--c-burgundy); }
+  .budget-item__amt.warn{ color:var(--c-orange); }
+
+  /* ============================================================
+     9 — SPLIT-BILL COMPONENT (new — Shared Cart)
+     ============================================================ */
+  .split-card{
+    background:var(--c-white); border:1px solid var(--tint-plum-10); border-radius:var(--r-xl);
+    padding:var(--sp-5); max-width:460px;
+  }
+  .split-card__head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--sp-4); }
+  .split-card__title{ font-size:15px; font-weight:700; }
+  .mode-toggle{ display:flex; background:var(--tint-slate-10); border-radius:var(--r-full); padding:3px; font-size:11.5px; font-weight:600; }
+  .mode-toggle span{ padding:5px 12px; border-radius:var(--r-full); color:var(--tint-plum-40); }
+  .mode-toggle span.active{ background:var(--c-deep-plum); color:var(--c-white); }
+
+  .split-row{ display:flex; align-items:center; justify-content:space-between; padding:var(--sp-3) 0; border-bottom:1px solid var(--tint-plum-10); }
+  .split-row:last-of-type{ border-bottom:none; }
+  .split-row__who{ display:flex; align-items:center; gap:var(--sp-3); }
+  .split-row__who-info b{ display:block; font-size:13.5px; }
+  .split-row__who-info span{ font-size:11.5px; color:var(--tint-plum-40); }
+  .split-row__amt{ font-family:var(--font-mono); font-size:13.5px; font-weight:500; margin-right:var(--sp-3); }
+  .status-chip{ font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.03em; padding:4px 9px; border-radius:var(--r-full); }
+  .status-chip--paid{ background:var(--tint-plum-10); color:var(--c-deep-plum); }
+  .status-chip--pending{ background:var(--tint-orange-10); color:var(--c-orange); }
+  .status-chip--covered{ background:var(--tint-slate-10); color:var(--c-slate); }
+  .split-row__right{ display:flex; align-items:center; }
+
+  .split-total{ display:flex; justify-content:space-between; margin-top:var(--sp-4); padding-top:var(--sp-4); border-top:1.5px solid var(--c-deep-plum); font-size:14px; font-weight:700; }
+
+  /* ============================================================
+     10 — EXTRAS: duplicate nudge + live indicator
+     ============================================================ */
+  .nudge{
+    display:flex; align-items:center; justify-content:space-between; gap:var(--sp-4);
+    background:var(--tint-orange-10); border:1px solid rgba(192,85,16,0.25); border-radius:var(--r-md);
+    padding:var(--sp-3) var(--sp-4); max-width:520px;
+  }
+  .nudge p{ margin:0; font-size:13px; color:var(--c-deep-plum); }
+  .nudge__actions{ display:flex; gap:var(--sp-2); flex-shrink:0; }
+  .nudge__actions button{ font-size:12px; padding:7px 12px; }
+
+  .live-pill{
+    display:inline-flex; align-items:center; gap:7px; background:var(--c-deep-plum); color:white;
+    padding:6px 12px; border-radius:var(--r-full); font-size:12px; font-weight:600;
+  }
+  .live-dot{ width:7px; height:7px; border-radius:50%; background:var(--c-amber); animation:pulse 1.4s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(212,146,26,0.55); } 70%{ box-shadow:0 0 0 6px rgba(212,146,26,0); } }
+
+  /* ============================================================
+     FIGMA IMPORT NOTES
+     ============================================================ */
+  .notes-card{
+    background:var(--c-deep-plum); color:rgba(255,255,255,0.92); border-radius:var(--r-xl);
+    padding:var(--sp-6); display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-6);
+  }
+  .notes-card h3{ font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--c-amber); margin:0 0 var(--sp-3); }
+  .notes-card ol,.notes-card ul{ margin:0; padding-left:18px; font-size:13px; line-height:1.7; color:rgba(255,255,255,0.8); }
+  .notes-card li::marker{ color:var(--c-amber); }
+  .notes-card code{ font-family:var(--font-mono); background:rgba(255,255,255,0.1); padding:1px 5px; border-radius:4px; font-size:12px; color:var(--c-white); }
+
+  footer{ margin-top:var(--sp-10); padding-top:var(--sp-5); border-top:1px solid var(--tint-plum-10); font-size:12px; color:var(--tint-plum-40); display:flex; justify-content:space-between; }
+
+  @media (max-width: 900px){
+    .layout{ grid-template-columns:1fr; }
+    .sidenav{ position:relative; height:auto; }
+    .content{ padding:var(--sp-6); }
+    .swatch-grid{ grid-template-columns:repeat(2,1fr); }
+    .input-grid{ grid-template-columns:1fr; }
+    .notes-card{ grid-template-columns:1fr; }
+    .btn-matrix,.state-col-head{ grid-template-columns:90px repeat(3,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ============================================================
+       SIDE NAV — also doubles as the section index for the
+       Figma "Design System" page (one frame per nav item).
+       ============================================================ -->
+  <aside class="sidenav">
+    <div class="sidenav__brand">
+      <div class="sidenav__mark">S</div>
+      <div>
+        <div class="sidenav__title">SprintMart</div>
+        <div class="sidenav__sub">Shared Cart · Design System</div>
+      </div>
+    </div>
+    <nav>
+      <div class="sidenav__group-label">Foundations</div>
+      <a href="#colours">Colour</a>
+      <a href="#typography">Typography</a>
+      <a href="#tokens">Spacing &amp; Radius</a>
+      <div class="sidenav__group-label">Core Components</div>
+      <a href="#buttons">Buttons</a>
+      <a href="#inputs">Inputs</a>
+      <a href="#badges">Badges &amp; Labels</a>
+      <div class="sidenav__group-label">Shared Cart Components</div>
+      <a href="#avatars">Member Avatar / Tag</a>
+      <a href="#budget-bar">Budget Bar</a>
+      <a href="#split-bill">Split-Bill Card</a>
+      <a href="#extras">Nudge &amp; Live Indicator</a>
+      <div class="sidenav__group-label">Build</div>
+      <a href="#figma-notes">Figma Import Notes</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+
+    <div class="page-header">
+      <p class="eyebrow">Mini Project · Session 18 Review — 4 July 2026</p>
+      <h1>Shared Cart Design System</h1>
+      <p>The full token set and component library for the SprintMart Shared Cart feature, built directly on SprintMart's existing five-hue app palette rather than a new one. Every value below is reused by <strong>screens.md</strong> and explained in <strong>PRD.md</strong> — this page is the single rendered reference for both the demo and the Figma file.</p>
+    </div>
+
+    <!-- ============================================================
+         1 — COLOUR
+         ============================================================ -->
+    <section id="colours">
+      <div class="section-head"><h2>Colour</h2><span class="count-pill">5 hues</span></div>
+      <p class="section-note">Five named colours, each with exactly one job. Click any swatch to copy its hex. There is no sixth "success green" — confirmation states are carried by Deep&nbsp;Plum and a checkmark, not colour, on purpose (see role table below).</p>
+
+      <div class="swatch-grid">
+        <div class="swatch" data-hex="#1E1B30" onclick="copyHex(this)">
+          <div class="swatch__fill" style="background:var(--c-deep-plum)"></div>
+          <div class="swatch__body">
+            <p class="swatch__name">Deep Plum</p>
+            <p class="swatch__hex">#1E1B30</p>
+            <span class="swatch__role" style="background:var(--c-deep-plum)">Structure</span>
+            <p class="copy-hint">click to copy</p>
+          </div>
+        </div>
+        <div class="swatch" data-hex="#6B7888" onclick="copyHex(this)">
+          <div class="swatch__fill" style="background:var(--c-slate)"></div>
+          <div class="swatch__body">
+            <p class="swatch__name">Slate</p>
+            <p class="swatch__hex">#6B7888</p>
+            <span class="swatch__role" style="background:var(--c-slate)">Neutral</span>
+            <p class="copy-hint">click to copy</p>
+          </div>
+        </div>
+        <div class="swatch" data-hex="#D4921A" onclick="copyHex(this)">
+          <div class="swatch__fill" style="background:var(--c-amber)"></div>
+          <div class="swatch__body">
+            <p class="swatch__name">Amber</p>
+            <p class="swatch__hex">#D4921A</p>
+            <span class="swatch__role" style="background:var(--c-amber)">Action</span>
+            <p class="copy-hint">click to copy</p>
+          </div>
+        </div>
+        <div class="swatch" data-hex="#C05510" onclick="copyHex(this)">
+          <div class="swatch__fill" style="background:var(--c-orange)"></div>
+          <div class="swatch__body">
+            <p class="swatch__name">Orange</p>
+            <p class="swatch__hex">#C05510</p>
+            <span class="swatch__role" style="background:var(--c-orange)">Emphasis</span>
+            <p class="copy-hint">click to copy</p>
+          </div>
+        </div>
+        <div class="swatch" data-hex="#6E1822" onclick="copyHex(this)">
+          <div class="swatch__fill" style="background:var(--c-burgundy)"></div>
+          <div class="swatch__body">
+            <p class="swatch__name">Burgundy</p>
+            <p class="swatch__hex">#6E1822</p>
+            <span class="swatch__role" style="background:var(--c-burgundy)">Urgency</span>
+            <p class="copy-hint">click to copy</p>
+          </div>
+        </div>
+      </div>
+
+      <table class="role-table">
+        <thead><tr><th>Role</th><th>Colour</th><th>Used for</th></tr></thead>
+        <tbody>
+          <tr><td>Structure</td><td><span class="role-dot" style="background:var(--c-deep-plum)"></span>Deep Plum</td><td>Navbars, body text, footers, primary CTA fill</td></tr>
+          <tr><td>Neutral</td><td><span class="role-dot" style="background:var(--c-slate)"></span>Slate</td><td>Labels, borders, meta text, disabled states, "covered by admin"</td></tr>
+          <tr><td>Action</td><td><span class="role-dot" style="background:var(--c-amber)"></span>Amber</td><td>Reversible actions, live/in-progress states, on-track budget</td></tr>
+          <tr><td>Emphasis</td><td><span class="role-dot" style="background:var(--c-orange)"></span>Orange</td><td>Secondary actions, soft warnings, approaching-cap budget</td></tr>
+          <tr><td>Urgency</td><td><span class="role-dot" style="background:var(--c-burgundy)"></span>Burgundy</td><td>Destructive actions, over-cap states, &lt;2 min checkout countdown</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============================================================
+         2 — TYPOGRAPHY
+         ============================================================ -->
+    <section id="typography">
+      <div class="section-head"><h2>Type Scale</h2><span class="count-pill">4 styles</span></div>
+      <p class="section-note">Two-weight system — Semibold for hierarchy, Regular for body and meta. Font: Inter. This four-style scale is the required Shared Cart mini system; the app-wide scale below is inherited context, not part of this project's deliverable.</p>
+
+      <div class="type-card">
+        <div class="type-card__sample t-screen-title">Flatmates' Cart</div>
+        <div class="type-card__meta"><b>Screen Title</b>22px / Semibold</div>
+      </div>
+      <div class="type-card">
+        <div class="type-card__sample t-section-header">Added by Rohan</div>
+        <div class="type-card__meta"><b>Section Header</b>17px / Semibold</div>
+      </div>
+      <div class="type-card">
+        <div class="type-card__sample t-body">Amul Taaza Milk, 1L — toggle to mark this item shared with the household.</div>
+        <div class="type-card__meta"><b>Body</b>14px / Regular</div>
+      </div>
+      <div class="type-card">
+        <div class="type-card__sample t-caption">2 hrs ago · 4 members · ₹330 to pay</div>
+        <div class="type-card__meta"><b>Caption</b>12px / Regular</div>
+      </div>
+
+      <div class="extended-scale">
+        <span class="extended-tag">App-wide scale · reference only</span>
+        <div class="type-card"><div class="type-card__sample t-display">Fresh Picks Today</div><div class="type-card__meta"><b>Display</b>40–48px / Bold</div></div>
+        <div class="type-card"><div class="type-card__sample t-h1">Back to School Deals</div><div class="type-card__meta"><b>H1</b>30–32px / Bold</div></div>
+        <div class="type-card"><div class="type-card__sample t-h2">Shared Cart</div><div class="type-card__meta"><b>H2</b>22–24px / Bold</div></div>
+        <div class="type-card"><div class="type-card__sample t-h3">Search milk, snacks, breakfast…</div><div class="type-card__meta"><b>H3</b>17–18px / Medium</div></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3 — TOKENS (spacing / radius / opacity)
+         ============================================================ -->
+    <section id="tokens">
+      <div class="section-head"><h2>Spacing, Radius &amp; Opacity</h2><span class="count-pill">supplementary</span></div>
+      <p class="section-note">Base-8 spacing grid, four radius tiers, five opacity steps. Used to build every component below — never an ad-hoc value.</p>
+
+      <div class="token-row">
+        <div class="token-col">
+          <h3>Spacing (base 8)</h3>
+          <div class="token-item"><span class="label">4px</span><div class="bar" style="width:4px"></div><span>space-1</span></div>
+          <div class="token-item"><span class="label">8px</span><div class="bar" style="width:8px"></div><span>space-2</span></div>
+          <div class="token-item"><span class="label">12px</span><div class="bar" style="width:12px"></div><span>space-3</span></div>
+          <div class="token-item"><span class="label">16px</span><div class="bar" style="width:16px"></div><span>space-4</span></div>
+          <div class="token-item"><span class="label">24px</span><div class="bar" style="width:24px"></div><span>space-5</span></div>
+          <div class="token-item"><span class="label">32px</span><div class="bar" style="width:32px"></div><span>space-6</span></div>
+          <div class="token-item"><span class="label">48px</span><div class="bar" style="width:48px"></div><span>space-8</span></div>
+          <div class="token-item"><span class="label">64px</span><div class="bar" style="width:64px"></div><span>space-10</span></div>
+        </div>
+        <div class="token-col">
+          <h3>Radius</h3>
+          <div class="token-item"><span class="label">4px</span><div class="box" style="width:24px;height:24px;border-radius:4px"></div><span>radius-sm · tags</span></div>
+          <div class="token-item"><span class="label">8px</span><div class="box" style="width:24px;height:24px;border-radius:8px"></div><span>radius-md · buttons</span></div>
+          <div class="token-item"><span class="label">13px</span><div class="box" style="width:24px;height:24px;border-radius:13px"></div><span>radius-lg · cards</span></div>
+          <div class="token-item"><span class="label">24px</span><div class="box" style="width:24px;height:24px;border-radius:24px"></div><span>radius-xl · modals</span></div>
+          <div class="token-item"><span class="label">∞</span><div class="box" style="width:24px;height:24px;border-radius:999px"></div><span>radius-full · pills</span></div>
+        </div>
+        <div class="token-col">
+          <h3>Opacity</h3>
+          <div class="token-item"><span class="label">90%</span><div class="box op-chip" style="width:24px;height:24px;opacity:.9"></div><span>opacity-90</span></div>
+          <div class="token-item"><span class="label">60%</span><div class="box op-chip" style="width:24px;height:24px;opacity:.6"></div><span>opacity-60</span></div>
+          <div class="token-item"><span class="label">40%</span><div class="box op-chip" style="width:24px;height:24px;opacity:.4"></div><span>opacity-40</span></div>
+          <div class="token-item"><span class="label">30%</span><div class="box op-chip" style="width:24px;height:24px;opacity:.3"></div><span>opacity-30</span></div>
+          <div class="token-item"><span class="label">10%</span><div class="box op-chip" style="width:24px;height:24px;opacity:.1"></div><span>opacity-10</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4 — BUTTONS
+         ============================================================ -->
+    <section id="buttons">
+      <div class="section-head"><h2>Buttons</h2><span class="count-pill">3 states</span></div>
+      <p class="section-note">Three states — <code>Default</code>, <code>Pressed</code>, <code>Disabled</code> — applied across four tiers. Primary is reserved for the one main action per screen; Destructive is used sparingly (Remove item, Leave cart, Deny request).</p>
+
+      <div class="state-col-head"><span></span><span>Default</span><span>Pressed</span><span>Disabled</span></div>
+
+      <div class="btn-matrix">
+        <span class="btn-matrix__label">Primary</span>
+        <button class="btn btn--primary is-default">Pay ₹330</button>
+        <button class="btn btn--primary is-pressed">Pay ₹330</button>
+        <button class="btn btn--primary is-disabled" disabled>Pay ₹330</button>
+      </div>
+      <div class="btn-matrix">
+        <span class="btn-matrix__label">Secondary</span>
+        <button class="btn btn--secondary is-default">Skip</button>
+        <button class="btn btn--secondary is-pressed">Skip</button>
+        <button class="btn btn--secondary is-disabled" disabled>Skip</button>
+      </div>
+      <div class="btn-matrix">
+        <span class="btn-matrix__label">Destructive</span>
+        <button class="btn btn--destructive is-default">Remove item</button>
+        <button class="btn btn--destructive is-pressed">Remove item</button>
+        <button class="btn btn--destructive is-disabled" disabled>Remove item</button>
+      </div>
+      <div class="btn-matrix">
+        <span class="btn-matrix__label">Ghost</span>
+        <button class="btn btn--ghost is-default">View details</button>
+        <button class="btn btn--ghost is-pressed">View details</button>
+        <button class="btn btn--ghost is-disabled" disabled>View details</button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5 — INPUTS
+         ============================================================ -->
+    <section id="inputs">
+      <div class="section-head"><h2>Inputs</h2><span class="count-pill">3 states</span></div>
+      <p class="section-note">Same three-state pattern as buttons, applied to form fields.</p>
+
+      <div class="input-grid">
+        <div class="input-demo">
+          <label>Default</label>
+          <input class="field field--default" placeholder="Search milk, snacks, breakfast…">
+          <p class="field-caption field-caption--neutral">Empty or unfocused field</p>
+        </div>
+        <div class="input-demo">
+          <label>Focused</label>
+          <input class="field field--focused" value="4821" autocomplete="off">
+          <p class="field-caption field-caption--neutral">Actively typing — e.g. invite code</p>
+        </div>
+        <div class="input-demo">
+          <label>Error</label>
+          <input class="field field--error" value="0000">
+          <p class="field-caption field-caption--error">Invalid invite code</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6 — BADGES
+         ============================================================ -->
+    <section id="badges">
+      <div class="section-head"><h2>Badges &amp; Labels</h2></div>
+      <p class="section-note">Compact, single-word-or-short-phrase. Base-app badges on top, Shared-Cart-specific status chips below.</p>
+      <div class="badge-row">
+        <span class="badge badge--amber">Return</span>
+        <span class="badge badge--burgundy">Deal</span>
+        <span class="badge badge--slate">New</span>
+        <span class="badge badge--outline">Out of stock</span>
+        <span class="badge badge--orange">Bestseller</span>
+      </div>
+      <div class="badge-row" style="margin-top:var(--sp-3)">
+        <span class="badge badge--burgundy">Awaiting approval</span>
+        <span class="badge badge--orange">Pending</span>
+        <span class="badge badge--slate">Covered by admin</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7 — MEMBER AVATAR / TAG
+         ============================================================ -->
+    <section id="avatars">
+      <div class="section-head"><h2>Member Avatar / Tag</h2><span class="count-pill">Shared Cart · new</span></div>
+      <p class="section-note">One distinct ring colour per member slot, rotating Amber → Orange → Burgundy → Slate so up to four members stay distinguishable without a new hue. Paired with a caption-style "added by" pill.</p>
+
+      <div class="avatar-row">
+        <div class="avatar-demo"><div class="avatar avatar--ring-amber">A</div><div class="avatar-demo__name">Ananya</div><div class="avatar-demo__role">Organiser</div></div>
+        <div class="avatar-demo"><div class="avatar avatar--ring-orange">R</div><div class="avatar-demo__name">Rohan</div><div class="avatar-demo__role">Contributor</div></div>
+        <div class="avatar-demo"><div class="avatar avatar--ring-burgundy">K</div><div class="avatar-demo__name">Kabir</div><div class="avatar-demo__role">Contributor</div></div>
+        <div class="avatar-demo"><div class="avatar avatar--ring-slate">P</div><div class="avatar-demo__name">Priya</div><div class="avatar-demo__role">Contributor</div></div>
+      </div>
+
+      <div class="added-by-pill">
+        <span class="mini-avatar">R</span> Added by Rohan · 2 hrs ago
+      </div>
+    </section>
+
+    <!-- ============================================================
+         8 — BUDGET BAR
+         ============================================================ -->
+    <section id="budget-bar">
+      <div class="section-head"><h2>Budget Bar</h2><span class="count-pill">Shared Cart · new</span></div>
+      <p class="section-note">₹ spent shown numerically beside the bar — never the bar alone. Three states: on track, approaching cap (80–100%), over cap (animated flash, awaiting admin approval).</p>
+
+      <div class="budget-row">
+        <div class="budget-item">
+          <div class="budget-item__who"><span class="budget-item__mini-avatar" style="background:var(--c-amber)">A</span>Ananya</div>
+          <div class="track"><div class="fill fill--ok" style="width:42%"></div></div>
+          <div class="budget-item__amt"><b>₹210</b> / ₹500</div>
+        </div>
+        <div class="budget-item">
+          <div class="budget-item__who"><span class="budget-item__mini-avatar" style="background:var(--c-orange)">R</span>Rohan</div>
+          <div class="track"><div class="fill fill--warn" style="width:88%"></div></div>
+          <div class="budget-item__amt warn"><b>₹440</b> / ₹500</div>
+        </div>
+        <div class="budget-item">
+          <div class="budget-item__who"><span class="budget-item__mini-avatar" style="background:var(--c-burgundy)">K</span>Kabir</div>
+          <div class="track"><div class="fill fill--over" style="width:100%"></div></div>
+          <div class="budget-item__amt over"><b>₹540</b> / ₹500</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         9 — SPLIT-BILL COMPONENT
+         ============================================================ -->
+    <section id="split-bill">
+      <div class="section-head"><h2>Split-Bill Card</h2><span class="count-pill">Shared Cart · new</span></div>
+      <p class="section-note">Mode toggle at the top, one row per member with avatar, amount, and status. "Covered by admin" uses neutral Slate deliberately — it should never read as a public callout.</p>
+
+      <div class="split-card">
+        <div class="split-card__head">
+          <span class="split-card__title">Bill split</span>
+          <div class="mode-toggle"><span>Admin Pays</span><span class="active">Each Pays Own</span></div>
+        </div>
+
+        <div class="split-row">
+          <div class="split-row__who">
+            <div class="avatar avatar--ring-amber" style="width:34px;height:34px;font-size:12px;">A</div>
+            <div class="split-row__who-info"><b>Ananya</b><span>Organiser</span></div>
+          </div>
+          <div class="split-row__right"><span class="split-row__amt">₹420</span><span class="status-chip status-chip--paid">Paid</span></div>
+        </div>
+        <div class="split-row">
+          <div class="split-row__who">
+            <div class="avatar avatar--ring-orange" style="width:34px;height:34px;font-size:12px;">R</div>
+            <div class="split-row__who-info"><b>Rohan</b><span>Contributor</span></div>
+          </div>
+          <div class="split-row__right"><span class="split-row__amt">₹190</span><span class="status-chip status-chip--pending">Pending</span></div>
+        </div>
+        <div class="split-row">
+          <div class="split-row__who">
+            <div class="avatar avatar--ring-burgundy" style="width:34px;height:34px;font-size:12px;">K</div>
+            <div class="split-row__who-info"><b>Kabir</b><span>Contributor</span></div>
+          </div>
+          <div class="split-row__right"><span class="split-row__amt">₹140</span><span class="status-chip status-chip--covered">Covered by admin</span></div>
+        </div>
+
+        <div class="split-total"><span>Total</span><span>₹750</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         10 — EXTRAS
+         ============================================================ -->
+    <section id="extras">
+      <div class="section-head"><h2>Duplicate Nudge &amp; Live Indicator</h2><span class="count-pill">Shared Cart · new</span></div>
+      <p class="section-note">Hick's Law in practice — the nudge is exactly two buttons, inline, never a modal. The live pill gives ambient awareness without a push notification.</p>
+
+      <div class="nudge" style="margin-bottom:var(--sp-5);">
+        <p>Riya already added <b>Amul Milk 1L</b>. Add another or increase quantity?</p>
+        <div class="nudge__actions">
+          <button class="btn btn--ghost is-default">Skip</button>
+          <button class="btn btn--secondary is-default">Add anyway</button>
+        </div>
+      </div>
+
+      <div class="live-pill"><span class="live-dot"></span>Live · Priya adding now…</div>
+    </section>
+
+    <!-- ============================================================
+         FIGMA IMPORT NOTES
+         ============================================================ -->
+    <section id="figma-notes">
+      <div class="section-head"><h2>Notes for Figma Import</h2></div>
+      <div class="notes-card">
+        <div>
+          <h3>Why this file imports cleanly</h3>
+          <ul>
+            <li>Every class follows <code>block__element--modifier</code>, so a plugin's auto-generated layer names already read sensibly — no manual renaming pass needed in Figma.</li>
+            <li>All colour, spacing, and radius values are CSS custom properties in <code>:root</code>. Most HTML-to-Figma plugins (e.g. <code>html.to.design</code>, Anima) map these straight onto Figma <em>Variables</em> — exactly what the rubric asks the Design System page to use.</li>
+            <li>Layout is plain flex/grid with fixed px values, not CSS Grid template-areas — these import far more reliably than newer grid syntax.</li>
+            <li>Inter + JetBrains Mono are both available as Figma/Google fonts, so text layers won't fall back to a substitute on import.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Suggested workflow</h3>
+          <ol>
+            <li>Open this file in Chrome, run the <code>html.to.design</code> plugin against the live page (not a screenshot) so each section lands as its own frame.</li>
+            <li>Rename the eight imported frames to match the side-nav order above — that becomes your Figma "Design System" page structure.</li>
+            <li>Convert the colour swatches first into Figma <em>Variables</em> (5 colours), then the type styles into <em>Text Styles</em> — every other component should reference those instead of holding raw hex/px values, so future edits propagate automatically.</li>
+            <li>Turn Button and Input into Figma <em>Components</em> with variants for tier × state — the matrix layout above was built specifically to map onto Figma's variant grid one-to-one.</li>
+            <li>Member Avatar, Budget Bar, and Split-Bill Card are the three project-required custom components — make sure these are the ones flagged as reusable Components, not just grouped frames.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>SprintMart Shared Cart — Mini Project · Design System v1</span>
+      <span>Companion files: PRD.md · screens.md</span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  function copyHex(el){
+    var hex = el.getAttribute('data-hex');
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(hex).catch(function(){});
+    }
+    var hint = el.querySelector('.copy-hint');
+    if (hint) {
+      var original = hint.textContent;
+      hint.textContent = 'copied ' + hex;
+      hint.style.opacity = 1;
+      setTimeout(function(){ hint.textContent = original; }, 1200);
+    }
+  }
+</script>
+
+</body>
+</html>

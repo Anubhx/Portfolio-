@@ -8,6 +8,17 @@ import PageHero from "@/components/PageHero";
 const EASE_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const caseStudies = [
+  /*
+  {
+    id: "sprintmart",
+    title: "SprintMart Shared Cart",
+    metadata: "UX RESEARCH & DESIGN / QUICK COMMERCE",
+    description:
+      "Collaborative grocery ordering for Indian households. Real-time cart sync, per-person budget caps, Hick's Law duplicate protection, and integrated multi-payer UPI split settlement.",
+    image: "/SprintMart/SprintMart Shared Cart.dc.html",
+    link: "/case-studies/sprintmart-shared-cart",
+  },
+  */
   {
     id: "zomato",
     title: "Zomato Group Ordering",
@@ -215,7 +226,7 @@ export default function CaseStudiesPage() {
                   textTransform: "uppercase",
                 }}
               >
-                (03 Selected)
+                (04 Selected)
               </span>
             </div>
 
